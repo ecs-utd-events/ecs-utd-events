@@ -1,0 +1,38 @@
+
+.btn {
+    margin: 5px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.primary-btn {
+    background-color: var(--primary2);
+    color: var(--gray3);
+}
+
+.primary-btn:hover {
+    background-color: var(--primary1);
+    color: var(--gray2)
+}
+
+.rounded-btn {
+    border-radius: 50px;
+}
+
+.square-btn {
+    border-radius: 8px;
+}
+
+.wide-btn {
+    width: 100%;
+    margin: 0;
+}
+
+.secondary-btn {
+    background-color: var(--secondary2);
+    color: var(--gray3);
+}
+
+.secondary-btn:hover {
+    background-color: var(--secondary1);
+    color: var(--gray2);
+}
