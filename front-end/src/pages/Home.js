@@ -9,6 +9,7 @@ import './../styles/App.css';
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
 
 
 export default function Home() {
@@ -24,7 +25,16 @@ export default function Home() {
                     </div>
                 </Container>
             </Jumbotron>
-            <FullCalendar defaultView="dayGridMonth" plugins={[ dayGridPlugin ]} />
+            <FullCalendar 
+              defaultView="dayGridMonth" 
+              plugins={[ dayGridPlugin, timeGridPlugin ]} 
+              headerToolbar={{
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              }}
+
+            />
         </div>
     );
 }
