@@ -1,3 +1,22 @@
+:root {
+  --primary1: #FEC5BB;
+  --primary2: #FCD5CE;
+  --primary3: #FAE1DD;
+  --primary4: #F8EDEB;
+  --accent1: #FEC89A;
+  --accent2: #FFD7BA;
+  --accent3: #FFE5D9;
+  --secondary1: #D8E2DC;
+  --secondary2: #E8E8E4;
+  --secondary3: #f7f9f8;
+  --gray1: #333333;
+  --gray2: #4F4F4F;
+  --gray3: #828282;
+  --gray4: #BDBDBD;
+  --gray5: #E0E0E0;
+  --gray6: #F2F2F2;
+}
+
 .App {
   text-align: center;
 }
