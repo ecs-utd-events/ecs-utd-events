@@ -1,18 +1,25 @@
-import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+import Login from './pages/Login';
+import Home from './pages/Home';
+import CreateEvent from './pages/CreateEvent';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <Jumbotron>
-        <Container>
-          <h1>And so it begins</h1>
-        </Container>
-      </Jumbotron>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/org/create" component={CreateEvent} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </Router>
   );
 }
 
