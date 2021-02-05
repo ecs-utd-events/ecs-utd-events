@@ -11,6 +11,9 @@ import CreateEvent from './pages/CreateEvent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
 
+import FullCalendar, { formatDate } from '@fullcalendar/react'
+
+
 function App() {
   return (
     <Router>

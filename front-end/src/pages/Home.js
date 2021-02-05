@@ -7,6 +7,10 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../styles/App.css';
 
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+
+
 export default function Home() {
     return (
         <div className="App">
@@ -20,6 +24,7 @@ export default function Home() {
                     </div>
                 </Container>
             </Jumbotron>
+            <FullCalendar defaultView="dayGridMonth" plugins={[ dayGridPlugin ]} />
         </div>
     );
 }
