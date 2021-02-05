@@ -9,7 +9,7 @@ import Home from './pages/Home';
 import CreateEvent from './pages/CreateEvent';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import './styles/App.css';
 
 function App() {
   return (

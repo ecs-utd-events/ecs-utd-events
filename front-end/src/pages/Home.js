@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './../App.css';
+import './../styles/App.css';
 
 export default function Home() {
   return (

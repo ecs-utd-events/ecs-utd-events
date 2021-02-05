@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
-import './../App.css';
+import './../styles/App.css';
 
 export default function CreateEvent() {
     return (
