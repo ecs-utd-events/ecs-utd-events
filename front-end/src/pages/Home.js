@@ -38,6 +38,7 @@ export function createEventId() {
 export default function Home() {
     return (
         <div className="App">
+          <div className="HeaderDiv">
             <Jumbotron>
                 <Container>
                     <h1>Home Page</h1>
@@ -48,6 +49,8 @@ export default function Home() {
                     </div>
                 </Container>
             </Jumbotron>
+          </div>
+          <div className="FullCalendarDiv">
             <FullCalendar 
               defaultView="dayGridMonth" 
               plugins={[ dayGridPlugin, timeGridPlugin ]} 
@@ -58,6 +61,7 @@ export default function Home() {
               }}
               initialEvents={INITIAL_EVENTS}
             />
+          </div>
         </div>
     );
 }

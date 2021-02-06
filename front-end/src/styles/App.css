@@ -55,3 +55,7 @@
     transform: rotate(360deg);
   }
 }
+
+.FullCalendarDiv {
+  background-color: var(--primary1);
+}
