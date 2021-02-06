@@ -56,6 +56,18 @@
   }
 }
 
-.FullCalendarDiv {
-  background-color: var(--primary1);
+.fullcalendar-div {
+  background-color: var(--primary4);
+  flex-grow: 1;
+}
+
+.main-page-sidebar {
+  width: 300px;
+  line-height: 1.5;
+  background: #99685d;
+  border-right: 1px solid #99685d;
+}
+
+.main-content {
+  display: flex;
 }
