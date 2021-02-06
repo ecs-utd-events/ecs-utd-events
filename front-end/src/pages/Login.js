@@ -10,9 +10,9 @@ import './../styles/App.css';
 export default function Login() {
     return (
         <div className="App">
-            <Container>
+            <Container >
                 <Row>
-                    <Col>
+                    <Col >
                     <Card>
                         <Card.Header><h3>Organization Login</h3></Card.Header>
                         <Card.Body >
@@ -27,14 +27,14 @@ export default function Login() {
                                     <Form.Control type="password" placeholder="Password" />
                                 </Form.Group>
                                 <Row>
-                                    <Col><CustomButton width={200}>Submit</CustomButton></Col>
-                                    <Col><CustomButton>Forgot password?</CustomButton></Col>
+                                    <Col><CustomButton width={'10rem'}>Submit</CustomButton></Col>
+                                    <Col><a href="#" style={{textAlign: 'center', lineHeight:'2.5rem'}}>Forgot password?</a></Col>
                                 </Row>
                             </Form>
                         </Card.Body>
                         </Card>
                     </Col>
-                    <Col >
+                    <Col>
                         <ECSLogo />
                     </Col>
                 </Row>
