@@ -14,19 +14,22 @@ export default function Login() {
                 <Row>
                     <Col>
                     <Card>
-                        <Card.Header>Organization Login</Card.Header>
-                        <Card.Body>
-                            <Form>
+                        <Card.Header><h3>Organization Login</h3></Card.Header>
+                        <Card.Body >
+                            <Form >
                                 <Form.Group controlId="email">
-                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Label style={{float: 'left'}}>Email address</Form.Label>
                                     <Form.Control type="email" placeholder="Email address" />
                                 </Form.Group>
 
                                 <Form.Group controlId="password">
-                                    <Form.Label>Password</Form.Label>
+                                    <Form.Label style={{float: 'left'}}>Password</Form.Label>
                                     <Form.Control type="password" placeholder="Password" />
                                 </Form.Group>
-                                <CustomButton ></CustomButton>
+                                <Row>
+                                    <Col><CustomButton width={200}>Submit</CustomButton></Col>
+                                    <Col><CustomButton>Forgot password?</CustomButton></Col>
+                                </Row>
                             </Form>
                         </Card.Body>
                         </Card>
