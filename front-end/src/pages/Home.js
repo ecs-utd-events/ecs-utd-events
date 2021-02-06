@@ -50,17 +50,29 @@ export default function Home() {
                 </Container>
             </Jumbotron>
           </div>
-          <div className="FullCalendarDiv">
-            <FullCalendar 
-              defaultView="dayGridMonth" 
-              plugins={[ dayGridPlugin, timeGridPlugin ]} 
-              headerToolbar={{
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-              }}
-              initialEvents={INITIAL_EVENTS}
-            />
+          <div className="main-content">
+            <div className="main-page-sidebar">
+              <h2>Instructions</h2>
+              <ul>
+                <li>Select dates and you will be prompted to create a new event</li>
+                <li>Drag, drop, and resize events</li>
+                <li>Click an event to delete it</li>
+              </ul>
+            </div>
+
+            <div className="fullcalendar-div">
+              <FullCalendar 
+                defaultView="dayGridMonth"
+                plugins={[ dayGridPlugin, timeGridPlugin ]} 
+                headerToolbar={{
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                }}
+                initialEvents={INITIAL_EVENTS}
+                height={'auto'}
+              />
+            </div>
           </div>
         </div>
     );
