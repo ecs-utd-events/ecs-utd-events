@@ -1,4 +1,5 @@
 import Button from "react-bootstrap/esm/Button";
+import './../styles/components.css';
 
 export default function CustomButton({ wide, width, primary, secondary, square, round, children, ...props }) {
     function getClassName()
