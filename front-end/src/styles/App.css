@@ -21,6 +21,10 @@
   text-align: center;
 }
 
+.App a {
+  color: var(--primary1);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -73,9 +77,19 @@
 }
 
 .vertical-align {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+   padding-top: 50vh
+}
+
+.background-accent {
+  background-color: var(--secondary3);
+  height: 100vh;
+}
+
+.main-text {
+  color: var(--primary1);
+  text-align: center;
+}
+
+.main-text a {
+  font-weight: bold;
 }

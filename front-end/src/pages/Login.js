@@ -9,36 +9,43 @@ import './../styles/App.css';
 
 export default function Login() {
     return (
-        <div className="App">
-            <Container >
-                <Row>
-                    <Col >
-                    <Card>
-                        <Card.Header><h3>Organization Login</h3></Card.Header>
-                        <Card.Body >
-                            <Form >
-                                <Form.Group controlId="email">
-                                    <Form.Label style={{float: 'left'}}>Email address</Form.Label>
-                                    <Form.Control type="email" placeholder="Email address" />
-                                </Form.Group>
+        <div className="background-accent">
+            <div className="App">
+                <Container style={{ paddingTop: '30vh' }}>
+                    <Row>
+                        <Col>
+                        <Card >
+                            <Card.Header><h2 style={{ fontWeight: 'bold' }}>Organization Login</h2></Card.Header>
+                            <Card.Body >
+                                <Form >
+                                    <Form.Group controlId="email">
+                                        <Form.Label style={{float: 'left'}}>Email address</Form.Label>
+                                        <Form.Control type="email" placeholder="Email address" />
+                                    </Form.Group>
 
-                                <Form.Group controlId="password">
-                                    <Form.Label style={{float: 'left'}}>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" />
-                                </Form.Group>
-                                <Row>
-                                    <Col><CustomButton width={'10rem'}>Submit</CustomButton></Col>
-                                    <Col><a href="#" style={{textAlign: 'center', lineHeight:'2.5rem'}}>Forgot password?</a></Col>
-                                </Row>
-                            </Form>
-                        </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <ECSLogo />
-                    </Col>
-                </Row>
-            </Container>
+                                    <Form.Group controlId="password">
+                                        <Form.Label style={{float: 'left'}}>Password</Form.Label>
+                                        <Form.Control type="password" placeholder="Password" />
+                                    </Form.Group>
+                                    <Row>
+                                        <Col><CustomButton width={'10rem'}>Submit</CustomButton></Col>
+                                        <Col><a href="#" style={{textAlign: 'center', lineHeight:'3.0rem'}}>Forgot password?</a></Col>
+                                    </Row>
+                                    <Row>
+                                        <Col className="mt-3">
+                                        <p className="main-text">Don't have an account yet? <a href="#">Sign up!</a></p>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <ECSLogo className="mt-5"/>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </div>
     )
 }
