@@ -10,22 +10,23 @@ export default function CreateEvent() {
     const onSubmit = data => console.log(data);
 
     return (
-        <div className="App vertical-align">
-            <Container >
-                <Card>
-                    <Card.Header><h2>Create Event</h2></Card.Header>
-                    <Form onSubmit={handleSubmit(onSubmit)} style={{display: 'inline-block'}}>
-                        <Form.Control className="mb-4" type="text" placeholder="Title" name="Title" ref={register} />
-                        <Form.Control className="mb-4" type="datetime-local" placeholder="Date" name="Date" ref={register} />
-                        <Form.Control className="mb-4" type="text" placeholder="Location" name="Location" ref={register} />
-                        <Form.Control className="mb-4" type="url" placeholder="Link" name="Link" ref={register} />
-                        <Form.Control className="mb-4"type="text" placeholder="Collaborator(s)" name="Collaborator(s)" as="select" custom>
-                            <option>1</option>
-                        </Form.Control>
-                        <Form.Control type="text" placeholder="Description" name="Description" ref={register} />
-
-                        <CustomButton width={250}>Submit</CustomButton>
-                    </Form>
+        <div className="App">
+            <Container style={{ width: 'fit-content'}}>
+                <Card style={{ marginTop: '25vh' }}>
+                    <Card.Header className="card-header-no-border"><h2>Create Event</h2></Card.Header>
+                    <Card.Body>
+                        <Form onSubmit={handleSubmit(onSubmit)} style={{display: 'inline-block'}}>
+                            <Form.Control className="mb-4" type="text" placeholder="Title" name="Title" ref={register} />
+                            <Form.Control className="mb-4" type="datetime-local" placeholder="Date" name="Date" ref={register} />
+                            <Form.Control className="mb-4" type="text" placeholder="Location" name="Location" ref={register} />
+                            <Form.Control className="mb-4" type="url" placeholder="Link" name="Link" ref={register} />
+                            <Form.Control className="mb-4"type="text" placeholder="Collaborator(s)" name="Collaborator(s)" as="select" custom>
+                                <option>1</option>
+                            </Form.Control>
+                            <Form.Control type="text" placeholder="Description" name="Description" ref={register} />
+                            <CustomButton width={250} style={{ marginTop: '2rem'}}>Submit</CustomButton>
+                        </Form>
+                    </Card.Body>
                 </Card>
             </Container>
         </div>

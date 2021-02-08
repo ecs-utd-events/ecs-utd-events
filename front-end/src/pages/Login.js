@@ -11,11 +11,11 @@ export default function Login() {
     return (
         <div className="background-accent">
             <div className="App">
-                <Container style={{ paddingTop: '30vh' }}>
+                <Container style={{ paddingTop: '30vh'}}>
                     <Row>
                         <Col>
                         <Card >
-                            <Card.Header className="card-header-no-border"><h2 style={{ fontWeight: 'bold' }}>Organization Login</h2></Card.Header>
+                            <Card.Header className="card-header-no-border"><h2>Organization Login</h2></Card.Header>
                             <Card.Body >
                                 <Form >
                                     <Form.Group controlId="email">

@@ -77,7 +77,7 @@
 }
 
 .vertical-align {
-   padding-top: 50vh
+  padding-top: 50vh
 }
 
 .background-accent {
@@ -106,4 +106,8 @@
 
 .card {
   padding: 2rem;
+}
+
+h2 {
+  font-weight: bold!important;
 }
