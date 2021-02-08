@@ -93,3 +93,17 @@
 .main-text a {
   font-weight: bold;
 }
+
+.form-control {
+  background-color: var(--secondary2)!important;
+}
+
+.card-header-no-border {
+  background-color: #FFFFFF!important;
+  border-bottom: 0!important;
+  padding: 1rem 0 0 0!important;
+}
+
+.card {
+  padding: 2rem;
+}

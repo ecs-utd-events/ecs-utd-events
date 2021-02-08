@@ -15,7 +15,7 @@ export default function Login() {
                     <Row>
                         <Col>
                         <Card >
-                            <Card.Header><h2 style={{ fontWeight: 'bold' }}>Organization Login</h2></Card.Header>
+                            <Card.Header className="card-header-no-border"><h2 style={{ fontWeight: 'bold' }}>Organization Login</h2></Card.Header>
                             <Card.Body >
                                 <Form >
                                     <Form.Group controlId="email">
