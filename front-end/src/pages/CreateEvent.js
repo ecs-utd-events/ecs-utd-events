@@ -23,8 +23,8 @@ export default function CreateEvent() {
                             <Form.Control className="mb-4"type="text" placeholder="Collaborator(s)" name="Collaborator(s)" as="select" custom>
                                 <option>1</option>
                             </Form.Control>
-                            <Form.Control type="text" placeholder="Description" name="Description" ref={register} />
-                            <CustomButton className="drop-shadow" width={250} style={{ marginTop: '2rem'}}>Submit</CustomButton>
+                            <Form.Control type="text" as="textarea" rows={3} placeholder="Description" name="Description" ref={register} />
+                            <CustomButton className="drop-shadow mt-4" width={250}>Submit</CustomButton>
                         </Form>
                     </Card.Body>
                 </Card>
