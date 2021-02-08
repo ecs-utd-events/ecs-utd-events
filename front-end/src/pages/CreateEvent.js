@@ -24,7 +24,7 @@ export default function CreateEvent() {
                                 <option>1</option>
                             </Form.Control>
                             <Form.Control type="text" placeholder="Description" name="Description" ref={register} />
-                            <CustomButton width={250} style={{ marginTop: '2rem'}}>Submit</CustomButton>
+                            <CustomButton className="drop-shadow" width={250} style={{ marginTop: '2rem'}}>Submit</CustomButton>
                         </Form>
                     </Card.Body>
                 </Card>

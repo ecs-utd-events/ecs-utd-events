@@ -94,8 +94,13 @@
   font-weight: bold;
 }
 
+.drop-shadow {
+  filter: drop-shadow(3px 4px 2px var(--gray4));
+}
+
 .form-control {
   background-color: var(--secondary2)!important;
+  filter: drop-shadow(3px 4px 2px var(--gray4));
 }
 
 .card-header-no-border {

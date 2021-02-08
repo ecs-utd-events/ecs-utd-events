@@ -28,7 +28,7 @@ export default function Login() {
                                         <Form.Control type="password" placeholder="Password" />
                                     </Form.Group>
                                     <Row>
-                                        <Col><CustomButton width={'10rem'}>Submit</CustomButton></Col>
+                                        <Col><CustomButton className="drop-shadow" width={'10rem'}>Submit</CustomButton></Col>
                                         <Col><a href="#" style={{textAlign: 'center', lineHeight:'3.0rem'}}>Forgot password?</a></Col>
                                     </Row>
                                     <Row>
