@@ -52,13 +52,16 @@
 
 .background-accent {
   background-color: var(--secondary3);
-  height: 100vh;
+  display: flex;
+  min-width: 100vw;
 }
 
 .login-wrapper {
-  height: 100vh;
-  text-align: center;
   display: flex;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 5rem;
+  text-align: center;
   align-items: center;
 }
 
