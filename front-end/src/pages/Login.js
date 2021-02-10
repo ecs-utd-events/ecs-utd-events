@@ -5,14 +5,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
-import EventInfoCard from '../components/EventInfoCard';
 import './../styles/App.css';
 
 export default function Login() {
     return (
         <div className="background-accent">
-            <div className="App">
-                <Container style={{ paddingTop: '30vh'}}>
+            <div className="login-wrapper">
+                <Container>
                     <Row>
                         <Col>
                         <Card >

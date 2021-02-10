@@ -6,15 +6,14 @@
 }
 
 .primary-btn {
-    transition: background-color ease-out .2s;
+    transition: all ease-in .2s;
     background-color: var(--primary1)!important;
     color: var(--gray3);
 }
 
 .primary-btn:hover {
-    transition: background-color ease-out .2s;
+    transition: all ease-in .2s;
     background-color: transparent!important;
-    /* outline: 5px solid var(--primary1); */
     box-shadow: 0 0 0 2pt var(--primary1);
     filter: none!important;
 
