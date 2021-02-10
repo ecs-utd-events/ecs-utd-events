@@ -36,10 +36,9 @@
 }
 
 .main-page-sidebar {
-  width: 300px;
-  line-height: 1.5;
-  background: #99685d;
-  border-right: 1px solid #99685d;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .main-content {

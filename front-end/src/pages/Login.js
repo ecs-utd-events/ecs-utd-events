@@ -14,7 +14,7 @@ export default function Login() {
                 <Container>
                     <Row>
                         <Col>
-                        <Card >
+                        <Card>
                             <Card.Header className="card-header-no-border"><h2>Organization Login</h2></Card.Header>
                             <Card.Body >
                                 <Form >

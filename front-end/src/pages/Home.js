@@ -41,30 +41,35 @@ export function createEventId() {
 export default function Home() {
   return (
     <div className="App">
-      <div style={{paddingTop: "5rem"}}>
+      <div style={{ paddingTop: "5rem" }}>
         <Container fluid>
-        <Row>
-          <Col>
-            <EventInfoCard />
-          </Col>
-          <Col xs={9}>
-            <div className="fullcalendar-div">
-              <FullCalendar
-                defaultView="dayGridMonth"
-                plugins={[dayGridPlugin, timeGridPlugin]}
-                headerToolbar={{
-                  left: 'prev,next today',
-                  center: 'title',
-                  right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }}
-                initialEvents={INITIAL_EVENTS}
-                height={'auto'}
-              />
-            </div>
-          </Col>
-        </Row>
+          <Row>
+            <Col>
+              <div className="main-page-sidebar">
+                <div>
+                  <h2>Event Information</h2>
+                  <EventInfoCard />
+                </div>
+              </div>
+            </Col>
+            <Col xs={9}>
+              <div className="fullcalendar-div">
+                <FullCalendar
+                  defaultView="dayGridMonth"
+                  plugins={[dayGridPlugin, timeGridPlugin]}
+                  headerToolbar={{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                  }}
+                  initialEvents={INITIAL_EVENTS}
+                  height={'auto'}
+                />
+              </div>
+            </Col>
+          </Row>
         </Container>
-        <div style={{padding: "5rem"}}>
+        <div style={{ padding: "5rem" }}>
           <Link to="/" style={{ padding: 10 }}>Home</Link>
           <Link to="/login">Organization Login</Link>
           <Link to="/org/create" style={{ padding: 10 }}>Create Event</Link>
