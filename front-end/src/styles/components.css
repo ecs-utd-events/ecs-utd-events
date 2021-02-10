@@ -6,14 +6,18 @@
 }
 
 .primary-btn {
+    transition: background-color ease-out .2s;
     background-color: var(--primary1)!important;
     color: var(--gray3);
 }
 
 .primary-btn:hover {
+    transition: background-color ease-out .2s;
     background-color: transparent!important;
-    color: var(--gray2);
-    border: 1px solid var(--accent2);
+    /* outline: 5px solid var(--primary1); */
+    box-shadow: 0 0 0 2pt var(--primary1);
+    filter: none!important;
+
 }
 
 .rounded-btn {

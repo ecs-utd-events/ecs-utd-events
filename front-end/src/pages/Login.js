@@ -30,11 +30,11 @@ export default function Login() {
                                     </Form.Group>
                                     <Row>
                                         <Col><CustomButton className="drop-shadow" width={'10rem'}>Submit</CustomButton></Col>
-                                        <Col><a href="#" style={{textAlign: 'center', lineHeight:'3.0rem'}}>Forgot password?</a></Col>
+                                        <Col><a href="/" style={{textAlign: 'center', lineHeight:'3.0rem'}}>Forgot password?</a></Col>
                                     </Row>
                                     <Row>
                                         <Col className="mt-3">
-                                        <p className="main-text">Don't have an account yet? <a href="#">Sign up!</a></p>
+                                        <p className="main-text">Don't have an account yet? <a href="/">Sign up!</a></p>
                                         </Col>
                                     </Row>
                                 </Form>
