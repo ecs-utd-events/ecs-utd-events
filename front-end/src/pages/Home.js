@@ -47,7 +47,7 @@ export default function Home() {
             <Col>
               <div className="main-page-sidebar">
                 <div>
-                  <h2>Event Information</h2>
+                  <h2 className="font-weight-bold">Event Information</h2>
                   <EventInfoCard />
                 </div>
               </div>

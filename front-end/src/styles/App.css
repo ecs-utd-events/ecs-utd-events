@@ -93,9 +93,6 @@
 }
 
 .card {
-  padding: 2rem;
-}
-
-h2 {
-  font-weight: bold!important;
+  padding: 1rem;
+  min-height: 75%;
 }

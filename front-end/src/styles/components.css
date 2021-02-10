@@ -71,3 +71,12 @@
     height: 100%;
     vertical-align: middle;
 }
+
+.event-card {
+    padding: 0
+}
+
+.card-title {
+    font-size: 24px;
+    color: var(--gray3)
+}
