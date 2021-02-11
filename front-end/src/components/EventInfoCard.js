@@ -1,9 +1,13 @@
+import { useState } from 'react';
+
 import Card from "react-bootstrap/esm/Card";
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
 import IconButton from '../components/IconButton';
 import Image from 'react-bootstrap/Image';
+import CustomButton from '../components/CustomButton';
+import Collapse from 'react-bootstrap/Collapse';
 import Calendar from '../assets/calendar.svg';
 import Placeholder from '../assets/placeholder.svg';
 import Description from '../assets/product-description.svg';
@@ -14,6 +18,8 @@ import Link from '../assets/link.svg';
 
 
 export default function EventInfoCard() {
+    const [open, setOpen] = useState(false);
+
     return (
         <Card className="drop-shadow card">
             <Card.Header className="card-header-no-border">
@@ -24,14 +30,23 @@ export default function EventInfoCard() {
                     <ListGroupItem><Image className="event-icon mr-2" src={Calendar}></Image>Date</ListGroupItem>
                     <ListGroupItem><Image className="event-icon mr-2" src={Placeholder}></Image>Location</ListGroupItem>
                     <ListGroupItem><Image className="event-icon mr-2" src={Group}></Image>Organization </ListGroupItem>
-                    <ListGroupItem><Image className="event-icon mr-2" src={Description}></Image>Description</ListGroupItem>
+                    <ListGroupItem>
+                        <span onClick={() => setOpen(!open)}>
+                            <Image className="event-icon mr-2" src={Description}></Image>
+                            Description
+                        </span>
+                        <Collapse in={open}>
+                        <div className="mt-2" id="collapse-text">
+                            Here's the description
+                        </div>
+                    </Collapse>
+                    </ListGroupItem>
                 </ListGroup>
             </Card.Body>
             <Card.Footer>
                 <small className="text-muted mr-sm-2">Last updated 2 mins ago</small>
                 <ButtonGroup>
                     <IconButton className="mr-1" icon={Link}></IconButton>
-                    <IconButton className="mr-1" icon={Calendar}></IconButton>
                     <IconButton className="mr-1" icon={Calendar}></IconButton>
                     <IconButton className="mr-1" icon={Share}></IconButton>
                 </ButtonGroup>
