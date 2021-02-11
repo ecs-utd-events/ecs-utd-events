@@ -78,6 +78,8 @@ export function createEventId() {
 export default function Home() {
 
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [animateCard, setAnimateCard] = useState('');
+
   return (
     <div className="App">
       <div style={{ paddingTop: "5rem" }} className="background">
@@ -87,7 +89,7 @@ export default function Home() {
               <div className="main-page-sidebar">
                 <div>
                   <h2 className="font-weight-bold">Event Information</h2>
-                  <EventInfoCard event={selectedEvent} />
+                  <EventInfoCard event={selectedEvent} animateCard={animateCard} setAnimateCard={setAnimateCard} />
                 </div>
               </div>
             </Col>
@@ -104,6 +106,7 @@ export default function Home() {
                   initialEvents={INITIAL_EVENTS}
                   height={'auto'}
                   eventClick={(info) => {
+                    setAnimateCard('blob-animation')
                     setSelectedEvent(info.event)
                   }}
                 />

@@ -98,6 +98,33 @@
   min-height: 75%;
 }
 
+.blob-animation {
+  display: none;
+  position: absolute;
+  fill: var(--primary1);
+  top: 0;
+  left: 50%;
+  width: 2%;
+  z-index: 2;
+  animation:
+    move 1s ease-in-out 1,
+    grow 1s ease 1;
+  transform-origin: 50% 50%;
+}
+
+@keyframes move {
+  from { top: 0; left: 40% }
+  to { top: 105%; left: 50% }
+}
+
+@keyframes grow {
+  0%   { transform: scale(1) }
+  20%  { transform: scale(50, 60) }
+  35%  { transform: scale(150, 120) }
+  50%  { transform: scale(300, 200) }
+  100% { transform: scale(1) }
+}
+
 .event-icon {
   width: 1.5rem;
   height: 1.5rem;
