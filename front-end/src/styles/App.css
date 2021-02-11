@@ -96,3 +96,8 @@
   padding: 1rem;
   min-height: 75%;
 }
+
+.event-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
