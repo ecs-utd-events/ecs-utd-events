@@ -1,0 +1,55 @@
+
+.fullcalendar-wrapper {
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+.fullcalendar-wrapper  .fc-view {
+    background-color: var(--primary4);
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:disabled {
+    background-color: var(--secondary2);
+    color: var(--gray3);
+    border-color: var(--gray3);
+    font-weight: 500;
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary {
+    background-color: var(--accent1);
+    color: var(--gray2);
+    border-color: var(--gray3);
+    font-weight: 500;
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:not(:disabled):hover {
+    background-color: var(--accent2);
+    color: var(--gray1);
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:focus {
+    box-shadow: none !important;
+}
+
+.fullcalendar-wrapper  .fc .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: var(--accent3);
+    color: var(--gray2);
+    border-color: var(--gray3);
+    font-weight: 500;
+}
+
+.fullcalendar-wrapper  .fc .fc-button-primary:not(:disabled).fc-button-active:focus {
+    box-shadow: none;
+}
+
+.fullcalendar-wrapper .fc h2 {
+    font-weight: 600;
+}
+
+.fullcalendar-wrapper .fc a {
+    color: var(--gray2);
+}
+
+.fullcalendar-wrapper .fc a:hover {
+    text-decoration: none;
+}

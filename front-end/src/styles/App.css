@@ -30,11 +30,6 @@
   }
 }
 
-.fullcalendar-div {
-  background-color: var(--primary4);
-  flex-grow: 1;
-}
-
 .main-page-sidebar {
   height: 100%;
   display: flex;
@@ -53,6 +48,10 @@
   background-color: var(--secondary3);
   display: flex;
   min-width: 100vw;
+}
+
+.background {
+  background-color: var(--secondary3);
 }
 
 .login-wrapper {

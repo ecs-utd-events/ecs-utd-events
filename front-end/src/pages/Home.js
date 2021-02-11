@@ -7,6 +7,7 @@ import {
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../styles/App.css';
+import './../styles/fullcalendar-custom.css';
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -40,7 +41,7 @@ export function createEventId() {
 export default function Home() {
   return (
     <div className="App">
-      <div style={{ paddingTop: "5rem" }}>
+      <div style={{ paddingTop: "5rem" }} className="background">
         <Container style={{ minHeight: '100vh' }} fluid>
           <Row>
             <Col>
@@ -51,8 +52,8 @@ export default function Home() {
                 </div>
               </div>
             </Col>
-            <Col xs={9}>
-              <div className="fullcalendar-div">
+            <Col lg={9}>
+              <div className="fullcalendar-wrapper">
                 <FullCalendar
                   defaultView="dayGridMonth"
                   plugins={[dayGridPlugin, timeGridPlugin]}
@@ -125,7 +126,7 @@ export default function Home() {
           <Link to="/org/create" style={{ padding: 10 }}>Create Event</Link>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
