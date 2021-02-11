@@ -99,10 +99,19 @@ export default function Home() {
                   headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    right: 'dayGridMonth,dayGridWeek,timeGridWeek,timeGridDay,listWeek,listDay'
+                  }}
+                  height="100%"
+                  scrollTime='08:00:00'
+                  views={{
+                    listWeek: {
+                      buttonText: 'week'
+                    },
+                    listDay: {
+                      buttonText: 'day'
+                    }
                   }}
                   initialEvents={INITIAL_EVENTS}
-                  height={'auto'}
                   eventClick={(info) => {
                     setSelectedEvent(info.event)
                   }}
