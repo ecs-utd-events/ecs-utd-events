@@ -1,5 +1,4 @@
 import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import {
@@ -12,8 +11,8 @@ import './../styles/App.css';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import EventInfoCard from '../components/EventInfoCard';
-
+import EventInfoCard from '../components/EventInfoCard'
+import OrgInfoCard from '../components/OrgInfoCard'
 
 // Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
 let eventGuid = 0
@@ -67,6 +66,56 @@ export default function Home() {
                 />
               </div>
             </Col>
+          </Row>
+        </Container>
+        <Container fluid>
+          <Row>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+            <Col md={4}>
+              <Container style={{paddingTop: 20}}>
+              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              </Container>
+            </Col>
+
           </Row>
         </Container>
         <div style={{ padding: "5rem" }}>
