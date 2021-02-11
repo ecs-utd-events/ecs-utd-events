@@ -60,7 +60,8 @@
   display: flex;
   min-height: 100vh;
   min-width: 100vw;
-  padding: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 5rem;
   text-align: center;
   align-items: center;
 }

@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <div className="App">
       <div style={{ paddingTop: "5rem" }}>
-        <Container fluid>
+        <Container style={{ minHeight: '100vh' }} fluid>
           <Row>
             <Col>
               <div className="main-page-sidebar">
@@ -68,51 +68,52 @@ export default function Home() {
             </Col>
           </Row>
         </Container>
+        <h1 className="font-weight-bold">Organizations</h1>
         <Container fluid>
           <Row>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
             <Col md={4}>
-              <Container style={{paddingTop: 20}}>
-              <OrgInfoCard orgName='Artificial Intelligence Society' />
+              <Container style={{ paddingTop: 20 }}>
+                <OrgInfoCard orgName='Artificial Intelligence Society' />
               </Container>
             </Col>
 
