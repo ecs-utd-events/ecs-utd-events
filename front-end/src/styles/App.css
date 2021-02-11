@@ -19,6 +19,7 @@
 
 .App {
   text-align: center;
+  background-color: var(--gray6);
 }
 
 @keyframes App-logo-spin {
