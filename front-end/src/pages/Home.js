@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/esm/Col';
 import {
   Link
 } from "react-router-dom";
+import { useState } from 'react'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../styles/App.css';
@@ -32,13 +33,22 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: 'All-day event',
-    start: todayStr
+    start: todayStr,
+    extendedProps: {
+      description: 'This is a sample description for an all-day event.'
+    }
   },
   {
     id: createEventId(),
     title: 'Timed event',
     start: todayStr + 'T12:00:00',
-    end: todayStr + 'T12:30:00'
+    end: todayStr + 'T12:30:00',
+    extendedProps: {
+      description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!',
+      org: 'ACM',
+      location: 'Zoom',
+      link: 'https://www.acmutd.com'
+    }
   },
   {
     id: createEventId(),
@@ -66,6 +76,8 @@ export function createEventId() {
 
 // Main page components
 export default function Home() {
+
+  const [selectedEvent, setSelectedEvent] = useState(null);
   return (
     <div className="App">
       <div style={{ paddingTop: "5rem" }} className="background">
@@ -75,7 +87,7 @@ export default function Home() {
               <div className="main-page-sidebar">
                 <div>
                   <h2 className="font-weight-bold">Event Information</h2>
-                  <EventInfoCard />
+                  <EventInfoCard event={selectedEvent} />
                 </div>
               </div>
             </Col>
@@ -91,6 +103,9 @@ export default function Home() {
                   }}
                   initialEvents={INITIAL_EVENTS}
                   height={'auto'}
+                  eventClick={(info) => {
+                    setSelectedEvent(info.event)
+                  }}
                 />
               </div>
             </Col>

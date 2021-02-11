@@ -70,10 +70,15 @@
     background-color: var(--secondary2);
 }
 
+.fullcalendar-wrapper .fc .fc-daygrid-event {
+    cursor: pointer;
+}
+
 .fullcalendar-wrapper .fc-h-event, .fullcalendar-wrapper .fc-v-event {
     background-color: var(--accent2);
     padding-left: 5px;
     border: 2px solid var(--accent1);
+    cursor: pointer;
 }
 
 .fullcalendar-wrapper .fc-h-event .fc-event-main, .fullcalendar-wrapper .fc-v-event .fc-event-main {
@@ -109,10 +114,8 @@
 
 .fullcalendar-wrapper .fc .fc-list-event {
     font-weight: 600;
-}
-
-.fullcalendar-wrapper .fc .fc-list-event {
     background-color: var(--primary4);
+    cursor: pointer;
 }
 
 .fullcalendar-wrapper .fc .fc-list-event.fc-event-today {
