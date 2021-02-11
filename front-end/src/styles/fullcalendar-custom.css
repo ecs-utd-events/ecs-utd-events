@@ -3,6 +3,10 @@
     flex-grow: 1;
     padding: 1rem;
 }
+/* 
+.fullcalendar-wrapper .fc-view{
+    background-color: var(--primary4)
+} */
 
 .fullcalendar-wrapper .fc .fc-button-primary:disabled {
     background-color: var(--secondary2);
@@ -58,17 +62,25 @@
     border: 1px solid var(--secondary1);
 }
 
-.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-today {
-    background-color: var(--secondary1);
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day {
+    background-color: var(--primary4);
 }
 
-.fullcalendar-wrapper .fc-h-event {
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-other {
+    background-color: var(--secondary3);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-today {
+    background-color: var(--secondary2);
+}
+
+.fullcalendar-wrapper .fc-h-event, .fullcalendar-wrapper .fc-v-event {
     background-color: var(--accent2);
     padding-left: 5px;
     border: 2px solid var(--accent1);
 }
 
-.fullcalendar-wrapper .fc-h-event .fc-event-main {
+.fullcalendar-wrapper .fc-h-event .fc-event-main, .fullcalendar-wrapper .fc-v-event .fc-event-main {
     color: var(--gray1);
     font-weight: 600;
 }
@@ -81,10 +93,10 @@
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day {
+.fullcalendar-wrapper .fc .fc-scrollgrid-section-body {
     background-color: var(--primary4);
 }
 
-.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-other {
-    background-color: var(--secondary3);
+.fullcalendar-wrapper .fc .fc-timegrid-col.fc-day-today {
+    background-color: var(--secondary2);
 }
