@@ -53,3 +53,34 @@
 .fullcalendar-wrapper .fc a:hover {
     text-decoration: none;
 }
+
+.fullcalendar-wrapper .fc th.fc-col-header-cell.fc-day {
+    background-color: var(--primary1);
+}
+
+.fullcalendar-wrapper .fc-theme-standard th, .fullcalendar-wrapper .fc-theme-standard td {
+    border: 1px solid var(--secondary1);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-today {
+    background-color: var(--secondary1);
+}
+
+.fullcalendar-wrapper .fc-h-event {
+    background-color: var(--accent2);
+    padding-left: 5px;
+    border: 2px solid var(--accent1);
+}
+
+.fullcalendar-wrapper .fc-h-event .fc-event-main {
+    color: var(--gray1);
+    font-weight: 600;
+}
+
+.fullcalendar-wrapper .fc-daygrid-event-dot {
+    border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--accent1);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day-number {
+    font-family: 'Source Sans Pro', sans-serif;
+}
