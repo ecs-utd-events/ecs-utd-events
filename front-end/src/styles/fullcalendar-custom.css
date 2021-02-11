@@ -4,10 +4,6 @@
     padding: 1rem;
 }
 
-.fullcalendar-wrapper  .fc-view {
-    background-color: var(--primary4);
-}
-
 .fullcalendar-wrapper .fc .fc-button-primary:disabled {
     background-color: var(--secondary2);
     color: var(--gray3);
@@ -83,4 +79,12 @@
 
 .fullcalendar-wrapper .fc .fc-daygrid-day-number {
     font-family: 'Source Sans Pro', sans-serif;
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day {
+    background-color: var(--primary4);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-other {
+    background-color: var(--secondary3);
 }
