@@ -3,10 +3,6 @@
     flex-grow: 1;
     padding: 1rem;
 }
-/* 
-.fullcalendar-wrapper .fc-view{
-    background-color: var(--primary4)
-} */
 
 .fullcalendar-wrapper .fc .fc-button-primary:disabled {
     background-color: var(--secondary2);
@@ -55,7 +51,7 @@
 }
 
 .fullcalendar-wrapper .fc th.fc-col-header-cell.fc-day {
-    background-color: var(--primary1);
+    background-color: var(--primary2);
 }
 
 .fullcalendar-wrapper .fc-theme-standard th, .fullcalendar-wrapper .fc-theme-standard td {
@@ -99,4 +95,32 @@
 
 .fullcalendar-wrapper .fc .fc-timegrid-col.fc-day-today {
     background-color: var(--secondary2);
+}
+
+/* List View Styles */
+
+.fullcalendar-wrapper .fc .fc-list-day-cushion {
+    background-color: var(--primary2);
+}
+
+.fullcalendar-wrapper .fc .fc-list-event-dot {
+    border: calc(var(--fc-list-event-dot-width, 10px) / 2) solid var(--accent1)
+}
+
+.fullcalendar-wrapper .fc .fc-list-event {
+    font-weight: 600;
+}
+
+.fullcalendar-wrapper .fc .fc-list-event {
+    background-color: var(--primary4);
+}
+
+.fullcalendar-wrapper .fc .fc-list-event.fc-event-today {
+    background-color: var(--secondary2);
+}
+
+.fullcalendar-wrapper .fc .fc-list-event .fc-list-event-time {
+    font-family: 'Source Sans Pro', sans-serif;
+    letter-spacing: 0.3px;
+    font-weight: 400;
 }
