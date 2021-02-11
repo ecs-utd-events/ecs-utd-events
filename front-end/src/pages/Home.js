@@ -12,12 +12,21 @@ import './../styles/fullcalendar-custom.css';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list';
 import EventInfoCard from '../components/EventInfoCard'
 import OrgInfoCard from '../components/OrgInfoCard'
 
 // Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
 let eventGuid = 0
-let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+const today = new Date()
+const tomorrow = new Date(today)
+tomorrow.setDate(tomorrow.getDate() + 1)
+const yday = new Date(today)
+yday.setDate(yday.getDate() + -1)
+
+let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+let tmrwStr = tomorrow.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+let ydayStr = yday.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
 export const INITIAL_EVENTS = [
   {
@@ -30,6 +39,24 @@ export const INITIAL_EVENTS = [
     title: 'Timed event',
     start: todayStr + 'T12:00:00',
     end: todayStr + 'T12:30:00'
+  },
+  {
+    id: createEventId(),
+    title: 'Timed event2',
+    start: todayStr + 'T11:00:00',
+    end: todayStr + 'T12:00:00'
+  },
+  {
+    id: createEventId(),
+    title: 'Tmrw event',
+    start: tmrwStr + 'T11:00:00',
+    end: tmrwStr + 'T12:00:00'
+  },
+  {
+    id: createEventId(),
+    title: 'Yday event',
+    start: ydayStr + 'T11:00:00',
+    end: ydayStr + 'T12:00:00'
   }
 ]
 
@@ -56,11 +83,11 @@ export default function Home() {
               <div className="fullcalendar-wrapper">
                 <FullCalendar
                   defaultView="dayGridMonth"
-                  plugins={[dayGridPlugin, timeGridPlugin]}
+                  plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
                   headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                   }}
                   initialEvents={INITIAL_EVENTS}
                   height={'auto'}
