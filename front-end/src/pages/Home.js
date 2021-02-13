@@ -193,7 +193,7 @@ export default function Home() {
           </Row>
         </Container>
         <h1 className="font-weight-bold">Organizations</h1>
-        <Container fluid style={{ paddingLeft: "5.5rem", paddingRight: "5.5rem" }}>
+        <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
               ORGANIZATIONS.map(org => {
