@@ -74,9 +74,41 @@ export function createEventId() {
   return String(eventGuid++)
 }
 
+export const ORGANIZATIONS = [
+  {
+    name: 'Artificial Intelligence Society'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Association for Computing Machinery'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+]
+
 // Main page components
 export default function Home() {
-
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [animateCard, setAnimateCard] = useState('');
 
@@ -85,7 +117,7 @@ export default function Home() {
       <div style={{ paddingTop: "5rem" }} className="background">
         <Container style={{ minHeight: '100vh' }} fluid>
           <Row>
-            <Col>
+            <Col className="d-none d-md-block">
               <div className="main-page-sidebar">
                 <div>
                   <h2 className="font-weight-bold">Event Information</h2>
@@ -93,7 +125,8 @@ export default function Home() {
                 </div>
               </div>
             </Col>
-            <Col lg={9}>
+            {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH LARGER THAN 768px (md breakpoint)*/}
+            <Col lg={9} className="d-none d-md-block">
               <div className="fullcalendar-wrapper">
                 <FullCalendar
                   defaultView="dayGridMonth"
@@ -101,10 +134,58 @@ export default function Home() {
                   headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,listDay,upcomingWeek'
+                  }}
+                  height="100%"
+                  scrollTime='08:00:00'
+                  listDayFormat={{
+                    weekday: 'long'
+                  }}
+                  listDaySideFormat={{
+                    month: "long",
+                    day: "numeric"
+                  }}
+                  views={{
+                    upcomingWeek: {
+                      buttonText: 'list',
+                      type: 'list',
+                      dayCount: 7
+                    }
                   }}
                   initialEvents={INITIAL_EVENTS}
-                  height={'auto'}
+                  eventClick={(info) => {
+                    setSelectedEvent(info.event)
+                  }}
+                />
+              </div>
+            </Col>
+            {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH SMALLER THAN 768px (md breakpoint)*/}
+            <Col className="d-sm-block d-md-none">
+              <div className="fullcalendar-wrapper">
+                <FullCalendar
+                  defaultView="dayGridMonth"
+                  plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                  headerToolbar={{
+                    left: '',
+                    center: 'title',
+                    right: ''
+                  }}
+                  footerToolbar={{
+                    left: 'prev,next',
+                    center: '',
+                    right: 'dayGridMonth,listWeek,timeGridDay'
+                  }}
+                  height="100%"
+                  scrollTime='08:00:00'
+                  views={{
+                    listWeek: {
+                      buttonText: 'week'
+                    },
+                    listDay: {
+                      buttonText: 'day'
+                    }
+                  }}
+                  initialEvents={INITIAL_EVENTS}
                   eventClick={(info) => {
                     setAnimateCard('blob-animation')
                     setSelectedEvent(info.event)
@@ -115,54 +196,19 @@ export default function Home() {
           </Row>
         </Container>
         <h1 className="font-weight-bold">Organizations</h1>
-        <Container fluid>
+        <Container fluid style={{ paddingLeft: "5.5rem", paddingRight: "5.5rem" }}>
           <Row>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-
+            {
+              ORGANIZATIONS.map(org => {
+                return (
+                  <Col md={4}>
+                    <Container style={{ paddingTop: 20 }}>
+                      <OrgInfoCard orgName={org.name} />
+                    </Container>
+                  </Col>
+                );
+              })
+            }
           </Row>
         </Container>
         <div style={{ padding: "5rem" }}>
