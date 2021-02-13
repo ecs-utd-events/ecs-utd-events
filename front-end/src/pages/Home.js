@@ -74,9 +74,41 @@ export function createEventId() {
   return String(eventGuid++)
 }
 
+export const ORGANIZATIONS = [
+  {
+    name: 'Artificial Intelligence Society'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Association for Computing Machinery'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+  {
+    name: 'Women Who Compute'
+  },
+]
+
 // Main page components
 export default function Home() {
-
   const [selectedEvent, setSelectedEvent] = useState(null);
   return (
     <div className="App">
@@ -121,54 +153,19 @@ export default function Home() {
           </Row>
         </Container>
         <h1 className="font-weight-bold">Organizations</h1>
-        <Container fluid>
+        <Container fluid style={{ paddingLeft: "5.5rem", paddingRight: "5.5rem"}}>
           <Row>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-            <Col md={4}>
-              <Container style={{ paddingTop: 20 }}>
-                <OrgInfoCard orgName='Artificial Intelligence Society' />
-              </Container>
-            </Col>
-
+            {
+              ORGANIZATIONS.map(org => {
+                return (
+                  <Col md={4}>
+                    <Container style={{paddingTop: 20}}>
+                      <OrgInfoCard orgName={org.name} />
+                    </Container>
+                  </Col>
+                );
+              })
+            }
           </Row>
         </Container>
         <div style={{ padding: "5rem" }}>
