@@ -107,8 +107,8 @@
   width: 2%;
   z-index: 2;
   animation:
-    move 1s ease-in-out 1,
-    grow 1s ease 1;
+    move 0.75s ease-in-out 1,
+    grow 0.75s ease 1;
   transform-origin: 50% 50%;
 }
 
