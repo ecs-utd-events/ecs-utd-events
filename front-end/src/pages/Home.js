@@ -112,13 +112,8 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   return (
     <div className="App">
-<<<<<<< HEAD
       <div style={{ paddingTop: "5rem" }} className="background">
         <Container style={{ minHeight: '100vh' }} fluid>
-=======
-      <div style={{ paddingTop: "5rem" }}>
-        <Container fluid>
->>>>>>> main
           <Row>
             <Col>
               <div className="main-page-sidebar">
