@@ -239,7 +239,8 @@ export default function Home() {
         <div style={{ padding: "5rem" }}>
           <Link to="/" style={{ padding: 10 }}>Home</Link>
           <Link to="/login">Organization Login</Link>
-          <Link to="/org/create" style={{ padding: 10 }}>Create Event</Link>
+          <Link to="/org" style={{ paddingLeft: 10 }}>Org Profile</Link>
+          <Link to="/admin/create" style={{ padding: 10 }}>Create Event</Link>
         </div>
       </div>
     </div >
