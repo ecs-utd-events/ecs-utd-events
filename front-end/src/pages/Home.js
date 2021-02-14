@@ -78,34 +78,44 @@ export function createEventId() {
 
 export const ORGANIZATIONS = [
   {
-    name: 'Artificial Intelligence Society'
+    name: 'Artificial Intelligence Society',
+    slug: 'artificial-intelligence-society'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
   {
-    name: 'Association for Computing Machinery'
+    name: 'Association for Computing Machinery',
+    slug: 'association-for-computing-machinery'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
   {
-    name: 'Women Who Compute'
+    name: 'Women Who Compute',
+    slug: 'women-who-compute'
   },
 ]
 
@@ -231,7 +241,9 @@ export default function Home() {
                 return (
                   <Col md={4}>
                     <Container style={{ paddingTop: 20 }}>
-                      <OrgInfoCard orgName={org.name} />
+                      <Link to={`org/${org.slug}`} style={{ textDecoration: 'none' }}>
+                        <OrgInfoCard orgName={org.name} />
+                      </Link>
                     </Container>
                   </Col>
                 );

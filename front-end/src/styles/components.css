@@ -1,4 +1,3 @@
-
 .btn {
     margin: 5px;
     padding-left: 1rem;
@@ -16,7 +15,6 @@
     background-color: transparent!important;
     box-shadow: 0 0 0 2pt var(--primary1);
     filter: none!important;
-
 }
 
 .rounded-btn {
@@ -84,7 +82,11 @@
 .org-info-card-style {
     display: flex;
     width: 100%;
-    height: 100%; 
-    align-items: center; 
+    height: 100%;
+    align-items: center;
     justify-content: center;
+}
+
+.interactive-card:hover {
+    filter: drop-shadow(1px 1.33px 1px var(--gray4));
 }

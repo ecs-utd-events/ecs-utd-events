@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image'
 
 export default function OrgInfoCard({ orgName }) {
     return (
-        <Card className="drop-shadow card">
+        <Card className="drop-shadow card interactive-card">
             <div >
                 <Card.Body>
                     <Row>
