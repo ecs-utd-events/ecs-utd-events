@@ -102,3 +102,11 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+
+.button-org-login-main-page {
+  min-width: 17vw;
+}
+
+.button-api-docs-main-page {
+  min-width: 17vw;
+}
