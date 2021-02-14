@@ -156,6 +156,7 @@ export default function Home() {
                   }}
                   initialEvents={INITIAL_EVENTS}
                   eventClick={(info) => {
+                    setAnimateCard('blob-animation')
                     setSelectedEvent(info.event)
                   }}
                 />
@@ -202,7 +203,6 @@ export default function Home() {
                   }}
                   initialEvents={INITIAL_EVENTS}
                   eventClick={(info) => {
-                    setAnimateCard('blob-animation')
                     setSelectedEvent(info.event)
                   }}
                 />
