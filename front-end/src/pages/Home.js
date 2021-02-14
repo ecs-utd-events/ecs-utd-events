@@ -151,6 +151,7 @@ export default function Home() {
                     upcomingWeek: {
                       buttonText: 'upcoming',
                       type: 'list',
+                      duration: { days: 7 },
                       dayCount: 7
                     }
                   }}
@@ -192,12 +193,14 @@ export default function Home() {
                       buttonText: '3-day',
                       type: 'timeGrid',
                       dayCount: 3,
+                      duration: { days: 3 },
                       displayEventTime: false
                     },
                     upcomingWeek: {
                       buttonText: 'upcoming',
                       type: 'list',
                       dayCount: 7,
+                      duration: { days: 7 },
                       displayEventTime: true,
                     }
                   }}
