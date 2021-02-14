@@ -16,6 +16,8 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list';
 import EventInfoCard from '../components/EventInfoCard'
 import OrgInfoCard from '../components/OrgInfoCard'
+import CustomButton from '../components/CustomButton';
+import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
 
 // Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
 let eventGuid = 0
@@ -204,9 +206,19 @@ export default function Home() {
               </div>
             </Col>
           </Row>
+          <Row className="justify-content-md-center">
+            <Col md={{ size: 2, offset: 3 }}>
+              <Link to="/login" style={{ padding: 10 }}>
+                <CustomButton className="drop-shadow button-org-login-main-page">Organization Login</CustomButton>
+              </Link>
+              <Link to="/" style={{ padding: 10 }}>
+                <CustomButton className="drop-shadow button-api-docs-main-page">API Documentation</CustomButton>
+              </Link>
+            </Col>
+          </Row>
         </Container>
         <h1 className="font-weight-bold">Organizations</h1>
-        <Container fluid style={{ paddingLeft: "5.5rem", paddingRight: "5.5rem" }}>
+        <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
               ORGANIZATIONS.map(org => {
