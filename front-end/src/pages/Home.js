@@ -127,12 +127,12 @@ export default function Home() {
             <Col lg={9} className="d-none d-md-block">
               <div className="fullcalendar-wrapper">
                 <FullCalendar
-                  defaultView="dayGridMonth"
+                  initialView="dayGridMonth"
                   plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
                   headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,listDay,upcomingWeek'
+                    right: 'dayGridMonth,timeGridWeek,upcomingWeek'
                   }}
                   height="100%"
                   scrollTime='08:00:00'
@@ -145,7 +145,7 @@ export default function Home() {
                   }}
                   views={{
                     upcomingWeek: {
-                      buttonText: 'list',
+                      buttonText: 'upcoming',
                       type: 'list',
                       dayCount: 7
                     }
@@ -159,10 +159,10 @@ export default function Home() {
             </Col>
             {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH SMALLER THAN 768px (md breakpoint)*/}
             <Col className="d-sm-block d-md-none">
-              <div className="fullcalendar-wrapper">
+              <div className="fullcalendar-wrapper fullcalendar-wrapper-mobile">
                 <FullCalendar
-                  defaultView="dayGridMonth"
-                  plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                  initialView="upcomingWeek"
+                  plugins={[timeGridPlugin, listPlugin]}
                   headerToolbar={{
                     left: '',
                     center: 'title',
@@ -171,16 +171,29 @@ export default function Home() {
                   footerToolbar={{
                     left: 'prev,next',
                     center: '',
-                    right: 'dayGridMonth,listWeek,timeGridDay'
+                    right: 'upcomingWeek,threeDay'
                   }}
                   height="100%"
                   scrollTime='08:00:00'
+                  listDayFormat={{
+                    weekday: 'long'
+                  }}
+                  listDaySideFormat={{
+                    month: "long",
+                    day: "numeric"
+                  }}
                   views={{
-                    listWeek: {
-                      buttonText: 'week'
+                    threeDay: {
+                      buttonText: '3-day',
+                      type: 'timeGrid',
+                      dayCount: 3,
+                      displayEventTime: false
                     },
-                    listDay: {
-                      buttonText: 'day'
+                    upcomingWeek: {
+                      buttonText: 'upcoming',
+                      type: 'list',
+                      dayCount: 7,
+                      displayEventTime: true,
                     }
                   }}
                   initialEvents={INITIAL_EVENTS}

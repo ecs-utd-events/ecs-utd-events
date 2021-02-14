@@ -1,4 +1,3 @@
-
 .fullcalendar-wrapper {
     height: 80vh;
     flex-grow: 1;
@@ -28,14 +27,14 @@
     box-shadow: none !important;
 }
 
-.fullcalendar-wrapper  .fc .fc-button-primary:not(:disabled).fc-button-active {
+.fullcalendar-wrapper .fc .fc-button-primary:not(:disabled).fc-button-active {
     background-color: var(--accent3);
     color: var(--gray2);
     border-color: var(--gray3);
     font-weight: 500;
 }
 
-.fullcalendar-wrapper  .fc .fc-button-primary:not(:disabled).fc-button-active:focus {
+.fullcalendar-wrapper .fc .fc-button-primary:not(:disabled).fc-button-active:focus {
     box-shadow: none;
 }
 
@@ -127,4 +126,21 @@
     font-family: 'Source Sans Pro', sans-serif;
     letter-spacing: 0.3px;
     font-weight: 400;
+}
+
+/* MOBILE SPECIFIC STYLES */
+
+.fullcalendar-wrapper .fullcalendar-wrapper-mobile {
+    height: 80vh;
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+.fullcalendar-wrapper.fullcalendar-wrapper-mobile .fc .fc-list-event .fc-list-event-time {
+    letter-spacing: 0;
+    font-size: 0.9rem;
+}
+
+.fullcalendar-wrapper.fullcalendar-wrapper-mobile .fc .fc-list-event-dot {
+    display: none;
 }
