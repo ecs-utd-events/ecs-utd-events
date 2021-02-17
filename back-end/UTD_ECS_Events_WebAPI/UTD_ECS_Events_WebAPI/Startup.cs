@@ -37,6 +37,8 @@ namespace UTD_ECS_Events_WebAPI
             //    dependency injection
             services.AddTransient<IFirestoreService, FirestoreService>();
             services.AddTransient<IFirestoreRepository, FirestoreRepository>();
+            services.AddTransient<IEventsService, EventsService>();
+            services.AddTransient<IEventsRepository, EventsRepository>();
 
             //    Serilog
             Log.Logger = new LoggerConfiguration()

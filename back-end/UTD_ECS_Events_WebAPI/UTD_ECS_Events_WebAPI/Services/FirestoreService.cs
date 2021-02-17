@@ -18,12 +18,12 @@ namespace UTD_ECS_Events_WebAPI.Services
 
         public IEnumerable<TeamModel> GetTeams()
         {
-            return _firestoreRepository.GetTeams();
+            return _firestoreRepository.GetTeams().Result;
         }
 
         public string CreateTeam(TeamModel teamModel)
         {
-            return _firestoreRepository.CreateTeam(teamModel);
+            return _firestoreRepository.CreateTeam(teamModel).Result;
         }
 
         public void DeleteTeam(string id)

@@ -6,10 +6,11 @@ using UTD_ECS_Events_WebAPI.Models;
 
 namespace UTD_ECS_Events_WebAPI.Repositories
 {
-    public interface IFirestoreRepository
+    public interface IEventsRepository
     {
-        Task<IEnumerable<TeamModel>> GetTeams();
-        Task<string> CreateTeam(TeamModel teamModel);
-        void DeleteTeam(string id);
+        Task<IEnumerable<EventModel>> GetEvents();
+        Task<string> CreateEvent(EventModel teamModel);
+        void DeleteEvent(string id);
     }
 }
+

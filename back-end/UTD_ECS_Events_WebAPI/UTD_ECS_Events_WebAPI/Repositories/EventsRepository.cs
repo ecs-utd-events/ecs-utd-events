@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace UTD_ECS_Events_WebAPI.Repositories
 {
-    public class FirestoreRepository : IFirestoreRepository
+    public class EventsRepository : IEventsRepository
     {
         private const string PROJECT_ID = "utdecsevents-9bed0";
         private readonly FirestoreDb _db;
 
-        public FirestoreRepository()
+        public EventsRepository()
         {
             /*
              * var credential = GoogleCredential
@@ -32,42 +32,49 @@ namespace UTD_ECS_Events_WebAPI.Repositories
             Log.Logger.Information("Created Firestore connection");
         }
 
-        public async Task<IEnumerable<TeamModel>> GetTeams()
+        public async Task<IEnumerable<EventModel>> GetEvents()
         {
-            Query query = _db.Collection("teams");
+            Query query = _db.Collection("events");
             QuerySnapshot snapshot = await query.GetSnapshotAsync();
-            
+
             return snapshot.Documents
                 .Select(document =>
                 {
-                    //return document.ConvertTo<TeamModel>();
+                    ;
                     var dictionary = document.ToDictionary();
-                    return new TeamModel
+                    return new EventModel
                     {
                         Id = document.Id,
-                        Team = dictionary["team"].ToString(),
-                        City = dictionary["city"].ToString()
+                        Title = dictionary["Title"].ToString(),
+                        Location = dictionary["Location"].ToString(),
+                        Link = dictionary["Link"].ToString(),
+                        StartTime = ((Timestamp)dictionary["StartTime"]).ToDateTime(),
+                        EndTime = ((Timestamp)dictionary["EndTime"]).ToDateTime()
                     };
                 })
                 .ToList();
         }
 
-        public async Task<string> CreateTeam(TeamModel value)
+        public async Task<string> CreateEvent(EventModel value)
         {
-            DocumentReference docRef = _db.Collection("teams").Document();
+            DocumentReference docRef = _db.Collection("events").Document();
             Dictionary<string, object> team = new Dictionary<string, object>
             {
-                {"city", value.City},
-                {"team", value.Team}
+                {"Title", value.Title},
+                {"Location", value.Location},
+                {"Link", value.Link },
+                {"StartTime", value.StartTime },
+                {"EndTime", value.EndTime }
             };
             await docRef.SetAsync(team);
             return docRef.Id;
         }
 
-        public async void DeleteTeam(string id)
+        public async void DeleteEvent(string id)
         {
-            DocumentReference docRef = _db.Collection("teams").Document(id);
+            DocumentReference docRef = _db.Collection("events").Document(id);
             await docRef.DeleteAsync();
         }
     }
 }
+
