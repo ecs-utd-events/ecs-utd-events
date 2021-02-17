@@ -1,0 +1,92 @@
+.btn {
+    margin: 5px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.primary-btn {
+    transition: all ease-in .2s;
+    background-color: var(--primary1)!important;
+    color: var(--gray3);
+}
+
+.primary-btn:hover {
+    transition: all ease-in .2s;
+    background-color: transparent!important;
+    box-shadow: 0 0 0 2pt var(--primary1);
+    filter: none!important;
+}
+
+.rounded-btn {
+    border-radius: 50px;
+}
+
+.square-btn {
+    border-radius: 8px;
+}
+
+.wide-btn {
+    width: 100%;
+    margin: 0;
+}
+
+.secondary-btn {
+    background-color: var(--secondary2);
+    color: var(--gray3);
+}
+
+.secondary-btn:hover {
+    background-color: var(--secondary1);
+    color: var(--gray2);
+}
+
+.icon-btn {
+    background-color: var(--accent2);
+    border-radius: 50%;
+    border-width: 0;
+    width: 40px;
+    height: 40px;
+    /* padding: 0.5rem; */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+    white-space: nowrap; /* This is required unless you put the helper span closely near the img */
+    text-align: center;
+    margin: 1em 0;
+}
+
+.icon-btn:hover {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.icon {
+    padding: 0.6em 0;
+    max-height: 40px;
+    max-width: 40px;
+    vertical-align: middle;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.event-card {
+    padding: 0
+}
+
+.card-title {
+    font-size: 24px;
+    color: var(--gray3)
+}
+
+.org-info-card-style {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.interactive-card:hover {
+    filter: drop-shadow(1px 1.33px 1px var(--gray4));
+}

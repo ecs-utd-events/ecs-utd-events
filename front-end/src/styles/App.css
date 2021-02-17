@@ -1,31 +1,25 @@
+:root {
+  --primary1: #FEC5BB;
+  --primary2: #FCD5CE;
+  --primary3: #FAE1DD;
+  --primary4: #F8EDEB;
+  --accent1: #FEC89A;
+  --accent2: #FFD7BA;
+  --accent3: #FFE5D9;
+  --secondary1: #D8E2DC;
+  --secondary2: #E8E8E4;
+  --secondary3: #f7f9f8;
+  --gray1: #333333;
+  --gray2: #4F4F4F;
+  --gray3: #828282;
+  --gray4: #BDBDBD;
+  --gray5: #E0E0E0;
+  --gray6: #F2F2F2;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+  background-color: var(--gray6);
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +29,111 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.main-page-sidebar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-content {
+  display: flex;
+}
+
+.vertical-align {
+  padding-top: 50vh
+}
+
+.background-accent {
+  background-color: var(--secondary3);
+  display: flex;
+  min-width: 100vw;
+}
+
+.background {
+  background-color: var(--secondary3);
+}
+
+.login-wrapper {
+  display: flex;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 5rem;
+  text-align: center;
+  align-items: center;
+}
+
+.login-wrapper a {
+  color: var(--primary1);
+}
+
+.main-text {
+  color: var(--primary1);
+  text-align: center;
+}
+
+.main-text a {
+  font-weight: bold;
+}
+
+.drop-shadow {
+  filter: drop-shadow(3px 4px 2px var(--gray4));
+}
+
+.form-control {
+  background-color: var(--secondary2)!important;
+  filter: drop-shadow(3px 4px 2px var(--gray4));
+}
+
+.card-header-no-border {
+  background-color: #FFFFFF!important;
+  border-bottom: 0!important;
+  padding: 1rem 0 0 0!important;
+}
+
+.card {
+  padding: 1rem;
+  min-height: 75%;
+}
+
+.blob-animation {
+  display: none;
+  position: absolute;
+  fill: var(--primary1);
+  top: 0;
+  left: 50%;
+  width: 2%;
+  z-index: 2;
+  animation:
+    move 0.75s ease-in-out 1,
+    grow 0.75s ease 1;
+  transform-origin: 50% 50%;
+}
+
+@keyframes move {
+  from { top: 0; left: 40% }
+  to { top: 105%; left: 50% }
+}
+
+@keyframes grow {
+  0%   { transform: scale(1) }
+  20%  { transform: scale(50, 60) }
+  35%  { transform: scale(150, 120) }
+  50%  { transform: scale(300, 200) }
+  100% { transform: scale(1) }
+}
+
+.event-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.button-org-login-main-page {
+  min-width: 17vw;
+}
+
+.button-api-docs-main-page {
+  min-width: 17vw;
 }

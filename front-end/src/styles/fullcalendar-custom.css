@@ -1,0 +1,146 @@
+.fullcalendar-wrapper {
+    height: 80vh;
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:disabled {
+    background-color: var(--secondary2);
+    color: var(--gray3);
+    border-color: var(--gray3);
+    font-weight: 500;
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary {
+    background-color: var(--accent1);
+    color: var(--gray2);
+    border-color: var(--gray3);
+    font-weight: 500;
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:not(:disabled):hover {
+    background-color: var(--accent2);
+    color: var(--gray1);
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:focus {
+    box-shadow: none !important;
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: var(--accent3);
+    color: var(--gray2);
+    border-color: var(--gray3);
+    font-weight: 500;
+}
+
+.fullcalendar-wrapper .fc .fc-button-primary:not(:disabled).fc-button-active:focus {
+    box-shadow: none;
+}
+
+.fullcalendar-wrapper .fc h2 {
+    font-weight: 600;
+}
+
+.fullcalendar-wrapper .fc a {
+    color: var(--gray2);
+}
+
+.fullcalendar-wrapper .fc a:hover {
+    text-decoration: none;
+}
+
+.fullcalendar-wrapper .fc th.fc-col-header-cell.fc-day {
+    background-color: var(--primary2);
+}
+
+.fullcalendar-wrapper .fc-theme-standard th, .fullcalendar-wrapper .fc-theme-standard td {
+    border: 1px solid var(--secondary1);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day {
+    background-color: var(--primary4);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-other {
+    background-color: var(--secondary3);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day.fc-day-today {
+    background-color: var(--secondary2);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-event {
+    cursor: pointer;
+}
+
+.fullcalendar-wrapper .fc-h-event, .fullcalendar-wrapper .fc-v-event {
+    background-color: var(--accent2);
+    padding-left: 5px;
+    border: 2px solid var(--accent1);
+    cursor: pointer;
+}
+
+.fullcalendar-wrapper .fc-h-event .fc-event-main, .fullcalendar-wrapper .fc-v-event .fc-event-main {
+    color: var(--gray1);
+    font-weight: 600;
+}
+
+.fullcalendar-wrapper .fc-daygrid-event-dot {
+    border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--accent1);
+}
+
+.fullcalendar-wrapper .fc .fc-daygrid-day-number {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.fullcalendar-wrapper .fc .fc-scrollgrid-section-body {
+    background-color: var(--primary4);
+}
+
+.fullcalendar-wrapper .fc .fc-timegrid-col.fc-day-today {
+    background-color: var(--secondary2);
+}
+
+/* List View Styles */
+
+.fullcalendar-wrapper .fc .fc-list-day-cushion {
+    background-color: var(--primary2);
+}
+
+.fullcalendar-wrapper .fc .fc-list-event-dot {
+    border: calc(var(--fc-list-event-dot-width, 10px) / 2) solid var(--accent1)
+}
+
+.fullcalendar-wrapper .fc .fc-list-event {
+    font-weight: 600;
+    background-color: var(--primary4);
+    cursor: pointer;
+}
+
+.fullcalendar-wrapper .fc .fc-list-event.fc-event-today {
+    background-color: var(--secondary2);
+}
+
+.fullcalendar-wrapper .fc .fc-list-event .fc-list-event-time {
+    font-family: 'Source Sans Pro', sans-serif;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+}
+
+/* MOBILE SPECIFIC STYLES */
+
+.fullcalendar-wrapper .fullcalendar-wrapper-mobile {
+    height: 80vh;
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+.fullcalendar-wrapper.fullcalendar-wrapper-mobile .fc .fc-list-event .fc-list-event-time {
+    letter-spacing: 0;
+    font-size: 0.9rem;
+}
+
+.fullcalendar-wrapper.fullcalendar-wrapper-mobile .fc .fc-list-event-dot {
+    display: none;
+}
