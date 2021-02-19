@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import UpcomingEventCard from "../components/UpcomingEventCard";
+import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
 
 import './../styles/App.css';
@@ -19,21 +19,17 @@ export default function OrgProfile() {
     let events = [
         {
             title: 'event title test',
-            extendedProps: {
-                location: 'zoom',
-                link: 'test',
-                org: 'acm',
-                description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
-            }
+            location: 'zoom',
+            link: 'test',
+            org: 'acm',
+            description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
         },
         {
             title: 'event title test2',
-            extendedProps: {
-                location: 'zoom',
-                link: 'test',
-                org: 'acm',
-                description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
-            }
+            location: 'zoom',
+            link: 'test',
+            org: 'acm',
+            description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
         }
     ];
     return (
@@ -66,7 +62,7 @@ export default function OrgProfile() {
                 </Row>
                 {events.map(event => {
                     return (
-                        <UpcomingEventCard event={event}></UpcomingEventCard>
+                        <OrgPageEventCard event={event}></OrgPageEventCard>
                     );
                 })}
             </Container>
