@@ -1,5 +1,4 @@
 import Container from 'react-bootstrap/Container';
-import { Navbar } from 'react-bootstrap'
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import {
@@ -18,7 +17,7 @@ import listPlugin from '@fullcalendar/list';
 import EventInfoCard from '../components/EventInfoCard'
 import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
-import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
+import NavbarComponent from '../components/NavbarComponent';
 
 // Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
 let eventGuid = 0
@@ -127,11 +126,7 @@ export default function Home() {
 
   return (
     <div className="App">
-      <Navbar className="mb-0 background">
-        <Navbar.Brand href="/">
-          <ECSLogo height='8vh'/>
-        </Navbar.Brand>
-      </Navbar>
+      <NavbarComponent page='Home'/>
       <div className="background">
         <Container style={{ minHeight: '100vh' }} fluid>
           <Row>
