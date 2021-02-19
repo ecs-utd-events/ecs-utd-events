@@ -6,11 +6,11 @@ using UTD_ECS_Events_WebAPI.Models;
 
 namespace UTD_ECS_Events_WebAPI.Services
 {
-    public interface IEventsService
+    public interface IOrgsService
     {
-        IEnumerable<EventModel> GetEvents();
-        string CreateEvent(EventModel eventModel);
-        void DeleteEvent(string id);
+        IEnumerable<OrgModel> GetOrgs();
+        string CreateOrg(OrgModel orgModel);
+        void DeleteOrg(string id);
     }
 }
 

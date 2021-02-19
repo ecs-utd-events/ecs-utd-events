@@ -6,11 +6,11 @@ using UTD_ECS_Events_WebAPI.Models;
 
 namespace UTD_ECS_Events_WebAPI.Repositories
 {
-    public interface IEventsRepository
+    public interface IOrgsRepository
     {
-        Task<IEnumerable<EventModel>> GetEvents();
-        Task<string> CreateEvent(EventModel eventModel);
-        void DeleteEvent(string id);
+        Task<IEnumerable<OrgModel>> GetOrgs();
+        Task<string> CreateOrg(OrgModel orgModel);
+        void DeleteOrg(string id);
     }
 }
 
