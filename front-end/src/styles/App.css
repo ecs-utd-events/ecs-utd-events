@@ -137,3 +137,9 @@
 .button-api-docs-main-page {
   min-width: 17vw;
 }
+
+.item-align-center {
+  margin-right: 0;
+  margin-left: auto;
+  width: 100%;
+}
