@@ -37,7 +37,7 @@ export default function OrgProfile() {
         <div className="App" style={{ height: '100vh' }}>
             <Container>
                 {/* Test Image */}
-                <Image src={Circle}></Image>
+                <Image src={Circle} style={{ width: '25vh', height: '25vh'}}></Image>
                 <Row className="my-4">
                     <h1 className="item-align-center font-weight-bold">{orgName}</h1>
                 </Row>
