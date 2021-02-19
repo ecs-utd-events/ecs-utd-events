@@ -17,7 +17,7 @@ import listPlugin from '@fullcalendar/list';
 import EventInfoCard from '../components/EventInfoCard'
 import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
-import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
+import NavbarComponent from '../components/NavbarComponent';
 
 // Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
 let eventGuid = 0
@@ -126,8 +126,9 @@ export default function Home() {
 
   return (
     <div className="App">
-      <div style={{ paddingTop: "5rem" }} className="background">
-        <Container style={{ minHeight: '100vh' }} fluid>
+      <NavbarComponent page='Home'/>
+      <div className="background">
+        <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
               <div className="main-page-sidebar">

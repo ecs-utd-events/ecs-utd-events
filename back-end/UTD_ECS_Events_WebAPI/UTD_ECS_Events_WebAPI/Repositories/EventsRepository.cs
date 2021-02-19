@@ -20,13 +20,6 @@ namespace UTD_ECS_Events_WebAPI.Repositories
 
         public EventsRepository()
         {
-            /*
-             * var credential = GoogleCredential
-                .FromFile(Path.Combine(AppContext.BaseDirectory + "/google.json"));
-            var channelCredentials = credential.ToChannelCredentials();
-            var channel = new Channel(FirestoreClient.DefaultEndpoint.ToString(), channelCredentials);
-            var firestoreClient = FirestoreClient.Create(channel);
-            */
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", Path.Combine(AppContext.BaseDirectory + "/google.json"));
             _db = FirestoreDb.Create(PROJECT_ID);
             Log.Logger.Information("Created Firestore connection");
@@ -40,33 +33,15 @@ namespace UTD_ECS_Events_WebAPI.Repositories
             return snapshot.Documents
                 .Select(document =>
                 {
-                    ;
-                    var dictionary = document.ToDictionary();
-                    return new EventModel
-                    {
-                        Id = document.Id,
-                        Title = dictionary["Title"].ToString(),
-                        Location = dictionary["Location"].ToString(),
-                        Link = dictionary["Link"].ToString(),
-                        StartTime = ((Timestamp)dictionary["StartTime"]).ToDateTime(),
-                        EndTime = ((Timestamp)dictionary["EndTime"]).ToDateTime()
-                    };
+                    return document.ConvertTo<EventModel>();
                 })
                 .ToList();
         }
 
-        public async Task<string> CreateEvent(EventModel value)
+        public async Task<string> CreateEvent(EventModel myEvent)
         {
             DocumentReference docRef = _db.Collection("events").Document();
-            Dictionary<string, object> team = new Dictionary<string, object>
-            {
-                {"Title", value.Title},
-                {"Location", value.Location},
-                {"Link", value.Link },
-                {"StartTime", value.StartTime },
-                {"EndTime", value.EndTime }
-            };
-            await docRef.SetAsync(team);
+            await docRef.SetAsync(myEvent);
             return docRef.Id;
         }
 
