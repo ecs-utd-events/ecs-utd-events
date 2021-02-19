@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import UpcomingEventCard from "../components/UpcomingEventCard";
+import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
 
 import './../styles/App.css';
@@ -13,27 +13,26 @@ import LinkSVG from '../assets/link.svg';
 import Description from '../assets/product-description.svg';
 import Circle from '../assets/circle.png';
 
+const today = new Date()
+let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+
 export default function OrgProfile() {
     let { orgName } = useParams();
     /** Test data */
     let events = [
         {
             title: 'event title test',
-            extendedProps: {
-                location: 'zoom',
-                link: 'test',
-                org: 'acm',
-                description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
-            }
+            location: 'zoom',
+            link: 'test',
+            org: 'acm',
+            description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
         },
         {
             title: 'event title test2',
-            extendedProps: {
-                location: 'zoom',
-                link: 'test',
-                org: 'acm',
-                description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
-            }
+            location: 'zoom',
+            link: 'test',
+            org: 'acm',
+            description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
         }
     ];
     return (
@@ -68,11 +67,18 @@ export default function OrgProfile() {
                 <Row className="mb-3" style={{ textAlign: 'center' }}>
                     <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
                 </Row>
-                {events.map(event => {
+                {/* Upcoming events have data >= today */}
+                {events.filter(event => {
+                    Date.parse(event.end) >= today
+                }).map(event => {
                     return (
-                        <UpcomingEventCard event={event}></UpcomingEventCard>
+                        <OrgPageEventCard event={event}></OrgPageEventCard>
                     );
                 })}
+                <Row className="mb-3" style={{ textAlign: 'center' }}>
+                    <h1 className="item-align-center font-weight-bold">Past Events</h1>
+                </Row>
+
             </Container>
         </div>
     )
