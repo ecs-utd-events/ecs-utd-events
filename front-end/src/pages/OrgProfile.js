@@ -36,7 +36,7 @@ export default function OrgProfile() {
         }
     ];   
     return (
-        <div className="App" style={{ height: '100vh' }}>
+        <div className="App" style={{ minHeight: '100vh' }}>
             <Container>
                 {/* Test Image */}
                 <Image src={Circle} style={{ width: '25vh', height: '25vh'}}></Image>
