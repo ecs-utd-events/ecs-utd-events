@@ -13,6 +13,9 @@ import LinkSVG from '../assets/link.svg';
 import Description from '../assets/product-description.svg';
 import Circle from '../assets/circle.png';
 
+const today = new Date()
+let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+
 export default function OrgProfile() {
     let { orgName } = useParams();
     /** Test data */
@@ -60,11 +63,18 @@ export default function OrgProfile() {
                 <Row className="mb-3" style={{ textAlign: 'center' }}>
                     <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
                 </Row>
-                {events.map(event => {
+                {/* Upcoming events have data >= today */}
+                {events.filter(event => {
+                    Date.parse(event.end) >= today
+                }).map(event => {
                     return (
                         <OrgPageEventCard event={event}></OrgPageEventCard>
                     );
                 })}
+                <Row className="mb-3" style={{ textAlign: 'center' }}>
+                    <h1 className="item-align-center font-weight-bold">Past Events</h1>
+                </Row>
+
             </Container>
         </div>
     )
