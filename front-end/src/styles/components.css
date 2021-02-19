@@ -48,7 +48,8 @@
     height: 40px;
     /* padding: 0.5rem; */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
-    white-space: nowrap; /* This is required unless you put the helper span closely near the img */
+    white-space: nowrap;
+    /* This is required unless you put the helper span closely near the img */
     text-align: center;
     margin: 1em 0;
 }
@@ -89,4 +90,41 @@
 
 .interactive-card:hover {
     box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.admin-tab {
+    padding: 20px;
+    background-color: var(--accent1);
+}
+
+.admin-tab:hover {
+    background-color: var(--accent2);
+    cursor: pointer;
+}
+
+.admin-tab.first {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 0;
+}
+
+.admin-tab.last {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 0;
+}
+
+.background .admin-tab-wrapper {
+    background-color: none;
+    border: none;
+    margin-top: 2rem;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.admin-tab-title {
+    font-weight: 600;
+    font-size: 2rem;
+    align-self: center;
+    margin-bottom: 0;
 }
