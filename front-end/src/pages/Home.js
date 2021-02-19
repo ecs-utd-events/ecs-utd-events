@@ -128,7 +128,7 @@ export default function Home() {
     <div className="App">
       <NavbarComponent page='Home'/>
       <div className="background">
-        <Container style={{ minHeight: '100vh' }} fluid>
+        <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
               <div className="main-page-sidebar">
