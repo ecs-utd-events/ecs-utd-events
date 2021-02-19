@@ -1,4 +1,5 @@
 import Container from 'react-bootstrap/Container';
+import { Navbar } from 'react-bootstrap'
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import {
@@ -126,7 +127,12 @@ export default function Home() {
 
   return (
     <div className="App">
-      <div style={{ paddingTop: "5rem" }} className="background">
+      <Navbar className="mb-0 background">
+        <Navbar.Brand href="/">
+          <ECSLogo height='8vh'/>
+        </Navbar.Brand>
+      </Navbar>
+      <div className="background">
         <Container style={{ minHeight: '100vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
