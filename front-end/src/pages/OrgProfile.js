@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';                              
+import Image from 'react-bootstrap/Image';
+import UpcomingEventCard from "../components/UpcomingEventCard";
+
 import './../styles/App.css';
+
 import LinkSVG from '../assets/link.svg';
 import Description from '../assets/product-description.svg';
-import UpcomingEventCard from "../components/UpcomingEventCard";
 import Circle from '../assets/circle.png';
 
 export default function OrgProfile() {

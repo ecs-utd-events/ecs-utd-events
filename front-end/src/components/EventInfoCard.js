@@ -40,14 +40,14 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                 </Card.Header>
                 <Card.Body>
                     <ListGroup className="list-group-flush text-left">
-                        <ListGroupItem>
+                        <ListGroupItem className="px-0">
                             <Image className="event-icon mr-2" src={Calendar}></Image>
                             <span>{event.start.toDateString()}</span><br />
                             <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span>
                         </ListGroupItem>
-                        <ListGroupItem><Image className="event-icon mr-2" src={Placeholder}></Image>{event.extendedProps.location || 'Unspecified Location'}</ListGroupItem>
-                        <ListGroupItem><Image className="event-icon mr-2" src={Group}></Image>{event.extendedProps.org || 'Organization'} </ListGroupItem>
-                        <ListGroupItem>
+                        <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Placeholder}></Image>{event.extendedProps.location || 'Unspecified Location'}</ListGroupItem>
+                        <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Group}></Image>{event.extendedProps.org || 'Organization'} </ListGroupItem>
+                        <ListGroupItem className="px-0">
                             <span onClick={() => setOpen(!open)}>
                                 <Image className="event-icon mr-2" src={Description}></Image>
                                 Description
