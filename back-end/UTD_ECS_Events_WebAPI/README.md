@@ -16,8 +16,10 @@ You'll find the file we want to run in the following location: `utd-ecs-events/b
 Once you find this file you'll want to copy either a relative path or full path and simply run: `dotnet <insert_filepath>`
 
 ### Check with Postman
+The application will be running at the following URL: **http:localhost:80/**
+
 You can now send requests using [Postman](https://www.postman.com/downloads/).
 
-You can currently (as of 02/18/21 @ 11:27:59 PM) send a GET, POST, or DELETE request to http:localhost:80/api/events
+You can currently (as of 02/18/21 @ 11:27:59 PM) send a GET, POST, or DELETE request to **http:localhost:80/api/events**
 
 If you simply want to check the GET request you can also use any internet browser.
