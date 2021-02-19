@@ -42,7 +42,7 @@ export default function OrgProfile() {
                     <h1 className="item-align-center font-weight-bold">{orgName}</h1>
                 </Row>
                 <Row className="mb-3">
-                    <Col xs={3} >
+                    <Col xs={3} style={{ textAlign: 'right' }}>
                         <Image src={LinkSVG}></Image>                    
                     </Col>
                     <Col style={{ textAlign: 'left'}}>
@@ -50,10 +50,10 @@ export default function OrgProfile() {
                     </Col>
                 </Row>
                 <Row className="mb-5">
-                    <Col xs={3} style={{ marginTop: 'auto', marginBottom: 'auto'}}>
+                    <Col xs={3} style={{ textAlign: 'right', marginTop: 'auto', marginBottom: 'auto'}}>
                         <Image  src={Description}></Image>
                     </Col>
-                    <Col style={{ textAlign: 'left'}}>
+                    <Col xs={6} style={{ textAlign: 'left'}}>
                         this is the description of the organization im testing i hoep that this alignment works
                     </Col>
                 </Row>
