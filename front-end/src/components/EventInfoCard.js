@@ -9,15 +9,19 @@ import Image from 'react-bootstrap/Image';
 import {
     Link
 } from "react-router-dom";
-import Collapse from 'react-bootstrap/Collapse';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import ShowMoreText from 'react-show-more-text';
+
 import Calendar from '../assets/calendar.svg';
 import Placeholder from '../assets/placeholder.svg';
 import Description from '../assets/product-description.svg';
 import Share from '../assets/share.svg';
 import Group from '../assets/group.svg';
 import LinkSVG from '../assets/link.svg';
+import Dropdown from '../assets/down-arrow.svg';
 
-
+const INFO_CARD_WIDTH = 50;
 export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
     const [open, setOpen] = useState(false);
     const onAnimationEnd = () => {
@@ -48,26 +52,26 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                         <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Placeholder}></Image>{event.extendedProps.location || 'Unspecified Location'}</ListGroupItem>
                         <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Group}></Image>{event.extendedProps.org || 'Organization'} </ListGroupItem>
                         <ListGroupItem className="px-0">
-                            <span onClick={() => setOpen(!open)}>
-                                <Image className="event-icon mr-2" src={Description}></Image>
-                                Description
-                            </span>
-                            <Collapse in={open}>
-                                <div className="mt-2" id="collapse-text">
-                                    {event.extendedProps.description || 'Here\'s the Description'}
-                                </div>
-                            </Collapse>
+                            <ShowMoreText 
+                                lines={2}
+                                more={'Read more'}
+                                less={'Read less'}
+                                expanded={false}>{event.extendedProps.description}</ShowMoreText>
                         </ListGroupItem>
                     </ListGroup>
                 </Card.Body>
-                <Card.Footer>
-                    <small className="text-muted mr-sm-2">Last updated 2 mins ago</small>
-                    <ButtonGroup>
-                        <IconButton className="mr-1" icon={LinkSVG}></IconButton>
-                        <IconButton className="mr-1" icon={Calendar}></IconButton>
-                        <IconButton className="mr-1" icon={Share}></IconButton>
-                    </ButtonGroup>
-                </Card.Footer>
+                <Row>
+                    <Col className="d-flex align-items-end">
+                        <p className="text-muted " style={{ fontSize: '.75rem'}}>Last updated 2 mins ago</p>
+                    </Col>
+                    <Col>
+                        <ButtonGroup>
+                            <IconButton className="mr-1" icon={LinkSVG}></IconButton>
+                            <IconButton className="mr-1" icon={Calendar}></IconButton>
+                            <IconButton className="mr-1" icon={Share}></IconButton>
+                        </ButtonGroup>
+                    </Col>
+                </Row>
             </Card>
         );
     } else {
