@@ -36,12 +36,8 @@ export default function OrgProfile() {
         }
     ];
     return (
-<<<<<<< HEAD
-        <div className="App" style={{ minHeight: '100vh' }}>
-=======
         <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
             <NavbarComponent page='OrgProfilePage' />
->>>>>>> 762f6dc1abc528664ed21ab6845cc36e4bd96511
             <Container>
                 {/* Test Image */}
                 <Image src={Circle} style={{ width: '25vh', height: '25vh' }}></Image>
