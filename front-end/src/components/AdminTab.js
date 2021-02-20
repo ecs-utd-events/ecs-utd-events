@@ -8,7 +8,7 @@ import settingsIcon from '@iconify/icons-gg/organisation'
 export const TAB_CONTENTS = [
     {
         title: 'Profile',
-        icon: profileIcon
+        icon: profileIcon,
     },
     {
         title: 'Events',
@@ -23,10 +23,13 @@ export const TAB_CONTENTS = [
         icon: settingsIcon
     }
 ]
-export const Tab = ({tab, index}) => {
-    const rowClass = index == 0 ? 'first' : index == TAB_CONTENTS.length - 1 ? 'last' : ''
+export const Tab = ({tab, index, parent}) => {
+    const selected = tab.title === parent;
+    const orderClass = index === 0 ? 'first' : index === TAB_CONTENTS.length - 1 ? 'last' : ''
+    const rowClass = orderClass.concat(' ').concat(selected ? 'selected' : '')
+    // const selected = tab.title === parent ? 'selected' : '';
     return (
-        <Row className={"admin-tab " + rowClass}>
+        <Row className={"admin-tab " + rowClass} disabled={tab.title === parent}>
             <Col>
                 <Container>
                     <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -43,69 +46,14 @@ export const Tab = ({tab, index}) => {
     )
 }
 
-export default function AdminTab() {
+export default function AdminTab({parent}) {
     console.log(TAB_CONTENTS)
+    // const selectedTab
     return (
         <Card className="card admin-tab-wrapper">
             {
-                TAB_CONTENTS.map((value, index) => <Tab tab={value} index={index} />)
+                TAB_CONTENTS.map((value, index) => <Tab tab={value} index={index} parent={parent} />)
             }
-            {/* <Row className="admin-tab first">
-                <Col>
-                    <Container>
-                        <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Col xs={3}>
-                                <Icon icon={profileIcon} style={{ color: 'var(--gray1)', fontSize: '2.5rem' }} />
-                            </Col>
-                            <Col style={{ alignItems: 'center', textAlign: 'center', height: '100%' }}>
-                                <h1 className="admin-tab-title">Profile</h1>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-            </Row>
-            <Row className="admin-tab">
-                <Col>
-                    <Container>
-                        <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Col xs={3}>
-                                <Icon icon={calendarIcon} style={{ color: 'var(--gray1)', fontSize: '2.5rem' }} />
-                            </Col>
-                            <Col style={{ textAlign: 'center' }}>
-                                <h1 className="admin-tab-title">Events</h1>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-            </Row>
-            <Row className="admin-tab">
-                <Col>
-                    <Container>
-                        <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Col xs={3}>
-                                <Icon icon={helpIcon} style={{ color: 'var(--gray1)', fontSize: '2.5rem' }} />
-                            </Col>
-                            <Col style={{ textAlign: 'center' }}>
-                                <h1 className="admin-tab-title">Help</h1>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-            </Row>
-            <Row className="admin-tab last">
-                <Col>
-                    <Container>
-                        <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Col xs={3}>
-                                <Icon icon={settingsIcon} style={{ color: 'var(--gray1)', fontSize: '2.5rem' }} />
-                            </Col>
-                            <Col style={{ textAlign: 'center' }}>
-                                <h1 className="admin-tab-title">Settings</h1>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-            </Row> */}
         </Card>
     )
 }

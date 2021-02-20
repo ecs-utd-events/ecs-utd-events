@@ -65,7 +65,7 @@ export default function OrgProfile() {
                 </Row>
                 {/* Upcoming events have data >= today */}
                 {events.filter(event => {
-                    Date.parse(event.end) >= today
+                    return (Date.parse(event.end) >= today)
                 }).map(event => {
                     return (
                         <OrgPageEventCard event={event}></OrgPageEventCard>

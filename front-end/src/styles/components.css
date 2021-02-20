@@ -114,6 +114,16 @@
     margin-bottom: 0;
 }
 
+.admin-tab.selected {
+    background-color: var(--accent3);
+    border-left: 10px solid var(--primary1);
+}
+
+.admin-tab.selected:hover {
+    background-color: var(--accent3);
+    cursor: auto;
+}
+
 .background .admin-tab-wrapper {
     background-color: none;
     border: none;

@@ -7,7 +7,7 @@ export default function EditProfile() {
             <Container fluid>
                 <Row>
                     <Col xs={3}>
-                        <AdminTab />
+                        <AdminTab parent="Profile" />
                     </Col>
                     <Col>
                         <h1>Org Profile</h1>
