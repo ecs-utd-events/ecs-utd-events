@@ -114,10 +114,21 @@
     margin-bottom: 0;
 }
 
+.admin-tab.selected {
+    background-color: var(--accent3);
+    border-left: 10px solid var(--primary1);
+}
+
+.admin-tab.selected:hover {
+    background-color: var(--accent3);
+    cursor: auto;
+}
+
 .background .admin-tab-wrapper {
     background-color: none;
     border: none;
     margin-top: 2rem;
+    margin-left: 1rem;
     padding-top: 0;
     padding-bottom: 0;
 }
@@ -127,4 +138,13 @@
     font-size: 2rem;
     align-self: center;
     margin-bottom: 0;
+}
+
+.admin-tab-wrapper a {
+    color: var(--gray1)
+}
+
+.admin-tab-wrapper a:hover {
+    color: var(--gray1);
+    text-decoration: none;
 }

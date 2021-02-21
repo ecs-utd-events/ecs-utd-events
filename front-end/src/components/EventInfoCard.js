@@ -1,35 +1,42 @@
-import { useState } from 'react';
-
 import Card from "react-bootstrap/esm/Card";
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import IconButton from '../components/IconButton';
-import Image from 'react-bootstrap/Image';
 import {
     Link
 } from "react-router-dom";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import ShowMoreText from 'react-show-more-text';
+import { Icon } from '@iconify/react';
+import CalendarIcon from '@iconify/icons-gg/calendar-dates';
+import PlaceholderIcon from '@iconify/icons-gg/pin';
+// import Description from '@iconify/icons-gg/details-more'
+import ShareIcon from '@iconify/icons-gg/share';
+import GroupIcon from '@iconify/icons-gg/organisation';
+import LinkIcon from '@iconify/icons-gg/link';
 
-import Calendar from '../assets/calendar.svg';
-import Placeholder from '../assets/placeholder.svg';
-import Description from '../assets/product-description.svg';
-import Share from '../assets/share.svg';
-import Group from '../assets/group.svg';
-import LinkSVG from '../assets/link.svg';
-import Dropdown from '../assets/down-arrow.svg';
+export function ListItemLayout({ icon, children }) {
+    return (
+        <Row>
+            <Col xs={1}>
+                <Icon icon={icon} className="event-icon" />
+            </Col>
+            <Col>
+                {children}
+            </Col>
+        </Row>
+    )
+}
 
-const INFO_CARD_WIDTH = 50;
 export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
-    const [open, setOpen] = useState(false);
     const onAnimationEnd = () => {
         setAnimateCard('')
     }
     if (event != null) {
         return (
-            <Card className="drop-shadow card">
+            <Card className="drop-shadow card pb-0">
                 <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0 }}>
                     <div style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden" }}>
                         <div style={{ display: animateCard == '' ? 'none' : 'block' }} className={"blob " + animateCard} onAnimationEnd={onAnimationEnd}>
@@ -40,19 +47,28 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                     </div>
                 </div>
                 <Card.Header className="card-header-no-border">
-                    <h3 className="font-weight-bold card-title">{event.title}</h3>
+                    <h3 className="font-weight-bold card-title mb-0">{event.title}</h3>
                 </Card.Header>
                 <Card.Body>
                     <ListGroup className="list-group-flush text-left">
                         <ListGroupItem className="px-0">
-                            <Image className="event-icon mr-2" src={Calendar}></Image>
-                            <span>{event.start.toDateString()}</span><br />
-                            <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span>
+                            <ListItemLayout icon={CalendarIcon}>
+                                <span>{event.start.toDateString()}</span><br />
+                                <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span>
+                            </ListItemLayout>
                         </ListGroupItem>
-                        <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Placeholder}></Image>{event.extendedProps.location || 'Unspecified Location'}</ListGroupItem>
-                        <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Group}></Image>{event.extendedProps.org || 'Organization'} </ListGroupItem>
                         <ListGroupItem className="px-0">
-                            <ShowMoreText 
+                            <ListItemLayout icon={PlaceholderIcon}>
+                                {event.extendedProps.location || 'Unspecified Location'}
+                            </ListItemLayout>
+                        </ListGroupItem>
+                        <ListGroupItem className="px-0">
+                            <ListItemLayout icon={GroupIcon}>
+                                {event.extendedProps.org || 'Organization'}
+                            </ListItemLayout>
+                        </ListGroupItem>
+                        <ListGroupItem className="px-0">
+                            <ShowMoreText
                                 lines={2}
                                 more={'Read more'}
                                 less={'Read less'}
@@ -62,17 +78,17 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                 </Card.Body>
                 <Row>
                     <Col className="d-flex align-items-end">
-                        <p className="text-muted " style={{ fontSize: '.75rem'}}>Last updated 2 mins ago</p>
+                        <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated 2 mins ago</p>
                     </Col>
                     <Col>
                         <ButtonGroup>
-                            <IconButton className="mr-1" icon={LinkSVG}></IconButton>
-                            <IconButton className="mr-1" icon={Calendar}></IconButton>
-                            <IconButton className="mr-1" icon={Share}></IconButton>
+                            <IconButton className="mr-1" icon={LinkIcon}></IconButton>
+                            <IconButton className="mr-1" icon={CalendarIcon}></IconButton>
+                            <IconButton className="mr-1" icon={ShareIcon}></IconButton>
                         </ButtonGroup>
                     </Col>
                 </Row>
-            </Card>
+            </Card >
         );
     } else {
         return (
