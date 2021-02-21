@@ -128,6 +128,7 @@
     background-color: none;
     border: none;
     margin-top: 2rem;
+    margin-left: 1rem;
     padding-top: 0;
     padding-bottom: 0;
 }
@@ -137,4 +138,13 @@
     font-size: 2rem;
     align-self: center;
     margin-bottom: 0;
+}
+
+.admin-tab-wrapper a {
+    color: var(--gray1)
+}
+
+.admin-tab-wrapper a:hover {
+    color: var(--gray1);
+    text-decoration: none;
 }
