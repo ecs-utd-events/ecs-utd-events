@@ -67,7 +67,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                         </ListGroupItem>
                         <ListGroupItem className="px-0">
                             <ShowMoreText
-                                lines={2}
+                                lines={3}
                                 more={'Read more'}
                                 less={'Read less'}
                                 expanded={false}>{event.extendedProps.description}</ShowMoreText>
