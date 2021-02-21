@@ -9,19 +9,17 @@ import {
     Link
 } from "react-router-dom";
 import ShowMoreText from 'react-show-more-text';
-import { Icon } from '@iconify/react';
-import CalendarIcon from '@iconify/icons-gg/calendar-dates';
-import PlaceholderIcon from '@iconify/icons-gg/pin';
-// import Description from '@iconify/icons-gg/details-more'
+import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
+import { ReactComponent as GroupIcon } from './../assets/group.svg';
+import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
 import ShareIcon from '@iconify/icons-gg/share';
-import GroupIcon from '@iconify/icons-gg/organisation';
 import LinkIcon from '@iconify/icons-gg/link';
 
-export function ListItemLayout({ icon, children }) {
+export function ListItemLayout({ Icon, children }) {
     return (
         <Row>
             <Col xs={1}>
-                <Icon icon={icon} className="event-icon" />
+                <Icon className="event-icon" />
             </Col>
             <Col>
                 {children}
@@ -49,21 +47,21 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                 <Card.Header className="card-header-no-border">
                     <h3 className="font-weight-bold card-title mb-0">{event.title}</h3>
                 </Card.Header>
-                <Card.Body>
+                <Card.Body className="pt-2">
                     <ListGroup className="list-group-flush text-left">
                         <ListGroupItem className="px-0">
-                            <ListItemLayout icon={CalendarIcon}>
+                            <ListItemLayout Icon={CalendarIcon}>
                                 <span>{event.start.toDateString()}</span><br />
                                 <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span>
                             </ListItemLayout>
                         </ListGroupItem>
                         <ListGroupItem className="px-0">
-                            <ListItemLayout icon={PlaceholderIcon}>
+                            <ListItemLayout Icon={PlaceholderIcon}>
                                 {event.extendedProps.location || 'Unspecified Location'}
                             </ListItemLayout>
                         </ListGroupItem>
                         <ListGroupItem className="px-0">
-                            <ListItemLayout icon={GroupIcon}>
+                            <ListItemLayout Icon={GroupIcon}>
                                 {event.extendedProps.org || 'Organization'}
                             </ListItemLayout>
                         </ListGroupItem>
@@ -83,7 +81,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                     <Col>
                         <ButtonGroup>
                             <IconButton className="mr-1" icon={LinkIcon}></IconButton>
-                            <IconButton className="mr-1" icon={CalendarIcon}></IconButton>
+                            <IconButton className="mr-1" SVGComponent={CalendarIcon}></IconButton>
                             <IconButton className="mr-1" icon={ShareIcon}></IconButton>
                         </ButtonGroup>
                     </Col>
