@@ -6,6 +6,11 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
+import Collapse from 'react-bootstrap/Collapse'
+import React, { useEffect, useState } from "react";
+import {
+    Link
+} from "react-router-dom";
 
 import './../styles/App.css';
 
@@ -64,6 +69,26 @@ export const UPCOMING_EVENTS = [
         location: 'Zoom',
         link: 'https://www.acmutd.com'
     },
+    {
+        id: createEventId(),
+        title: 'Timed event',
+        start: todayStr + 'T12:00:00',
+        end: todayStr + 'T12:30:00',
+        description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!',
+        org: 'ACM',
+        location: 'Zoom',
+        link: 'https://www.acmutd.com'
+    },
+    {
+        id: createEventId(),
+        title: 'Timed event',
+        start: todayStr + 'T12:00:00',
+        end: todayStr + 'T12:30:00',
+        description: 'eeeeeeeeeeeeeeeeeeee be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!',
+        org: 'ACM',
+        location: 'Zoom',
+        link: 'https://www.acmutd.com'
+    },
 ]
 
 export const PAST_EVENTS = [
@@ -76,7 +101,38 @@ export const PAST_EVENTS = [
         org: 'ACM',
         location: 'Discord',
         link: 'https://discord.gg/Azq7zZn457'
-    }
+    },
+    {
+        id: createEventId(),
+        title: 'Development Fireside Presentation',
+        start: ydayStr + 'T17:30:00',
+        end: ydayStr + 'T18:45:00',
+        description: '22222222222222222222 ACM Development. Each month we will have an opportunity for everyone to come in and listen to the amazing new features and products that we release. In addition to that there will be conversation about the latest trends in tech, discussions around real-world software development & more.',
+        org: 'ACM',
+        location: 'Discord',
+        link: 'https://discord.gg/Azq7zZn457'
+    },
+    {
+        id: createEventId(),
+        title: 'Development Fireside Presentation',
+        start: ydayStr + 'T17:30:00',
+        end: ydayStr + 'T18:45:00',
+        description: '3333333333333 Development. Each month we will have an opportunity for everyone to come in and listen to the amazing new features and products that we release. In addition to that there will be conversation about the latest trends in tech, discussions around real-world software development & more.',
+        org: 'ACM',
+        location: 'Discord',
+        link: 'https://discord.gg/Azq7zZn457'
+    },
+    {
+        id: createEventId(),
+        title: 'Development Fireside Presentation',
+        start: ydayStr + 'T17:30:00',
+        end: ydayStr + 'T18:45:00',
+        description: '444444444444444444444. Each month we will have an opportunity for everyone to come in and listen to the amazing new features and products that we release. In addition to that there will be conversation about the latest trends in tech, discussions around real-world software development & more.',
+        org: 'ACM',
+        location: 'Discord',
+        link: 'https://discord.gg/Azq7zZn457'
+    },
+
 ]
 
 export function createEventId() {
@@ -85,23 +141,54 @@ export function createEventId() {
 
 export default function OrgProfile() {
     let { orgName } = useParams();
-    /** Test data */
-    let events = [
-        {
-            title: 'event title test',
-            location: 'zoom',
-            link: 'test',
-            org: 'acm',
-            description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
-        },
-        {
-            title: 'event title test2',
-            location: 'zoom',
-            link: 'test',
-            org: 'acm',
-            description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!'
-        }
-    ];
+    const [openUpcomingEvents, setUpcomingOpen] = useState(false);
+    const [openPastEvents, setPastOpen] = useState(false);
+    const maxEventsDisplayed = 3;
+
+    var additionalUpcomingEvents;
+    if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
+        additionalUpcomingEvents =
+            <div>
+                <Link
+                    onClick={() => setUpcomingOpen(!openUpcomingEvents)}
+                    aria-controls="expand-events"
+                    aria-expanded={openUpcomingEvents}
+                >
+                    expand...
+                </Link>
+                <Collapse in={openUpcomingEvents}>
+                    <div>
+                        {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
+                            return (
+                                <OrgPageEventCard event={event} pastEvent={false} ></OrgPageEventCard>
+                            );
+                        })}
+                    </div>
+                </Collapse>
+            </div>
+    }
+    var additionalPastEvents;
+    if (PAST_EVENTS.length > maxEventsDisplayed) {
+        additionalPastEvents =
+            <div>
+                <Link
+                    onClick={() => setPastOpen(!openPastEvents)}
+                    aria-controls="expand-events"
+                    aria-expanded={openPastEvents}
+                >
+                    expand...
+                </Link>
+                <Collapse in={openPastEvents}>
+                    <div>
+                        {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
+                            return (
+                                <OrgPageEventCard event={event} pastEvent={true} ></OrgPageEventCard>
+                            );
+                        })}
+                    </div>
+                </Collapse>
+            </div>
+    }
     return (
         <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
             <NavbarComponent page='OrgProfilePage' />
@@ -130,19 +217,23 @@ export default function OrgProfile() {
                 <Row className="mb-3" style={{ textAlign: 'center' }}>
                     <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
                 </Row>
-                {UPCOMING_EVENTS.map(event => {
+                {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
+                {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
                         <OrgPageEventCard event={event} pastEvent={false} ></OrgPageEventCard>
                     );
                 })}
+                {additionalUpcomingEvents}
+                {/* DISPLAY PAST EVENTS */}
                 <Row className="mb-3" style={{ textAlign: 'center' }}>
                     <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
                 </Row>
-                {PAST_EVENTS.map(event => {
+                {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
                         <OrgPageEventCard event={event} pastEvent={true} ></OrgPageEventCard>
                     );
                 })}
+                {additionalPastEvents}
             </Container>
         </div >
     )
