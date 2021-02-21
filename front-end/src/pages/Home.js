@@ -278,6 +278,7 @@ export default function Home() {
           <Link to="/login">Organization Login</Link>
           <Link to="/org" style={{ paddingLeft: 10 }}>Org Profile</Link>
           <Link to="/admin/create" style={{ padding: 10 }}>Create Event</Link>
+          <Link to="/admin/profile" style={{ padding: 10 }}>Admin</Link>
         </div>
       </div>
     </div >
