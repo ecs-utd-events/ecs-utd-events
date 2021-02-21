@@ -34,10 +34,49 @@ let ydayStr = yday.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 export const INITIAL_EVENTS = [
   {
     id: createEventId(),
-    title: 'All-day event',
+    title: 'A Look into NLP and Research Engineering at Google',
+    start: todayStr + 'T20:00:00',
+    end: todayStr + 'T21:00:00',
+    extendedProps: {
+      description: 'As an Education x Research x Industry Event, if you\'re interested in learning how natural language processing and deep learning play several roles in language-oriented products like the Google Assistant or Alexa, come hear from a software engineer at Google discuss the challenges that go with creating these products. We\'ll also be discussing differences between industry and academia, important skills to be an effective software engineer, and what different software-engineering centric career paths in tech might look like. The talk will conclude with an open-ended Q&A forum.',
+      org: 'ACM',
+      location: 'Zoom',
+      link: 'https://cdn.discordapp.com/attachments/714723430079135755/808062875062108180/ACM_Research_Engineering_at_Google_Flyer_1.png'
+    }
+  },
+  {
+    id: createEventId(),
+    title: 'Development Fireside Presentation',
+    start: ydayStr + 'T17:30:00',
+    end: ydayStr + 'T18:45:00',
+    extendedProps: {
+      description: 'One exciting initiative that we are also proud to be launching this semester is Fireside Chats with ACM Development. Each month we will have an opportunity for everyone to come in and listen to the amazing new features and products that we release. In addition to that there will be conversation about the latest trends in tech, discussions around real-world software development & more.',
+      org: 'ACM',
+      location: 'Discord',
+      link: 'https://discord.gg/Azq7zZn457'
+    }
+  },
+  {
+    id: createEventId(),
+    title: 'Pitching Yourself Workshop and Resume Critique with Xilinx',
+    start: tmrwStr + 'T16:00:00',
+    end: tmrwStr + 'T17:15:00',
+    extendedProps: {
+      description: 'Attend to get a chance to win a swag bag containing a pair of AirPods!',
+      org: 'SWE',
+      location: 'Zoom',
+      link: 'https://xilinx.zoom.us/j/2792764728?pwd=ekpwcWpOY25FTWlSb3g2U3RBa1lMdz09'
+    }
+  },
+  {
+    id: createEventId(),
+    title: 'HackUTD',
     start: todayStr,
     extendedProps: {
-      description: 'This is a sample description for an all-day event.'
+      description: 'HackUTD, the largest university hackathon in North Texas, is a weekend long event where students build apps, hardware, and more. HackUTD provides a venue for self-expression and creativity through technology. People with varying technical backgrounds come together, form teams around a problem or idea, and collaboratively code a unique solution from scratch. Whether you\'re a frequent hackathon attendee or just getting started, we\'d love to see what you can make.',
+      org: 'HackUTD',
+      location: 'ECSW',
+      link: 'https://2021.hackutd.co/'
     }
   },
   {
@@ -52,24 +91,6 @@ export const INITIAL_EVENTS = [
       link: 'https://www.acmutd.com'
     }
   },
-  {
-    id: createEventId(),
-    title: 'Timed event2',
-    start: todayStr + 'T11:00:00',
-    end: todayStr + 'T12:00:00'
-  },
-  {
-    id: createEventId(),
-    title: 'Tmrw event',
-    start: tmrwStr + 'T11:00:00',
-    end: tmrwStr + 'T12:00:00'
-  },
-  {
-    id: createEventId(),
-    title: 'Yday event',
-    start: ydayStr + 'T11:00:00',
-    end: ydayStr + 'T12:00:00'
-  }
 ]
 
 export function createEventId() {
