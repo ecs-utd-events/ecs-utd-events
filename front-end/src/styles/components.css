@@ -63,6 +63,7 @@
     max-height: 40px;
     max-width: 40px;
     vertical-align: middle;
+    fill: var(--gray1);
 }
 
 .helper {
