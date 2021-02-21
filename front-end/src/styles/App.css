@@ -127,8 +127,8 @@
 }
 
 .event-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  color: var(--gray3);
+  font-size: 1.5rem;
 }
 
 .button-org-login-main-page {
