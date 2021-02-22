@@ -14,6 +14,7 @@ import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
 import ShareIcon from '@iconify/icons-gg/share';
 import LinkIcon from '@iconify/icons-gg/link';
+import Tag from "./Tag";
 
 export function ListItemLayout({ Icon, children }) {
     return (
@@ -78,6 +79,13 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                         </ListGroupItem>
                     </ListGroup>
                 </Card.Body>
+                {event.extendedProps.tags != null &&
+                    <Row>
+                        <Col>
+                            {event.extendedProps.tags.map((label) => <Tag type="accent">{label}</Tag>)}
+                        </Col>
+                    </Row>
+                }
                 <Row>
                     <Col className="d-flex align-items-end">
                         <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated 2 mins ago</p>

@@ -149,3 +149,36 @@
     color: var(--gray1);
     text-decoration: none;
 }
+.MuiChip-root.custom-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: var(--gray2);
+    margin: 1px;
+}
+
+.MuiChip-root.custom-tag.primary {
+    background-color: var(--primary1);
+}
+
+.MuiChip-root.custom-tag.secondary {
+    background-color: var(--secondary1);
+}
+
+.MuiChip-root.custom-tag.accent {
+    background-color: var(--accent3);
+}
+
+.MuiChip-outlined.custom-tag.primary {
+    border: 2px solid var(--primary1);
+    background-color: transparent;
+}
+
+.MuiChip-outlined.custom-tag.secondary {
+    border: 2px solid var(--secondary1);
+    background-color: transparent;
+}
+
+.MuiChip-outlined.custom-tag.accent {
+    border: 2px solid var(--accent1);
+    background-color: transparent;
+}

@@ -41,7 +41,8 @@ export const INITIAL_EVENTS = [
       description: 'As an Education x Research x Industry Event, if you\'re interested in learning how natural language processing and deep learning play several roles in language-oriented products like the Google Assistant or Alexa, come hear from a software engineer at Google discuss the challenges that go with creating these products. We\'ll also be discussing differences between industry and academia, important skills to be an effective software engineer, and what different software-engineering centric career paths in tech might look like. The talk will conclude with an open-ended Q&A forum.',
       org: 'ACM',
       location: 'Zoom',
-      link: 'https://cdn.discordapp.com/attachments/714723430079135755/808062875062108180/ACM_Research_Engineering_at_Google_Flyer_1.png'
+      link: 'https://cdn.discordapp.com/attachments/714723430079135755/808062875062108180/ACM_Research_Engineering_at_Google_Flyer_1.png',
+      tags: ['Google', 'ACM Education', 'ACM Research', 'Industry', 'ML']
     }
   },
   {
@@ -53,7 +54,8 @@ export const INITIAL_EVENTS = [
       description: 'One exciting initiative that we are also proud to be launching this semester is Fireside Chats with ACM Development. Each month we will have an opportunity for everyone to come in and listen to the amazing new features and products that we release. In addition to that there will be conversation about the latest trends in tech, discussions around real-world software development & more.',
       org: 'ACM',
       location: 'Discord',
-      link: 'https://discord.gg/Azq7zZn457'
+      link: 'https://discord.gg/Azq7zZn457',
+      tags: ['ACM Dev', 'Discord', 'Software', 'Engineering']
     }
   },
   {
@@ -65,7 +67,8 @@ export const INITIAL_EVENTS = [
       description: 'Attend to get a chance to win a swag bag containing a pair of AirPods!',
       org: 'SWE',
       location: 'Zoom',
-      link: 'https://xilinx.zoom.us/j/2792764728?pwd=ekpwcWpOY25FTWlSb3g2U3RBa1lMdz09'
+      link: 'https://xilinx.zoom.us/j/2792764728?pwd=ekpwcWpOY25FTWlSb3g2U3RBa1lMdz09',
+      tags: ['Industry', 'womxn', 'oSTEM', 'raffle', 'workshop']
     }
   },
   {
@@ -76,7 +79,8 @@ export const INITIAL_EVENTS = [
       description: 'HackUTD, the largest university hackathon in North Texas, is a weekend long event where students build apps, hardware, and more. HackUTD provides a venue for self-expression and creativity through technology. People with varying technical backgrounds come together, form teams around a problem or idea, and collaboratively code a unique solution from scratch. Whether you\'re a frequent hackathon attendee or just getting started, we\'d love to see what you can make.',
       org: 'HackUTD',
       location: 'ECSW',
-      link: 'https://2021.hackutd.co/'
+      link: 'https://2021.hackutd.co/',
+      tags: ['hackathon']
     }
   },
   {
@@ -88,7 +92,8 @@ export const INITIAL_EVENTS = [
       description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!',
       org: 'ACM',
       location: 'Zoom',
-      link: 'https://www.acmutd.com'
+      link: 'https://www.acmutd.com',
+      tags: ['Industry', 'ML', 'AI', 'collab']
     }
   },
 ]
