@@ -39,7 +39,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
     if (event != null) {
         return (
             <Card className="drop-shadow card pb-0">
-                <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0 }}>
+                <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
                     <div style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden" }}>
                         <div style={{ display: animateCard == '' ? 'none' : 'block' }} className={"blob " + animateCard} onAnimationEnd={onAnimationEnd}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 350">

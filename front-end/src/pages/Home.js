@@ -147,14 +147,14 @@ export default function Home() {
 
   return (
     <div className="App">
-      <NavbarComponent page='Home'/>
+      <NavbarComponent page='Home' />
       <div className="background">
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
               <div className="main-page-sidebar">
                 <div>
-                  <h2 className="font-weight-bold">Event Information</h2>
+                  <h2 style={{ fontWeight: 600 }}>Event Information</h2>
                   <EventInfoCard event={selectedEvent} animateCard={animateCard} setAnimateCard={setAnimateCard} />
                 </div>
               </div>
