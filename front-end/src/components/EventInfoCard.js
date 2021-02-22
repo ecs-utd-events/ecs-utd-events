@@ -14,6 +14,7 @@ import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
 import ShareIcon from '@iconify/icons-gg/share';
 import LinkIcon from '@iconify/icons-gg/link';
+import Tag from "./Tag";
 
 export function ListItemLayout({ Icon, children }) {
     return (
@@ -39,7 +40,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
     if (event != null) {
         return (
             <Card className="drop-shadow card pb-0">
-                <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0 }}>
+                <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
                     <div style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden" }}>
                         <div style={{ display: animateCard == '' ? 'none' : 'block' }} className={"blob " + animateCard} onAnimationEnd={onAnimationEnd}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 350">
@@ -78,6 +79,13 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                         </ListGroupItem>
                     </ListGroup>
                 </Card.Body>
+                {event.extendedProps.tags != null &&
+                    <Row>
+                        <Col>
+                            {event.extendedProps.tags.map((label) => <Tag type="accent">{label}</Tag>)}
+                        </Col>
+                    </Row>
+                }
                 <Row>
                     <Col className="d-flex align-items-end">
                         <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated 2 mins ago</p>
