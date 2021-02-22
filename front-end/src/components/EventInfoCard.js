@@ -90,9 +90,11 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                     <Col className="d-flex align-items-end">
                         <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated 2 mins ago</p>
                     </Col>
-                    <Col>
+                    <Col className="d-flex align-item-end justify-content-end">
                         <ButtonGroup>
-                            <IconButton className="mr-1" icon={LinkIcon}></IconButton>
+                            {event.extendedProps.link != null &&
+                                <IconButton className="mr-1 color-black" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
+                            }
                             <IconButton className="mr-1" SVGComponent={CalendarIcon}></IconButton>
                             <IconButton className="mr-1" icon={ShareIcon}></IconButton>
                         </ButtonGroup>
