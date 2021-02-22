@@ -18,7 +18,7 @@ import LinkIcon from '@iconify/icons-gg/link';
 export function ListItemLayout({ Icon, children }) {
     return (
         <Row>
-            <Col xs={1}>
+            <Col xs={2}>
                 <Icon className="event-icon" />
             </Col>
             <Col>
@@ -26,6 +26,10 @@ export function ListItemLayout({ Icon, children }) {
             </Col>
         </Row>
     )
+}
+
+export function getFormattedTime(time) {
+    return time.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
 }
 
 export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
@@ -51,8 +55,8 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                     <ListGroup className="list-group-flush text-left">
                         <ListGroupItem className="px-0">
                             <ListItemLayout Icon={CalendarIcon}>
-                                <span>{event.start.toDateString()}</span><br />
-                                <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span>
+                                {event.start.toDateString()}<br />
+                                {!event.allDay ? getFormattedTime(event.start) + " - " + getFormattedTime(event.end) : null}
                             </ListItemLayout>
                         </ListGroupItem>
                         <ListGroupItem className="px-0">
