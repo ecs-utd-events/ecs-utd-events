@@ -99,6 +99,10 @@
   border-radius: 10px!important
 }
 
+.main-page-sidebar .card {
+  min-height: auto;
+}
+
 .blob-animation {
   display: none;
   position: absolute;
