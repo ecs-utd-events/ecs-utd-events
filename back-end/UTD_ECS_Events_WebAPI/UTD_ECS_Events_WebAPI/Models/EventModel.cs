@@ -9,7 +9,8 @@ namespace UTD_ECS_Events_WebAPI.Models
     [FirestoreData]
     public class EventModel
     {
-        //public string Id { get; set; }
+        [FirestoreDocumentId]
+        public string Id { get; set; }
         [FirestoreProperty]
         public string Title { get; set; }
         [FirestoreProperty]
@@ -22,5 +23,9 @@ namespace UTD_ECS_Events_WebAPI.Models
         public DateTime EndTime { get; set; }
         [FirestoreProperty]
         public string Description { get; set; }
+        //[FirestoreProperty]
+        //public DocumentReference Orgs { get; set; }
+        [FirestoreProperty]
+        public DateTime LastUpdated { get; set; }
     }
 }

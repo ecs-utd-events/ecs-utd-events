@@ -21,14 +21,17 @@ namespace UTD_ECS_Events_WebAPI.Controllers
             _eventsService = eventsService;
         }
 
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<string>), 200)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
-        [ProducesResponseType(500)]
+        [HttpGet("all")]
         public ActionResult<List<EventModel>> Get()
         {
             var events = _eventsService.GetEvents();
             return events.ToList();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<EventModel> Get(string id)
+        {
+            return _eventsService.GetSingleEvent(id);
         }
 
         [HttpPost]

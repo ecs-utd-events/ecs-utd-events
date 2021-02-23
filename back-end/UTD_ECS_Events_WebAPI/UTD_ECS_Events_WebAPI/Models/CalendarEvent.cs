@@ -7,19 +7,18 @@ using Google.Cloud.Firestore;
 namespace UTD_ECS_Events_WebAPI.Models
 {
     [FirestoreData]
-    public class OrgModel
+    public class CalendarEvent
     {
         [FirestoreDocumentId]
-        public string Slug { get; set; }
+        public string Id { get; set; }
         [FirestoreProperty]
-        public string Name { get; set; }
+        public string Title { get; set; }
         [FirestoreProperty]
-        public string ShortName { get; set; }
+        public DateTime StartTime { get; set; }
         [FirestoreProperty]
-        public string Website { get; set; }
+        public DateTime EndTime { get; set; }
         [FirestoreProperty]
-        public string Description { get; set; }
-        [FirestoreProperty]
-        public Dictionary<string,string> SocialMedia { get; set; }
+        public List<DocumentReference> Orgs { get; set; }
     }
 }
+

@@ -40,7 +40,7 @@ namespace UTD_ECS_Events_WebAPI.Repositories
 
         public async Task<string> CreateOrg(OrgModel myOrg)
         {
-            DocumentReference docRef = _db.Collection("organizations").Document();
+            DocumentReference docRef = _db.Collection("organizations").Document(myOrg.Slug);
             await docRef.SetAsync(myOrg);
             return docRef.Id;
         }
