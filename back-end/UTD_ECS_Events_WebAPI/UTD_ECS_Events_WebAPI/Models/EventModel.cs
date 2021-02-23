@@ -23,8 +23,8 @@ namespace UTD_ECS_Events_WebAPI.Models
         public DateTime EndTime { get; set; }
         [FirestoreProperty]
         public string Description { get; set; }
-        //[FirestoreProperty]
-        //public DocumentReference Orgs { get; set; }
+        [FirestoreProperty]
+        public List<string> Orgs { get; set; }
         [FirestoreProperty]
         public DateTime LastUpdated { get; set; }
     }
