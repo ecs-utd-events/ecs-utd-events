@@ -1,5 +1,58 @@
 # Back-End
 
+## API Documentation
+### Events
+#### Data Model
+```
+{
+    "id": "string",
+    "title": "string",
+    "location": "string",
+    "link": "string",
+    "startTime": "DateTime",
+    "endTime": "DateTime",
+    "description": "string",
+    "orgs": [
+        "string",
+        "ACM"
+    ],
+    "lastUpdated": "DateTime"
+}
+```
+#### Controller
+| Command  | Method | Route | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| Create  | POST  | /api/events | Create an event. Event must be specified as JSON in body of request (id not required). Id returned on successful POST |
+| Find all | GET  | /api/events/all | Retrieve all events in the database |
+| Find single  | GET  | /api/events/{event_id} | Retrieves the event with id {event_id} |
+| Delete  | DELETE  | /api/events/{event_id} | Deletes the event with id {event_id} |
+
+
+### Organizations
+#### Data Model
+```
+{
+    "slug": "string",
+    "name": "string",
+    "shortName": "string",
+    "website": "string",
+    "description": "string",
+    "socialMedia": {
+        "key:string": "value:string"
+        "facebook": "fb",
+        "twitter": "tw"
+    }
+}
+```
+Note: ```slug``` is the Id for an Organization object
+#### Controller
+| Command  | Method | Route | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| Create  | POST  | /api/orgs | Create an organization. Organization must be specified as JSON in body of request (slug REQUIRED). Id (slug) returned on successful POST |
+| Find all | GET  | /api/orgs | Retrieve all organizations in the database |
+| Delete  | DELETE  | /api/orgs/{org_slug} | Deletes the organization with id {org_slug} |
+
+
 ## Running on local without Visual Studio
 ### Prerequisites
 First you'll want to ensure you have .NET Core downloaded. You will need at least version 3.1+

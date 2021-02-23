@@ -10,6 +10,7 @@ namespace UTD_ECS_Events_WebAPI.Repositories
     {
         Task<IEnumerable<EventModel>> GetEvents();
         Task<string> CreateEvent(EventModel eventModel);
+        Task<EventModel> GetSingleEvent(string id);
         void DeleteEvent(string id);
     }
 }

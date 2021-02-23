@@ -103,6 +103,10 @@
   min-height: auto;
 }
 
+.main-page-sidebar .card-body {
+  padding: 1vw;
+}
+
 .blob-animation {
   display: none;
   position: absolute;

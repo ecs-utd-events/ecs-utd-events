@@ -9,6 +9,7 @@ namespace UTD_ECS_Events_WebAPI.Services
     public interface IEventsService
     {
         IEnumerable<EventModel> GetEvents();
+        EventModel GetSingleEvent(string id);
         string CreateEvent(EventModel eventModel);
         void DeleteEvent(string id);
     }

@@ -4,20 +4,25 @@ import Col from 'react-bootstrap/esm/Col';
 import {
   Link
 } from "react-router-dom";
-import { useState } from 'react'
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './../styles/App.css';
-import './../styles/fullcalendar-custom.css';
+import React, { useState } from 'react'
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './../styles/App.css';
+import './../styles/fullcalendar-custom.css';
+
 import EventInfoCard from '../components/EventInfoCard'
 import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
+import EventInfoModal from '../components/EventInfoModal';
 
 // Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
 let eventGuid = 0
@@ -149,11 +154,20 @@ export const ORGANIZATIONS = [
 export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [animateCard, setAnimateCard] = useState('');
+  const [mobileModalOpen, setMobileModalOpen] = useState(false);
 
   return (
     <div className="App">
       <NavbarComponent page='Home' />
       <div className="background">
+        <Modal
+          style={{ overflow: 'auto', justifyContent: 'center' }}
+          open={mobileModalOpen}
+          onClose={() => setMobileModalOpen(false)}
+          closeAfterTransition>
+          <EventInfoModal event={selectedEvent} handleClose={() => setMobileModalOpen(false)} open={mobileModalOpen} />
+        </Modal>
+
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
@@ -244,6 +258,7 @@ export default function Home() {
                   initialEvents={INITIAL_EVENTS}
                   eventClick={(info) => {
                     setSelectedEvent(info.event)
+                    setMobileModalOpen(true);
                   }}
                 />
               </div>

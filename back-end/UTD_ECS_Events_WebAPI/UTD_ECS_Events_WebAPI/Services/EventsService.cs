@@ -21,6 +21,18 @@ namespace UTD_ECS_Events_WebAPI.Services
             return _eventsRepository.GetEvents().Result;
         }
 
+        public EventModel GetSingleEvent(string id)
+        {
+            try
+            {
+                return _eventsRepository.GetSingleEvent(id).Result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public string CreateEvent(EventModel eventModel)
         {
             return _eventsRepository.CreateEvent(eventModel).Result;

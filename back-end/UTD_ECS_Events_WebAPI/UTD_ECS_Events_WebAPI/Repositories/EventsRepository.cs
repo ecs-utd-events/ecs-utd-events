@@ -38,9 +38,26 @@ namespace UTD_ECS_Events_WebAPI.Repositories
                 .ToList();
         }
 
+        public async Task<EventModel> GetSingleEvent(string id)
+        {
+            DocumentReference docRef = _db.Collection("events").Document(id);
+            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+            if (snapshot.Exists)
+            {
+                return snapshot.ConvertTo<EventModel>();
+            }
+            else
+            {
+                throw new ArgumentException("Document with this id does not exist: " + id);
+            }
+        }
+
         public async Task<string> CreateEvent(EventModel myEvent)
         {
             DocumentReference docRef = _db.Collection("events").Document();
+            myEvent.StartTime = myEvent.StartTime.ToUniversalTime();
+            myEvent.EndTime = myEvent.EndTime.ToUniversalTime();
+            myEvent.LastUpdated = myEvent.LastUpdated.ToUniversalTime();
             await docRef.SetAsync(myEvent);
             return docRef.Id;
         }
