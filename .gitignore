@@ -14,6 +14,7 @@ front-end/build
 # misc
 front-end/.DS_Store
 front-end/.env.local
+front-end/.env
 front-end/.env.development.local
 front-end/.env.test.local
 front-end/.env.production.local
