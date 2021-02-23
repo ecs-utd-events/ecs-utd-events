@@ -19,6 +19,7 @@
     "lastUpdated": "DateTime"
 }
 ```
+where "DateTime" is a string of the form "yyyy-mm-ddThh:mm:ssZ".
 #### Controller
 | Command  | Method | Route | Description |
 | ------------- | ------------- | ------------- | ------------- |

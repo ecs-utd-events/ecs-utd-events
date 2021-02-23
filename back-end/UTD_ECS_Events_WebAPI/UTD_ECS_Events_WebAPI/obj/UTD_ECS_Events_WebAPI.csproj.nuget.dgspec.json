@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\siddh\\Box Sync\\UTD Academics\\Spring 2021\\CS 4485.001\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {}
+    "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\siddh\\Box Sync\\UTD Academics\\Spring 2021\\CS 4485.001\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {
+    "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\siddh\\Box Sync\\UTD Academics\\Spring 2021\\CS 4485.001\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
         "projectName": "UTD_ECS_Events_WebAPI",
-        "projectPath": "C:\\Users\\siddh\\Box Sync\\UTD Academics\\Spring 2021\\CS 4485.001\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
-        "packagesPath": "C:\\Users\\siddh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\siddh\\Box Sync\\UTD Academics\\Spring 2021\\CS 4485.001\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\obj\\",
+        "projectPath": "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
+        "packagesPath": "C:\\Users\\jiwon\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\siddh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jiwon\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Google.Cloud.Firestore": {
               "target": "Package",
@@ -73,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }
