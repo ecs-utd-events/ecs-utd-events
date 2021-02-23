@@ -2,19 +2,56 @@
 
 ## API Documentation
 ### Events
-- Get all events: HTTP GET localhost:XXXXX/api/events/all
-- Get single event: HTTP GET localhost:XXXXX/api/events/{event_id}
-- Create event: HTTP POST localhost:XXXXX/api/events
-  - Event object in JSON format in body of HTTP request (all fields except id)
-  - To see fields required for an event object, look at JSON received from HTTP GET
-- Delete event: HTTP DELETE localhost:XXXXX/api/events/{event_id}
+#### Data Model
+```
+{
+    "id": "string",
+    "title": "string",
+    "location": "string",
+    "link": "string",
+    "startTime": "DateTime",
+    "endTime": "DateTime",
+    "description": "string",
+    "orgs": [
+        "string",
+        "ACM"
+    ],
+    "lastUpdated": "DateTime"
+}
+```
+#### Controller
+| Command  | Method | Route | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| Create  | POST  | /api/events | Create an event. Event must be specified as JSON in body of request (id not required). Id returned on successful POST |
+| Find all | GET  | /api/events/all | Retrieve all events in the database |
+| Find single  | GET  | /api/events/{event_id} | Retrieves the event with id {event_id} |
+| Delete  | DELETE  | /api/events/{event_id} | Deletes the event with id {event_id} |
 
-### Orgs
-- Get all orgs: HTTP GET localhost:XXXXX/api/orgs
-- Create org: HTTP POST localhost:XXXXX/api/orgs
-  - Organization object in JSON format in body of HTTP request (here, slug (id) REQUIRED)
-  - To see fields required for an organization object, look at JSON received from HTTP GET
-- Delete org: HTTP DELETE localhost:XXXXX/api/events/{org_id}
+
+### Organizations
+#### Data Model
+```
+{
+    "slug": "string",
+    "name": "string",
+    "shortName": "string",
+    "website": "string",
+    "description": "string",
+    "socialMedia": {
+        "key:string": "value:string"
+        "facebook": "fb",
+        "twitter": "tw"
+    }
+}
+```
+Note: ```slug``` is the Id for an Organization object
+#### Controller
+| Command  | Method | Route | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| Create  | POST  | /api/orgs | Create an organization. Organization must be specified as JSON in body of request (slug REQUIRED). Id (slug) returned on successful POST |
+| Find all | GET  | /api/orgs | Retrieve all organizations in the database |
+| Delete  | DELETE  | /api/orgs/{org_slug} | Deletes the organization with id {org_slug} |
+
 
 ## Running on local without Visual Studio
 ### Prerequisites
