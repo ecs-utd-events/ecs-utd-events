@@ -46,11 +46,22 @@
     border-width: 0;
     width: 40px;
     height: 40px;
+    color: var(--gray1);
     /* padding: 0.5rem; */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
-    white-space: nowrap; /* This is required unless you put the helper span closely near the img */
+    white-space: nowrap;
+    /* This is required unless you put the helper span closely near the img */
     text-align: center;
     margin: 1em 0;
+}
+
+.icon-btn.sm {
+    width: 30px;
+    height: 30px;
+}
+.icon-btn.lg {
+    width: 50px;
+    height: 50px;
 }
 
 .icon-btn:hover {
@@ -62,6 +73,17 @@
     max-height: 40px;
     max-width: 40px;
     vertical-align: middle;
+    fill: var(--gray1);
+}
+
+.icon.sm {
+    max-height: 30px;
+    max-width: 30px;
+}
+
+.icon.lg {
+    max-height: 50px;
+    max-width: 50px;
 }
 
 .helper {
@@ -75,8 +97,9 @@
 }
 
 .card-title {
-    font-size: 24px;
-    color: var(--gray3)
+    font-size: 1.5rem;
+    color: var(--gray3);
+    text-align: center;
 }
 
 .org-info-card-style {
@@ -88,5 +111,128 @@
 }
 
 .interactive-card:hover {
-    filter: drop-shadow(1px 1.33px 1px var(--gray4));
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.admin-tab {
+    padding: 20px;
+    background-color: var(--accent1);
+}
+
+.admin-tab:hover {
+    background-color: var(--accent2);
+    cursor: pointer;
+}
+
+.admin-tab.first {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 0;
+}
+
+.admin-tab.last {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 0;
+}
+
+.admin-tab.selected {
+    background-color: var(--accent3);
+    border-left: 10px solid var(--primary1);
+}
+
+.admin-tab.selected:hover {
+    background-color: var(--accent3);
+    cursor: auto;
+}
+
+.background .admin-tab-wrapper {
+    background-color: none;
+    border: none;
+    margin-top: 2rem;
+    margin-left: 1rem;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.admin-tab-title {
+    font-weight: 600;
+    font-size: 2rem;
+    align-self: center;
+    margin-bottom: 0;
+}
+
+.admin-tab-wrapper a {
+    color: var(--gray1)
+}
+
+.admin-tab-wrapper a:hover {
+    color: var(--gray1);
+    text-decoration: none;
+}
+
+.MuiChip-root.custom-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: var(--gray2);
+    margin: 1px;
+}
+
+.MuiChip-root.custom-tag.primary {
+    background-color: var(--primary1);
+}
+
+.MuiChip-root.custom-tag.secondary {
+    background-color: var(--secondary1);
+}
+
+.MuiChip-root.custom-tag.accent {
+    background-color: var(--accent3);
+}
+
+.MuiChip-outlined.custom-tag.primary {
+    border: 2px solid var(--primary1);
+    background-color: transparent;
+}
+
+.MuiChip-outlined.custom-tag.secondary {
+    border: 2px solid var(--secondary1);
+    background-color: transparent;
+}
+
+.MuiChip-outlined.custom-tag.accent {
+    border: 2px solid var(--accent1);
+    background-color: transparent;
+}
+
+.modal-wrapper {
+    min-height: 100vh;
+}
+
+.modal-wrapper .modal-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 1rem;
+    padding-bottom: 0;
+    padding-top: 10vh;
+    background-color: white;
+    overflow: scroll;
+}
+
+.modal-wrapper .close-btn-wrapper {
+    z-index: 99;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.modal-wrapper .modal-appbar {
+    width: 100%;
+    height: 10vh;
+    position: fixed;
+    top: 0;
+    background-color: var(--primary1);
 }

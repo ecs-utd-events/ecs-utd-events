@@ -6,7 +6,7 @@ export default function NavbarComponent({ page }) {
     return (
         <Navbar className={'mb-0 ' + backgroundCSSName}>
             <Navbar.Brand href="/">
-                <ECSLogo height='8vh' />
+                <ECSLogo height='8vh' width='8vh'/>
             </Navbar.Brand>
         </Navbar>
     );

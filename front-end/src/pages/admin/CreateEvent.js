@@ -2,8 +2,8 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/esm/Card';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
-import './../styles/App.css';
-import CustomButton from '../components/CustomButton';
+import './../../styles/App.css';
+import CustomButton from '../../components/CustomButton';
 
 export default function CreateEvent() {
     const { register, handleSubmit, watch, errors } = useForm();

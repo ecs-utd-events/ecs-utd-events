@@ -1,32 +1,19 @@
-import { useState } from 'react';
-
 import Card from "react-bootstrap/esm/Card";
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import ListGroup from 'react-bootstrap/ListGroup';
-import ListGroupItem from 'react-bootstrap/ListGroupItem';
-import IconButton from '../components/IconButton';
-import Image from 'react-bootstrap/Image';
 import {
     Link
 } from "react-router-dom";
-import Collapse from 'react-bootstrap/Collapse';
-import Calendar from '../assets/calendar.svg';
-import Placeholder from '../assets/placeholder.svg';
-import Description from '../assets/product-description.svg';
-import Share from '../assets/share.svg';
-import Group from '../assets/group.svg';
-import LinkSVG from '../assets/link.svg';
+
+import EventInfoContent from './EventInfoContent.js';
 
 
 export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
-    const [open, setOpen] = useState(false);
     const onAnimationEnd = () => {
         setAnimateCard('')
     }
     if (event != null) {
         return (
-            <Card className="drop-shadow card">
-                <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0 }}>
+            <Card className="drop-shadow card pb-0">
+                <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
                     <div style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden" }}>
                         <div style={{ display: animateCard == '' ? 'none' : 'block' }} className={"blob " + animateCard} onAnimationEnd={onAnimationEnd}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 350">
@@ -35,40 +22,8 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                         </div>
                     </div>
                 </div>
-                <Card.Header className="card-header-no-border">
-                    <h3 className="font-weight-bold card-title">{event.title}</h3>
-                </Card.Header>
-                <Card.Body>
-                    <ListGroup className="list-group-flush text-left">
-                        <ListGroupItem className="px-0">
-                            <Image className="event-icon mr-2" src={Calendar}></Image>
-                            <span>{event.start.toDateString()}</span><br />
-                            <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span>
-                        </ListGroupItem>
-                        <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Placeholder}></Image>{event.extendedProps.location || 'Unspecified Location'}</ListGroupItem>
-                        <ListGroupItem className="px-0"><Image className="event-icon mr-2" src={Group}></Image>{event.extendedProps.org || 'Organization'} </ListGroupItem>
-                        <ListGroupItem className="px-0">
-                            <span onClick={() => setOpen(!open)}>
-                                <Image className="event-icon mr-2" src={Description}></Image>
-                                Description
-                            </span>
-                            <Collapse in={open}>
-                                <div className="mt-2" id="collapse-text">
-                                    {event.extendedProps.description || 'Here\'s the Description'}
-                                </div>
-                            </Collapse>
-                        </ListGroupItem>
-                    </ListGroup>
-                </Card.Body>
-                <Card.Footer>
-                    <small className="text-muted mr-sm-2">Last updated 2 mins ago</small>
-                    <ButtonGroup>
-                        <IconButton className="mr-1" icon={LinkSVG}></IconButton>
-                        <IconButton className="mr-1" icon={Calendar}></IconButton>
-                        <IconButton className="mr-1" icon={Share}></IconButton>
-                    </ButtonGroup>
-                </Card.Footer>
-            </Card>
+                <EventInfoContent event={event} />
+            </Card >
         );
     } else {
         return (
