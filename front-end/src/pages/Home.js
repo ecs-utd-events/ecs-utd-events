@@ -89,10 +89,7 @@ export default function Home() {
       .catch(error => {
         console.error('There was an error fetching events!', error);
       });
-    // empty dependency array means this effect will only run once (like componentDidMount in classes)
-  }, []);
 
-  useEffect(() => {
     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs')
       .then(response => response.json())
       .then(data => shuffleArray(data))
@@ -100,6 +97,7 @@ export default function Home() {
       .catch(error => {
         console.error('There was an error fetching organizations!', error);
       });
+    // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
 
   return (
