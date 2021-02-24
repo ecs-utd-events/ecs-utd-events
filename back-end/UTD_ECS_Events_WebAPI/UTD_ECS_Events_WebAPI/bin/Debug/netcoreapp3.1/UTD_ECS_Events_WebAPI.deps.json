@@ -24,6 +24,8 @@
     ".NETCoreApp,Version=v3.1": {
       "UTD_ECS_Events_WebAPI/1.0.0": {
         "dependencies": {
+          "FireSharp": "2.0.0",
+          "FirebaseAdmin": "2.0.0",
           "Google.Cloud.Firestore": "2.3.0",
           "Serilog": "2.10.0",
           "Serilog.Sinks.Console": "3.1.1",
@@ -161,7 +163,6 @@
           "System.Buffers": "4.0.2.0",
           "System.Collections.Concurrent": "4.0.15.0",
           "System.Collections": "4.1.2.0",
-          "System.Collections.Immutable.Reference": "1.2.5.0",
           "System.Collections.NonGeneric": "4.1.2.0",
           "System.Collections.Specialized": "4.1.2.0",
           "System.ComponentModel.Annotations": "4.3.1.0",
@@ -318,6 +319,38 @@
           "UTD_ECS_Events_WebAPI.dll": {}
         }
       },
+      "FirebaseAdmin/2.0.0": {
+        "dependencies": {
+          "Google.Api.Gax.Rest": "3.2.0",
+          "Google.Apis.Auth": "1.49.0",
+          "System.Collections.Immutable": "1.7.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FirebaseAdmin.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/FirebaseAdmin.dll": {}
+        }
+      },
+      "FireSharp/2.0.0": {
+        "dependencies": {
+          "Microsoft.Bcl.Async": "1.0.168",
+          "Microsoft.Net.Http": "2.2.28",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "runtime": {
+          "lib/net45/FireSharp.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/net45/FireSharp.dll": {}
+        }
+      },
       "Google.Api.CommonProtos/2.2.0": {
         "dependencies": {
           "Google.Protobuf": "3.13.0"
@@ -351,7 +384,7 @@
         "dependencies": {
           "Google.Api.CommonProtos": "2.2.0",
           "Google.Api.Gax": "3.2.0",
-          "Google.Apis.Auth": "1.48.0",
+          "Google.Apis.Auth": "1.49.0",
           "Grpc.Auth": "2.31.0",
           "Grpc.Core.Api": "2.31.0"
         },
@@ -380,33 +413,48 @@
           "lib/netstandard2.0/Google.Api.Gax.Grpc.GrpcCore.dll": {}
         }
       },
-      "Google.Apis/1.48.0": {
+      "Google.Api.Gax.Rest/3.2.0": {
         "dependencies": {
-          "Google.Apis.Core": "1.48.0"
+          "Google.Api.Gax": "3.2.0",
+          "Google.Apis.Auth": "1.49.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "assemblyVersion": "3.2.0.0",
+            "fileVersion": "3.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {}
+        }
+      },
+      "Google.Apis/1.49.0": {
+        "dependencies": {
+          "Google.Apis.Core": "1.49.0"
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           }
         },
         "compile": {
           "lib/netstandard2.0/Google.Apis.dll": {}
         }
       },
-      "Google.Apis.Auth/1.48.0": {
+      "Google.Apis.Auth/1.49.0": {
         "dependencies": {
-          "Google.Apis": "1.48.0",
-          "Google.Apis.Core": "1.48.0"
+          "Google.Apis": "1.49.0",
+          "Google.Apis.Core": "1.49.0"
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           },
           "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           }
         },
         "compile": {
@@ -414,14 +462,14 @@
           "lib/netstandard2.0/Google.Apis.Auth.dll": {}
         }
       },
-      "Google.Apis.Core/1.48.0": {
+      "Google.Apis.Core/1.49.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3"
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           }
         },
         "compile": {
@@ -432,7 +480,7 @@
         "dependencies": {
           "Google.Cloud.Firestore.V1": "2.2.0",
           "Grpc.Core": "2.31.0",
-          "System.Collections.Immutable": "1.4.0",
+          "System.Collections.Immutable": "1.7.1",
           "System.Linq.Async": "4.0.0"
         },
         "runtime": {
@@ -493,7 +541,7 @@
       },
       "Grpc.Auth/2.31.0": {
         "dependencies": {
-          "Google.Apis.Auth": "1.48.0",
+          "Google.Apis.Auth": "1.49.0",
           "Grpc.Core.Api": "2.31.0"
         },
         "runtime": {
@@ -567,6 +615,35 @@
           "lib/netstandard2.0/Grpc.Core.Api.dll": {}
         }
       },
+      "Microsoft.Bcl/1.1.9": {
+        "dependencies": {
+          "Microsoft.Bcl.Build": "1.0.14"
+        }
+      },
+      "Microsoft.Bcl.Async/1.0.168": {
+        "dependencies": {
+          "Microsoft.Bcl": "1.1.9"
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Threading.Tasks.Extensions.Desktop.dll": {
+            "assemblyVersion": "1.0.168.0",
+            "fileVersion": "1.0.168.0"
+          },
+          "lib/net40/Microsoft.Threading.Tasks.Extensions.dll": {
+            "assemblyVersion": "1.0.12.0",
+            "fileVersion": "1.0.168.0"
+          },
+          "lib/net40/Microsoft.Threading.Tasks.dll": {
+            "assemblyVersion": "1.0.12.0",
+            "fileVersion": "1.0.168.0"
+          }
+        },
+        "compile": {
+          "lib/net40/Microsoft.Threading.Tasks.Extensions.Desktop.dll": {},
+          "lib/net40/Microsoft.Threading.Tasks.Extensions.dll": {},
+          "lib/net40/Microsoft.Threading.Tasks.dll": {}
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.0.0": {
         "runtime": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
@@ -576,6 +653,27 @@
         },
         "compile": {
           "ref/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {}
+        }
+      },
+      "Microsoft.Bcl.Build/1.0.14": {},
+      "Microsoft.Net.Http/2.2.28": {
+        "dependencies": {
+          "Microsoft.Bcl": "1.1.9",
+          "Microsoft.Bcl.Build": "1.0.14"
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Extensions.dll": {
+            "assemblyVersion": "2.2.28.0",
+            "fileVersion": "2.2.28.0"
+          },
+          "lib/net45/System.Net.Http.Primitives.dll": {
+            "assemblyVersion": "4.2.28.0",
+            "fileVersion": "4.2.28.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Net.Http.Extensions.dll": {},
+          "lib/net45/System.Net.Http.Primitives.dll": {}
         }
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
@@ -642,7 +740,17 @@
           "lib/netstandard2.0/Serilog.Sinks.File.dll": {}
         }
       },
-      "System.Collections.Immutable/1.4.0": {},
+      "System.Collections.Immutable/1.7.1": {
+        "runtime": {
+          "lib/netstandard2.0/System.Collections.Immutable.dll": {
+            "assemblyVersion": "1.2.5.0",
+            "fileVersion": "4.700.20.21406"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/System.Collections.Immutable.dll": {}
+        }
+      },
       "System.Console/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -1598,12 +1706,6 @@
         },
         "compileOnly": true
       },
-      "System.Collections.Immutable.Reference/1.2.5.0": {
-        "compile": {
-          "System.Collections.Immutable.dll": {}
-        },
-        "compileOnly": true
-      },
       "System.Collections.NonGeneric/4.1.2.0": {
         "compile": {
           "System.Collections.NonGeneric.dll": {}
@@ -2500,6 +2602,20 @@
       "serviceable": false,
       "sha512": ""
     },
+    "FirebaseAdmin/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Qm8UzfTcxqd/TfCdU6IS5Ek1eAt3v/kySLAw3kMxVi/I1nunifbzaVF76UZMDiiOmwqq2Ppgyitg1VFxcg4J/Q==",
+      "path": "firebaseadmin/2.0.0",
+      "hashPath": "firebaseadmin.2.0.0.nupkg.sha512"
+    },
+    "FireSharp/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZYwngje22CjTtHYlQfC7RxD4PPud/PIQuJG/vWSmd5K6f04G+bEHRSnrkJqAuGDNXeEQU+e9KHhXc1JQxLqEhg==",
+      "path": "firesharp/2.0.0",
+      "hashPath": "firesharp.2.0.0.nupkg.sha512"
+    },
     "Google.Api.CommonProtos/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -2528,26 +2644,33 @@
       "path": "google.api.gax.grpc.grpccore/3.2.0",
       "hashPath": "google.api.gax.grpc.grpccore.3.2.0.nupkg.sha512"
     },
-    "Google.Apis/1.48.0": {
+    "Google.Api.Gax.Rest/3.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wnZJKPM7blcDzfTyMQ6kHvvDkd89a3C8m8uzTIJ8vrOdRqSAwHDE9nhht6GtcPe+sSfpuav0dX4RFAz2pKzp8w==",
-      "path": "google.apis/1.48.0",
-      "hashPath": "google.apis.1.48.0.nupkg.sha512"
+      "sha512": "sha512-YY4mD0nGxTx1uez7Perm+zAd3FH50dd3+7HTYsRFCywDEtj3RkrMjcAmw6mNpKkw2sRICu7aYNy1mgMjd3nVbw==",
+      "path": "google.api.gax.rest/3.2.0",
+      "hashPath": "google.api.gax.rest.3.2.0.nupkg.sha512"
     },
-    "Google.Apis.Auth/1.48.0": {
+    "Google.Apis/1.49.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-OwBOJLMr/4WH3svpoYjOhPu+GYN1N3sEsllBbMHxLYpfCKP13XheifjSnClzXnHuY19tDfN6aEwHpPv5jkG88Q==",
-      "path": "google.apis.auth/1.48.0",
-      "hashPath": "google.apis.auth.1.48.0.nupkg.sha512"
+      "sha512": "sha512-fmXQQTxZFOBlnvokvdQMzq0Lt+g2QzpZ4H6U8lMMFHgAR8ZqxQnPN5yHDpoHf7a++hJHb5W3pALxauGsq+afKQ==",
+      "path": "google.apis/1.49.0",
+      "hashPath": "google.apis.1.49.0.nupkg.sha512"
     },
-    "Google.Apis.Core/1.48.0": {
+    "Google.Apis.Auth/1.49.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DJ/2eNBneeqEJuTO0ZPNON9DdDMS2JXcHiszZ86MUNqPtQGhB3xbZoGg1p0sOfvGpyyoqsIMNeJXdSWUHB4E5g==",
-      "path": "google.apis.core/1.48.0",
-      "hashPath": "google.apis.core.1.48.0.nupkg.sha512"
+      "sha512": "sha512-3V9ohvixQtjaEvk7T9Ac7E/KvwEPa7eL4aMNreJDI0CEPzCdQdk2zCvaJPRrNIjhe+UuBeOeom1oAOMFB74JHg==",
+      "path": "google.apis.auth/1.49.0",
+      "hashPath": "google.apis.auth.1.49.0.nupkg.sha512"
+    },
+    "Google.Apis.Core/1.49.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9DgGdtyzgrCfHWwc/HiDXDbykNMeKQozbEHYEUEcezRuH+YR3fvq7YGVBDmUM8g6qEL3kDk6h5EU4h0IJwue1w==",
+      "path": "google.apis.core/1.49.0",
+      "hashPath": "google.apis.core.1.49.0.nupkg.sha512"
     },
     "Google.Cloud.Firestore/2.3.0": {
       "type": "package",
@@ -2598,12 +2721,40 @@
       "path": "grpc.core.api/2.31.0",
       "hashPath": "grpc.core.api.2.31.0.nupkg.sha512"
     },
+    "Microsoft.Bcl/1.1.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-USQ55innJy8K+tAXvVa1O8dUTp2s7pmJ5cJj6Tl02HtGc2xBDj0P2QH5620HbGXIWKWYhydoeQF8Rm/JRDBGhw==",
+      "path": "microsoft.bcl/1.1.9",
+      "hashPath": "microsoft.bcl.1.1.9.nupkg.sha512"
+    },
+    "Microsoft.Bcl.Async/1.0.168": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tUNC02eBwDKpGre0BcNIvblLv1q0Q3DnS/vtkRHj2FE1sXwt386HAudztyl5C0U88hllrqHDvtlz8bK0Y8cHDA==",
+      "path": "microsoft.bcl.async/1.0.168",
+      "hashPath": "microsoft.bcl.async.1.0.168.nupkg.sha512"
+    },
     "Microsoft.Bcl.AsyncInterfaces/1.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-K63Y4hORbBcKLWH5wnKgzyn7TOfYzevIEwIedQHBIkmkEBA9SCqgvom+XTuE+fAFGvINGkhFItaZ2dvMGdT5iw==",
       "path": "microsoft.bcl.asyncinterfaces/1.0.0",
       "hashPath": "microsoft.bcl.asyncinterfaces.1.0.0.nupkg.sha512"
+    },
+    "Microsoft.Bcl.Build/1.0.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cDLKSvNvRa519hplsbSoYqO69TjdDIhfjtKUM0g20/nVROoWsGav9KCI9HtnGjLmdV1+TcUUDhbotcllibjPEA==",
+      "path": "microsoft.bcl.build/1.0.14",
+      "hashPath": "microsoft.bcl.build.1.0.14.nupkg.sha512"
+    },
+    "Microsoft.Net.Http/2.2.28": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hPL9k+rPIpAj84RZSq3WtJkOD9uMStBovAIAz/0OQ+9hQIwQ2XqQlAhMqI4kw0XDxweJySIqNTMlkhRRuthcPQ==",
+      "path": "microsoft.net.http/2.2.28",
+      "hashPath": "microsoft.net.http.2.2.28.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
@@ -2654,12 +2805,12 @@
       "path": "serilog.sinks.file/4.1.0",
       "hashPath": "serilog.sinks.file.4.1.0.nupkg.sha512"
     },
-    "System.Collections.Immutable/1.4.0": {
+    "System.Collections.Immutable/1.7.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-71hw5RUJRu5+q/geUY69gpXD8Upd12cH+F3MwpXV2zle7Bqqkrmc1JblOTuvUcgmdnUtQvBlV5e1d6RH+H2lvA==",
-      "path": "system.collections.immutable/1.4.0",
-      "hashPath": "system.collections.immutable.1.4.0.nupkg.sha512"
+      "sha512": "sha512-B43Zsz5EfMwyEbnObwRxW5u85fzJma3lrDeGcSAV1qkhSRTNY5uXAByTn9h9ddNdhM+4/YoLc/CI43umjwIl9Q==",
+      "path": "system.collections.immutable/1.7.1",
+      "hashPath": "system.collections.immutable.1.7.1.nupkg.sha512"
     },
     "System.Console/4.3.0": {
       "type": "package",
@@ -3469,11 +3620,6 @@
       "sha512": ""
     },
     "System.Collections/4.1.2.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Collections.Immutable.Reference/1.2.5.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
