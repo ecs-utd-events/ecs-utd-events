@@ -151,7 +151,7 @@ export default function OrgProfile() {
             .catch(error => {
                 console.error('There was an error fetching the org info for this org: ' + orgSlug, error);
             });
-    }, []);
+    }, [orgSlug]);
 
     console.log(orgSlug);
     console.log(orgInfo);
