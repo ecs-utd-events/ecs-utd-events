@@ -2,86 +2,77 @@ import { useState, useRef } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Editable } from './Editable';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
+import OrgPageEventCard from './OrgPageEventCard';
+import IconButton from './IconButton';
+import CloseIcon from '@iconify/icons-gg/close';
+import EditIcon from '@iconify/icons-gg/edit-markup';
 
 export default function EditableEventCard({ event }) {
-    const inputRef = useRef();
-    const { register } = useForm();
-    const [dateTime, setDateTime] = useState(event.start);
-    const [title, setTitle] = useState(event.title);
-    const [location, setLocation] = useState(event.location);
-    const [org, setOrg] = useState(event.org);
-    const [link, setLink] = useState(event.link);
-    const [description, setDescription] = useState(event.description);
-
-    if (event != null) {
+    const { register, handleSubmit, watch, errors } = useForm();
+    const onSubmit = data => console.log(data);
+    const [isEditing, setEditing] = useState(false);
+    // var isEdit = false;
+    if (isEditing) {
         return (
-            <Form>
-                <Card className="drop-shadow mb-4">
+            <div className="App">
+            <Card className={"drop-shadow mb-4 "}>
+                <Form>
                     <Row>
                         <Col xs={5} style={{ textAlign: 'left' }}>
-                            <h5>
-                                <Editable
-                                    text={title}
-                                    type="input"
-                                    childRef={inputRef}
-                                >
-                                    <Form.Control type="text" placeholder={title} value={title} name="Title" ref={inputRef} onChange={e => setTitle(e.target.value)} />
-                                </Editable>
-                            </h5>
+                            <Form.Control className="mb-4" type="text" placeholder="Title" name="Title" value={event.title} ref={register} />
                         </Col>
                     </Row>
                     <Row>
                         <Col xs={3} style={{ textAlign: 'left' }}>
-                            <Editable
-                                text={dateTime}
-                                type="input"
-                                childRef={inputRef}
-                            >
-                                <Form.Control type="datetime-local" placeholder={dateTime} value={dateTime} name="Start" ref={inputRef} onChange={e => setDateTime(e.target.value)} />
-                            </Editable>
                             {/* <p className="mb-0">{event.start.toDateString()}</p> */}
                             {/* <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span> */}
-                            <Editable
-                                text={location}
-                                type="input"
-                                childRef={inputRef}
-                            >
-                                <Form.Control type="text" placeholder={location} value={location} name="Location" ref={inputRef} onChange={e => setLocation(e.target.value)} />
-                            </Editable>
-                            <Editable
-                                text={org}
-                                type="input"
-                                childRef={inputRef}
-                            >
-                                <Form.Control type="text" placeholder={org} value={org} name="org" ref={inputRef} onChange={e => setOrg(e.target.value)} />
-                            </Editable>
-                            <Editable
-                                text={link}
-                                type="textarea"
-                                childRef={inputRef}
-                            >
-                                <Form.Control type="url" placeholder={link} value={link} name="Link" ref={inputRef} onChange={e => setLink(e.target.value)} />
-                            </Editable>
+                            <Form.Control className="mb-4" type="datetime-local" placeholder="Date" value={event.start} name="Date" ref={register} />
+                            <Form.Control className="mb-4" type="text" placeholder="Location" value={event.location} name="Location" ref={register} />
+                            <Form.Control className="mb-4" type="url" placeholder="Link" value={event.link}name="Link" ref={register} />
+                            <Form.Control className="mb-4" type="text" placeholder="Collaborator(s)" name="Collaborator(s)" as="select" value={event.org} custom>
+                                <option>1</option>
+                            </Form.Control>
                         </Col>
                         <Col style={{ textAlign: 'left' }}>
-                            <Editable
-                                text={description}
-                                type="url"
-                                childRef={inputRef}
-                            >
-                                <Form.Control type="text" as="textarea" rows={5} placeholder="Description" value={description} name="Description" ref={inputRef} onChange={e => setDescription(e.target.value)} />
-                            </Editable>
+                            <Form.Control type="text" as="textarea" rows={3} placeholder="Description" name="Description" value={event.desecription} ref={register} />
+                            <IconButton icon={CloseIcon} onClick={() => setEditing(!isEditing)}></IconButton>
                         </Col>
                     </Row>
-                </Card>
-            </Form>
+                </Form>
+            </Card>
+            </div>
         )
     } else {
         return (
-            null
+            <div>
+                <Card className="drop-shadow mb-4">
+                    <Row>
+                        <Col xs={5} style={{ textAlign: 'left' }}>
+                            <Form.Control className="mb-4" type="text" placeholder="Title" name="Title" value={event.title} ref={register} readOnly/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={3} style={{ textAlign: 'left' }}>
+                            <Form.Control className="mb-4" type="datetime-local" placeholder="Date" value={event.start} name="Date" ref={register} readOnly/>
+                            <Form.Control className="mb-4" type="text" placeholder="Location" value={event.location} name="Location" ref={register} readOnly/>
+                            <Form.Control className="mb-4" type="url" placeholder="Link" value={event.link}name="Link" ref={register} readonly={true} readOnly />
+                            <Form.Control className="mb-4" type="url" placeholder="Collaborator(s)" value={event.org} name="Org" ref={register} readonly={true} readOnly />
+                        </Col>
+                        <Col style={{ textAlign: 'left' }}>
+                            <Form.Control className="mb-4" type="text" placeholder="Description" value={event.description} name="description" ref={register} readOnly/>
+
+                            <IconButton icon={EditIcon} onClick={() => setEditing(!isEditing)}></IconButton>
+                        </Col>
+
+
+                    </Row>
+
+                </Card>
+            </div>
         );
     }
 }
