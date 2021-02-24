@@ -138,7 +138,7 @@
 
 .admin-tab.selected {
     background-color: var(--accent3);
-    border-left: 10px solid var(--primary1);
+    border-left: 5px solid var(--primary1);
 }
 
 .admin-tab.selected:hover {
@@ -157,7 +157,6 @@
 
 .admin-tab-title {
     font-weight: 600;
-    font-size: 2rem;
     align-self: center;
     margin-bottom: 0;
 }
