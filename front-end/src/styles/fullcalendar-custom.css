@@ -108,8 +108,8 @@
     background-color: var(--primary2);
 }
 
-.fullcalendar-wrapper .fc .fc-list-event-dot {
-    border: calc(var(--fc-list-event-dot-width, 10px) / 2) solid var(--accent1)
+.fullcalendar-wrapper .fc .fc-list-event-graphic {
+    display: none;
 }
 
 .fullcalendar-wrapper .fc .fc-list-event {
@@ -141,6 +141,6 @@
     font-size: 0.9rem;
 }
 
-.fullcalendar-wrapper.fullcalendar-wrapper-mobile .fc .fc-list-event-dot {
+.fullcalendar-wrapper.fullcalendar-wrapper-mobile .fc .fc-list-event-graphic {
     display: none;
 }

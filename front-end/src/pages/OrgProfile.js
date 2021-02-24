@@ -8,9 +8,6 @@ import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
 import Collapse from 'react-bootstrap/Collapse'
 import React, { useEffect, useState } from "react";
-import {
-    Link
-} from "react-router-dom";
 
 import './../styles/App.css';
 
@@ -140,28 +137,40 @@ export function createEventId() {
 }
 
 export default function OrgProfile() {
-    let { orgName } = useParams();
+    let { orgSlug } = useParams();
+    const [orgInfo, setOrgInfo] = useState({});
     const [openUpcomingEvents, setUpcomingOpen] = useState(false);
     const [openPastEvents, setPastOpen] = useState(false);
     const maxEventsDisplayed = 3;
 
+    useEffect(() => {
+        // GET request using fetch inside useEffect React hook
+        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + orgSlug)
+            .then(response => response.json())
+            .then(data => setOrgInfo(data))
+            .catch(error => {
+                console.error('There was an error fetching the org info for this org: ' + orgSlug, error);
+            });
+    }, []);
+
+    console.log(orgSlug);
+    console.log(orgInfo);
     // These objects allow us to put "expand" for additional (more than 3) events.
     var additionalUpcomingEvents;
     if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
         additionalUpcomingEvents =
             <div>
-                <Link
+                <button
                     onClick={() => setUpcomingOpen(!openUpcomingEvents)}
                     aria-controls="expand-events"
-                    aria-expanded={openUpcomingEvents}
-                >
+                    aria-expanded={openUpcomingEvents}>
                     expand...
-                </Link>
+                </button>
                 <Collapse in={openUpcomingEvents}>
                     <div>
                         {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
                             return (
-                                <OrgPageEventCard event={event} pastEvent={false} ></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={false} ></OrgPageEventCard>
                             );
                         })}
                     </div>
@@ -172,18 +181,17 @@ export default function OrgProfile() {
     if (PAST_EVENTS.length > maxEventsDisplayed) {
         additionalPastEvents =
             <div>
-                <Link
+                <button
                     onClick={() => setPastOpen(!openPastEvents)}
                     aria-controls="expand-events"
-                    aria-expanded={openPastEvents}
-                >
+                    aria-expanded={openPastEvents}>
                     expand...
-                </Link>
+                </button>
                 <Collapse in={openPastEvents}>
                     <div>
                         {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
                             return (
-                                <OrgPageEventCard event={event} pastEvent={true} ></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={true} ></OrgPageEventCard>
                             );
                         })}
                     </div>
@@ -197,14 +205,14 @@ export default function OrgProfile() {
                 {/* Test Image */}
                 <Image src={Circle} style={{ width: '25vh', height: '25vh' }}></Image>
                 <Row className="my-4">
-                    <h1 className="item-align-center font-weight-bold">{orgName}</h1>
+                    <h1 className="item-align-center font-weight-bold">{orgSlug}</h1>
                 </Row>
                 <Row className="mb-3">
                     <Col xs={3} style={{ textAlign: 'right' }}>
                         <Image src={LinkSVG}></Image>
                     </Col>
                     <Col style={{ textAlign: 'left' }}>
-                        <a href="#">link</a>
+                        <a href="https://www.google.com" target="_blank" rel="noreferrer">link</a>
                     </Col>
                 </Row>
                 <Row className="mb-5">
@@ -221,7 +229,7 @@ export default function OrgProfile() {
                 {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
                 {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
-                        <OrgPageEventCard event={event} pastEvent={false} ></OrgPageEventCard>
+                        <OrgPageEventCard key={event.id} event={event} pastEvent={false} ></OrgPageEventCard>
                     );
                 })}
                 {additionalUpcomingEvents}
@@ -231,7 +239,7 @@ export default function OrgProfile() {
                 </Row>
                 {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
-                        <OrgPageEventCard event={event} pastEvent={true} ></OrgPageEventCard>
+                        <OrgPageEventCard key={event.id} event={event} pastEvent={true} ></OrgPageEventCard>
                     );
                 })}
                 {additionalPastEvents}

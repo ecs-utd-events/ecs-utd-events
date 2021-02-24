@@ -205,6 +205,12 @@
     background-color: transparent;
 }
 
+.MuiDialog-root .MuiDialog-paper {
+    margin: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
 .modal-wrapper {
     min-height: 100vh;
 }
@@ -218,7 +224,6 @@
     padding-bottom: 0;
     padding-top: 10vh;
     background-color: white;
-    overflow: scroll;
 }
 
 .modal-wrapper .close-btn-wrapper {
@@ -231,7 +236,6 @@
 
 .modal-wrapper .modal-appbar {
     width: 100%;
-    height: 10vh;
     position: fixed;
     top: 0;
     background-color: var(--primary1);
