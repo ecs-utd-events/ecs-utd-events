@@ -231,7 +231,6 @@
 
 .modal-wrapper .modal-appbar {
     width: 100%;
-    height: 10vh;
     position: fixed;
     top: 0;
     background-color: var(--primary1);
