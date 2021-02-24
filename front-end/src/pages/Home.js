@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/esm/Col';
 import {
   Link
 } from "react-router-dom";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -12,7 +12,6 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../styles/App.css';
@@ -36,125 +35,74 @@ let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 let tmrwStr = tomorrow.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 let ydayStr = yday.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
-export const INITIAL_EVENTS = [
-  {
-    id: createEventId(),
-    title: 'A Look into NLP and Research Engineering at Google',
-    start: todayStr + 'T20:00:00',
-    end: todayStr + 'T21:00:00',
-    extendedProps: {
-      description: 'As an Education x Research x Industry Event, if you\'re interested in learning how natural language processing and deep learning play several roles in language-oriented products like the Google Assistant or Alexa, come hear from a software engineer at Google discuss the challenges that go with creating these products. We\'ll also be discussing differences between industry and academia, important skills to be an effective software engineer, and what different software-engineering centric career paths in tech might look like. The talk will conclude with an open-ended Q&A forum.',
-      org: 'ACM',
-      location: 'Zoom',
-      link: 'https://cdn.discordapp.com/attachments/714723430079135755/808062875062108180/ACM_Research_Engineering_at_Google_Flyer_1.png',
-      tags: ['Google', 'ACM Education', 'ACM Research', 'Industry', 'ML']
-    }
-  },
-  {
-    id: createEventId(),
-    title: 'Development Fireside Presentation',
-    start: ydayStr + 'T17:30:00',
-    end: ydayStr + 'T18:45:00',
-    extendedProps: {
-      description: 'One exciting initiative that we are also proud to be launching this semester is Fireside Chats with ACM Development. Each month we will have an opportunity for everyone to come in and listen to the amazing new features and products that we release. In addition to that there will be conversation about the latest trends in tech, discussions around real-world software development & more.',
-      org: 'ACM',
-      location: 'Discord',
-      link: 'https://discord.gg/Azq7zZn457',
-      tags: ['ACM Dev', 'Discord', 'Software', 'Engineering']
-    }
-  },
-  {
-    id: createEventId(),
-    title: 'Pitching Yourself Workshop and Resume Critique with Xilinx',
-    start: tmrwStr + 'T16:00:00',
-    end: tmrwStr + 'T17:15:00',
-    extendedProps: {
-      description: 'Attend to get a chance to win a swag bag containing a pair of AirPods!',
-      org: 'SWE',
-      location: 'Zoom',
-      link: 'https://xilinx.zoom.us/j/2792764728?pwd=ekpwcWpOY25FTWlSb3g2U3RBa1lMdz09',
-      tags: ['Industry', 'womxn', 'oSTEM', 'raffle', 'workshop']
-    }
-  },
-  {
-    id: createEventId(),
-    title: 'HackUTD',
-    start: todayStr,
-    extendedProps: {
-      description: 'HackUTD, the largest university hackathon in North Texas, is a weekend long event where students build apps, hardware, and more. HackUTD provides a venue for self-expression and creativity through technology. People with varying technical backgrounds come together, form teams around a problem or idea, and collaboratively code a unique solution from scratch. Whether you\'re a frequent hackathon attendee or just getting started, we\'d love to see what you can make.',
-      org: 'HackUTD',
-      location: 'ECSW',
-      link: 'https://2021.hackutd.co/',
-      tags: ['hackathon']
-    }
-  },
-  {
-    id: createEventId(),
-    title: 'Timed event',
-    start: todayStr + 'T12:00:00',
-    end: todayStr + 'T12:30:00',
-    extendedProps: {
-      description: 'Come out to our event! We will have food and cool guest speakers! If you come and ask a question you’ll be put in a raffle to win a free Google Home Mini! Also come learn how to participate in our upcoming Hackathon even if it’s your first one! Please come to our event!! I need friendz!!!',
-      org: 'ACM',
-      location: 'Zoom',
-      link: 'https://www.acmutd.com',
-      tags: ['Industry', 'ML', 'AI', 'collab']
-    }
-  },
-]
-
 export function createEventId() {
   return String(eventGuid++)
 }
 
-export const ORGANIZATIONS = [
-  {
-    name: 'Artificial Intelligence Society',
-    slug: 'artificial-intelligence-society'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Association for Computing Machinery',
-    slug: 'association-for-computing-machinery'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-]
+const oneDayInMilliseconds = 86400000 - 1000;
+function parseEventsToFullCalendarFormat(eventData) {
+  return eventData.map(event => {
+    const allDay = new Date(event.endTime) - (new Date(event.startTime)) >= oneDayInMilliseconds ? true : false;
+    return {
+      id: event.id,
+      title: event.title,
+      start: event.startTime,
+      end: event.endTime,
+      allDay: allDay,
+      extendedProps: {
+        description: event.description,
+        org: event.orgs,
+        location: event.location,
+        link: event.link,
+        // default tags until sid implements tags
+        tags: ['Google', 'Industry', 'ML', 'WWC']
+      }
+    }
+  })
+}
+
+/* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
+to randomize the order of presented organizations. 
+See: https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/ for bias in 
+alphabetical ordering. */
+function shuffleArray(array) {
+  var newArr = array;
+  for (let i = newArr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+}
 
 // Main page components
 export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [animateCard, setAnimateCard] = useState('');
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
+
+  useEffect(() => {
+    // GET request using fetch inside useEffect React hook
+    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
+      .then(response => response.json())
+      .then(data => parseEventsToFullCalendarFormat(data))
+      .then(data => setEvents(data))
+      .catch(error => {
+        console.error('There was an error fetching events!', error);
+      });
+    // empty dependency array means this effect will only run once (like componentDidMount in classes)
+  }, []);
+
+  useEffect(() => {
+    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs')
+    .then(response => response.json())
+    .then(data => shuffleArray(data))
+    .then(data => setOrganizations(data))
+    .catch(error => {
+      console.error('There was an error fetching organizations!', error);
+    });
+  }, []);
 
   return (
     <div className="App">
@@ -206,7 +154,7 @@ export default function Home() {
                       dayCount: 7
                     }
                   }}
-                  initialEvents={INITIAL_EVENTS}
+                  events={events}
                   eventClick={(info) => {
                     setAnimateCard('blob-animation')
                     setSelectedEvent(info.event)
@@ -255,7 +203,7 @@ export default function Home() {
                       displayEventTime: true,
                     }
                   }}
-                  initialEvents={INITIAL_EVENTS}
+                  events={events}
                   eventClick={(info) => {
                     setSelectedEvent(info.event)
                     setMobileModalOpen(true);
@@ -279,7 +227,7 @@ export default function Home() {
         <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
-              ORGANIZATIONS.map(org => {
+              organizations.map(org => {
                 return (
                   <Col md={4}>
                     <Container style={{ paddingTop: 20 }}>
@@ -298,6 +246,7 @@ export default function Home() {
           <Link to="/login">Organization Login</Link>
           <Link to="/org" style={{ paddingLeft: 10 }}>Org Profile</Link>
           <Link to="/admin/create" style={{ padding: 10 }}>Create Event</Link>
+          <Link to="/admin/profile" style={{ padding: 10 }}>Admin</Link>
         </div>
       </div>
     </div >

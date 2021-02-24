@@ -31,22 +31,26 @@ export const Editable = ({
 
     return (
         <section {...props}>
-            {isEditing ? (
-                <div
-                    onBlur={() => setEditing(false)}
-                    onKeyDown={e => handleKeyDown(e, type)}
-                >
-                    {children}
-                </div>
-            ) : (
-                    <div
-                        onClick={() => setEditing(true)}
-                    >
-                        <span>
-                            {text || placeholder || "Editable content"}
-                        </span>
-                    </div>
-                )}
-        </section>
+                    {isEditing ? (
+                        <div
+                            onBlur={() => setEditing(false)}
+                            onKeyDown={e => handleKeyDown(e, type)}
+                        >
+                            {children}
+                        </div>
+                    ) : (
+                            <div
+                                onClick={() => setEditing(true)}
+                            >
+                                {
+                                    
+                                }
+                                <span>
+                                    {text || placeholder || "Editable content"}
+                                </span>
+                            </div>
+                        )}
+                </section>
     );
+    
 }

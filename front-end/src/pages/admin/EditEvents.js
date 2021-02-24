@@ -21,6 +21,7 @@ export default function EditEvents() {
         <AdminLayout pageName="Events">
             <h1>Edit Events</h1>
             <EditableEventCard event={event}></EditableEventCard>
+            
         </AdminLayout>
     )
 }
