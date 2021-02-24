@@ -8,9 +8,6 @@ import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
 import Collapse from 'react-bootstrap/Collapse'
 import React, { useEffect, useState } from "react";
-import {
-    Link
-} from "react-router-dom";
 
 import './../styles/App.css';
 
@@ -150,18 +147,17 @@ export default function OrgProfile() {
     if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
         additionalUpcomingEvents =
             <div>
-                <Link
+                <button
                     onClick={() => setUpcomingOpen(!openUpcomingEvents)}
                     aria-controls="expand-events"
-                    aria-expanded={openUpcomingEvents}
-                >
+                    aria-expanded={openUpcomingEvents}>
                     expand...
-                </Link>
+                </button>
                 <Collapse in={openUpcomingEvents}>
                     <div>
                         {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
                             return (
-                                <OrgPageEventCard event={event} pastEvent={false} ></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={false} ></OrgPageEventCard>
                             );
                         })}
                     </div>
@@ -172,18 +168,17 @@ export default function OrgProfile() {
     if (PAST_EVENTS.length > maxEventsDisplayed) {
         additionalPastEvents =
             <div>
-                <Link
+                <button
                     onClick={() => setPastOpen(!openPastEvents)}
                     aria-controls="expand-events"
-                    aria-expanded={openPastEvents}
-                >
+                    aria-expanded={openPastEvents}>
                     expand...
-                </Link>
+                </button>
                 <Collapse in={openPastEvents}>
                     <div>
                         {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
                             return (
-                                <OrgPageEventCard event={event} pastEvent={true} ></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={true} ></OrgPageEventCard>
                             );
                         })}
                     </div>
@@ -204,7 +199,7 @@ export default function OrgProfile() {
                         <Image src={LinkSVG}></Image>
                     </Col>
                     <Col style={{ textAlign: 'left' }}>
-                        <a href="#">link</a>
+                        <a href="https://www.google.com" target="_blank" rel="noreferrer">link</a>
                     </Col>
                 </Row>
                 <Row className="mb-5">
@@ -221,7 +216,7 @@ export default function OrgProfile() {
                 {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
                 {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
-                        <OrgPageEventCard event={event} pastEvent={false} ></OrgPageEventCard>
+                        <OrgPageEventCard key={event.id} event={event} pastEvent={false} ></OrgPageEventCard>
                     );
                 })}
                 {additionalUpcomingEvents}
@@ -231,7 +226,7 @@ export default function OrgProfile() {
                 </Row>
                 {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
-                        <OrgPageEventCard event={event} pastEvent={true} ></OrgPageEventCard>
+                        <OrgPageEventCard key={event.id} event={event} pastEvent={true} ></OrgPageEventCard>
                     );
                 })}
                 {additionalPastEvents}

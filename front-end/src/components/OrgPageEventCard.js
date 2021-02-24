@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 export default function OrgPageEventCard({ event, pastEvent }) {
-    const backgroundColor = pastEvent == true ? "org-page-past-event-card" : "";
+    const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
     if (event != null) {
         return (
             <Card className={"drop-shadow mb-4 " + backgroundColor}>

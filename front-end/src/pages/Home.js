@@ -218,7 +218,7 @@ export default function Home() {
             {
               organizations.map(org => {
                 return (
-                  <Col md={4}>
+                  <Col md={4} key={org.slug}>
                     <Container style={{ paddingTop: 20 }}>
                       <Link to={`org/${org.slug}`} style={{ textDecoration: 'none' }}>
                         <OrgInfoCard orgName={org.name} />

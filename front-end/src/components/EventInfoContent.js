@@ -73,7 +73,7 @@ export default function EventInfoContent({ event, mobile }) {
             {event.extendedProps.tags != null &&
                 <Row>
                     <Col>
-                        {event.extendedProps.tags.map((label) => <Tag type="accent">{label}</Tag>)}
+                        {event.extendedProps.tags.map((label, index) => <Tag key={index} type="accent">{label}</Tag>)}
                     </Col>
                 </Row>
             }
