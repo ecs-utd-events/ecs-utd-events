@@ -102,9 +102,4 @@ C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_EC
 C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\obj\Debug\netcoreapp3.1\UTD_ECS_Events_WebAPI.dll
 C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\obj\Debug\netcoreapp3.1\UTD_ECS_Events_WebAPI.pdb
 C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\obj\Debug\netcoreapp3.1\UTD_ECS_Events_WebAPI.genruntimeconfig.cache
-C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\bin\Debug\netcoreapp3.1\FireSharp.dll
-C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Threading.Tasks.Extensions.Desktop.dll
-C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Threading.Tasks.Extensions.dll
-C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Threading.Tasks.dll
-C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\bin\Debug\netcoreapp3.1\System.Net.Http.Extensions.dll
-C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\bin\Debug\netcoreapp3.1\System.Net.Http.Primitives.dll
+C:\Users\jiwon\Source\Repos\utd-ecs-events\back-end\UTD_ECS_Events_WebAPI\UTD_ECS_Events_WebAPI\bin\Debug\netcoreapp3.1\Firebase.Auth.dll
