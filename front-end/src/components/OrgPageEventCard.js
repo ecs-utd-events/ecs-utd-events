@@ -13,7 +13,7 @@ export default function OrgPageEventCard({ event, pastEvent }) {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={2} style={{ textAlign: 'left' }}>
+                    <Col xs={4} md={2} style={{ textAlign: 'left' }}>
                         {/* <p className="mb-0">{event.start.toDateString()}</p> */}
                         {/* <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span> */}
                         <p className="mb-0">{event.start}</p>

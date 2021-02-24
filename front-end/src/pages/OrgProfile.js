@@ -145,6 +145,7 @@ export default function OrgProfile() {
     const [openPastEvents, setPastOpen] = useState(false);
     const maxEventsDisplayed = 3;
 
+    // These objects allow us to put "expand" for additional (more than 3) events.
     var additionalUpcomingEvents;
     if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
         additionalUpcomingEvents =

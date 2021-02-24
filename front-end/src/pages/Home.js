@@ -13,7 +13,6 @@ import listPlugin from '@fullcalendar/list';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../styles/App.css';
 import './../styles/fullcalendar-custom.css';
@@ -23,8 +22,6 @@ import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
-
-// const serverURL = 'http://localhost:80'
 
 // Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
 let eventGuid = 0
@@ -42,52 +39,8 @@ export function createEventId() {
   return String(eventGuid++)
 }
 
-export const ORGANIZATIONS = [
-  {
-    name: 'Artificial Intelligence Society',
-    slug: 'artificial-intelligence-society'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Association for Computing Machinery',
-    slug: 'association-for-computing-machinery'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-  {
-    name: 'Women Who Compute',
-    slug: 'women-who-compute'
-  },
-]
-
 const oneDayInMilliseconds = 86400000 - 1000;
 function parseEventsToFullCalendarFormat(eventData) {
-  console.log(eventData)
   return eventData.map(event => {
     const allDay = new Date(event.endTime) - (new Date(event.startTime)) >= oneDayInMilliseconds ? true : false;
     return {
@@ -108,6 +61,18 @@ function parseEventsToFullCalendarFormat(eventData) {
   })
 }
 
+/* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
+to randomize the order of presented organizations. 
+See: https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/ for bias in 
+alphabetical ordering. */
+function shuffleArray(array) {
+  var newArr = array;
+  for (let i = newArr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+}
 
 // Main page components
 export default function Home() {
@@ -115,6 +80,7 @@ export default function Home() {
   const [animateCard, setAnimateCard] = useState('');
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
     // GET request using fetch inside useEffect React hook
@@ -126,6 +92,16 @@ export default function Home() {
         console.error('There was an error fetching events!', error);
       });
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
+  }, []);
+
+  useEffect(() => {
+    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs')
+    .then(response => response.json())
+    .then(data => shuffleArray(data))
+    .then(data => setOrganizations(data))
+    .catch(error => {
+      console.error('There was an error fetching organizations!', error);
+    });
   }, []);
 
   return (
@@ -251,7 +227,7 @@ export default function Home() {
         <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
-              ORGANIZATIONS.map(org => {
+              organizations.map(org => {
                 return (
                   <Col md={4}>
                     <Container style={{ paddingTop: 20 }}>
