@@ -16,11 +16,8 @@ namespace UTD_ECS_Events_WebAPI.Auth
             UserRecordArgs args = new UserRecordArgs()
             {
                 Email = "user@example.com",
-                EmailVerified = false,
-                PhoneNumber = "+11234567890",
                 Password = "secretPassword",
                 DisplayName = "John Doe",
-                PhotoUrl = "http://www.example.com/12345678/photo.png",
                 Disabled = false,
             };
             UserRecord userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(args);
