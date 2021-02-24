@@ -24,7 +24,6 @@ front-end/yarn-debug.log*
 front-end/yarn-error.log*
 
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/project.nuget.cache
-back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/project.assets.json
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/UTD_ECS_Events_WebAPI.csproj.nuget.g.props
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/UTD_ECS_Events_WebAPI.csproj.nuget.dgspec.json
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/Release/netcoreapp3.1/UTD_ECS_Events_WebAPI.assets.cache
@@ -33,3 +32,4 @@ back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/Debug/netcoreapp3.1/UTD
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/Debug/netcoreapp3.1/UTD_ECS_Events_WebAPI.assets.cache
 back-end/log*.txt
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/log*.txt
+back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/Debug/netcoreapp3.1/*.cache
