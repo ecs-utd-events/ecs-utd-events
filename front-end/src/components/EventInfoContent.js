@@ -56,12 +56,17 @@ export default function EventInfoContent({ event, mobile }) {
                         </ListItemLayout>
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
-                        {mobile == null && <ShowMoreText
-                            lines={3}
-                            more={'Read more'}
-                            less={'Read less'}
-                            expanded={false}>{event.extendedProps.description}</ShowMoreText>}
-                        {mobile && event.extendedProps.description}
+                        {(mobile == null || !mobile) &&
+                            <ShowMoreText
+                                lines={3}
+                                more={'Read more'}
+                                less={'Read less'}
+                                expanded={false}>{event.extendedProps.description}
+                            </ShowMoreText>
+                        }
+                        {mobile &&
+                            <p>{event.extendedProps.description}</p>
+                        }
                     </ListGroupItem>
                 </ListGroup>
             </Card.Body>

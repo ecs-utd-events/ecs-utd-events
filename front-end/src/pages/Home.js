@@ -115,7 +115,6 @@ export default function Home() {
           closeAfterTransition>
           <EventInfoModal event={selectedEvent} handleClose={() => setMobileModalOpen(false)} open={mobileModalOpen} />
         </Modal>
-
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
