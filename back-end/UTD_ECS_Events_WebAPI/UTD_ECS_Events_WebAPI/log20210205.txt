@@ -1,6 +1,0 @@
-2021-02-05 16:04:27.115 -06:00 [INF] Created Firestore connection
-2021-02-05 16:06:21.709 -06:00 [INF] Created Firestore connection
-2021-02-05 16:06:40.643 -06:00 [INF] Created Firestore connection
-2021-02-05 16:07:14.113 -06:00 [INF] Created Firestore connection
-2021-02-05 16:07:27.649 -06:00 [INF] Created Firestore connection
-2021-02-05 16:07:35.064 -06:00 [INF] Created Firestore connection

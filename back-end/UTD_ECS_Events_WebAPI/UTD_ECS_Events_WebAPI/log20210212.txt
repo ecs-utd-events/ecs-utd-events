@@ -1,8 +1,0 @@
-2021-02-12 10:10:54.714 -06:00 [INF] Created Firestore connection
-2021-02-12 10:12:22.474 -06:00 [INF] Created Firestore connection
-2021-02-12 10:12:51.328 -06:00 [INF] Created Firestore connection
-2021-02-12 10:18:44.817 -06:00 [INF] Created Firestore connection
-2021-02-12 10:19:00.763 -06:00 [INF] Created Firestore connection
-2021-02-12 10:19:09.103 -06:00 [INF] Created Firestore connection
-2021-02-12 10:19:41.401 -06:00 [INF] Created Firestore connection
-2021-02-12 10:19:45.679 -06:00 [INF] Created Firestore connection
