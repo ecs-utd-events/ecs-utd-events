@@ -5,7 +5,6 @@ import EditIcon from '@iconify/icons-gg/edit-markup';
 import TrashIcon from '@iconify/icons-gg/trash';
 import IconButton from './IconButton';
 import { ButtonGroup, OverlayTrigger } from 'react-bootstrap';
-import { Tooltip } from 'bootstrap';
 
 export default function OrgPageEventCard({ event, pastEvent, isEditable}) {
     const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";

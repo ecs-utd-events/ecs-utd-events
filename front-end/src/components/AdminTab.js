@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card } from "react-bootstrap/esm";
+import { Container, Row, Col } from "react-bootstrap/esm";
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import profileIcon from '@iconify/icons-gg/profile';
