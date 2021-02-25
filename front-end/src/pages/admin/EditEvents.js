@@ -1,5 +1,7 @@
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard from '../../components/EditableEventCard';
+import AddIcon from '@iconify/icons-gg/add';
+import IconButton from '../../components/IconButton';
 
 const today = new Date()
 let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
@@ -21,7 +23,7 @@ export default function EditEvents() {
         <AdminLayout pageName="Events">
             <h1>Edit Events</h1>
             <EditableEventCard event={event}></EditableEventCard>
-            
+            <IconButton icon={AddIcon}></IconButton>
         </AdminLayout>
     )
 }

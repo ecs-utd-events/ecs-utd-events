@@ -7,9 +7,9 @@ import IconButton from './IconButton';
 import { ButtonGroup, OverlayTrigger } from 'react-bootstrap';
 import { Tooltip } from 'bootstrap';
 
-export default function OrgPageEventCard({ event, pastEvent }) {
+export default function OrgPageEventCard({ event, pastEvent, isEditable}) {
     const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
-    if (event != null) {
+    if (event && !isEditable) {
         return (
             <Card className={"drop-shadow mb-4 " + backgroundColor}>
                 <Row>
@@ -56,8 +56,7 @@ export default function OrgPageEventCard({ event, pastEvent }) {
                 <Row>
                     <Col md={{ span: 10, offset: 10 }}>
                         <ButtonGroup>
-                        <Tooltip id="edit-button-tooltip" >Edit card</Tooltip>
-                            {/* <OverlayTrigger placement="top" overlay={renderEditTooltip}><IconButton className="mr-2" icon={EditIcon}></IconButton></OverlayTrigger> */}
+                            <IconButton className="mr-2" icon={EditIcon}></IconButton>
                             <IconButton icon={TrashIcon}></IconButton>
                         </ButtonGroup>
                     </Col>
