@@ -24,6 +24,8 @@
     ".NETCoreApp,Version=v3.1": {
       "UTD_ECS_Events_WebAPI/1.0.0": {
         "dependencies": {
+          "FirebaseAdmin": "2.0.0",
+          "FirebaseAuthentication.net": "1.0.0",
           "Google.Cloud.Firestore": "2.3.0",
           "Serilog": "2.10.0",
           "Serilog.Sinks.Console": "3.1.1",
@@ -161,7 +163,6 @@
           "System.Buffers": "4.0.2.0",
           "System.Collections.Concurrent": "4.0.15.0",
           "System.Collections": "4.1.2.0",
-          "System.Collections.Immutable.Reference": "1.2.5.0",
           "System.Collections.NonGeneric": "4.1.2.0",
           "System.Collections.Specialized": "4.1.2.0",
           "System.ComponentModel.Annotations": "4.3.1.0",
@@ -318,6 +319,36 @@
           "UTD_ECS_Events_WebAPI.dll": {}
         }
       },
+      "FirebaseAdmin/2.0.0": {
+        "dependencies": {
+          "Google.Api.Gax.Rest": "3.2.0",
+          "Google.Apis.Auth": "1.49.0",
+          "System.Collections.Immutable": "1.7.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FirebaseAdmin.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/FirebaseAdmin.dll": {}
+        }
+      },
+      "FirebaseAuthentication.net/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "runtime": {
+          "lib/portable45-net45+win8+wpa81/Firebase.Auth.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/portable45-net45+win8+wpa81/Firebase.Auth.dll": {}
+        }
+      },
       "Google.Api.CommonProtos/2.2.0": {
         "dependencies": {
           "Google.Protobuf": "3.13.0"
@@ -351,7 +382,7 @@
         "dependencies": {
           "Google.Api.CommonProtos": "2.2.0",
           "Google.Api.Gax": "3.2.0",
-          "Google.Apis.Auth": "1.48.0",
+          "Google.Apis.Auth": "1.49.0",
           "Grpc.Auth": "2.31.0",
           "Grpc.Core.Api": "2.31.0"
         },
@@ -380,33 +411,48 @@
           "lib/netstandard2.0/Google.Api.Gax.Grpc.GrpcCore.dll": {}
         }
       },
-      "Google.Apis/1.48.0": {
+      "Google.Api.Gax.Rest/3.2.0": {
         "dependencies": {
-          "Google.Apis.Core": "1.48.0"
+          "Google.Api.Gax": "3.2.0",
+          "Google.Apis.Auth": "1.49.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "assemblyVersion": "3.2.0.0",
+            "fileVersion": "3.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {}
+        }
+      },
+      "Google.Apis/1.49.0": {
+        "dependencies": {
+          "Google.Apis.Core": "1.49.0"
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           }
         },
         "compile": {
           "lib/netstandard2.0/Google.Apis.dll": {}
         }
       },
-      "Google.Apis.Auth/1.48.0": {
+      "Google.Apis.Auth/1.49.0": {
         "dependencies": {
-          "Google.Apis": "1.48.0",
-          "Google.Apis.Core": "1.48.0"
+          "Google.Apis": "1.49.0",
+          "Google.Apis.Core": "1.49.0"
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           },
           "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           }
         },
         "compile": {
@@ -414,14 +460,14 @@
           "lib/netstandard2.0/Google.Apis.Auth.dll": {}
         }
       },
-      "Google.Apis.Core/1.48.0": {
+      "Google.Apis.Core/1.49.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3"
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "assemblyVersion": "1.48.0.0",
-            "fileVersion": "1.48.0.0"
+            "assemblyVersion": "1.49.0.0",
+            "fileVersion": "1.49.0.0"
           }
         },
         "compile": {
@@ -432,7 +478,7 @@
         "dependencies": {
           "Google.Cloud.Firestore.V1": "2.2.0",
           "Grpc.Core": "2.31.0",
-          "System.Collections.Immutable": "1.4.0",
+          "System.Collections.Immutable": "1.7.1",
           "System.Linq.Async": "4.0.0"
         },
         "runtime": {
@@ -493,7 +539,7 @@
       },
       "Grpc.Auth/2.31.0": {
         "dependencies": {
-          "Google.Apis.Auth": "1.48.0",
+          "Google.Apis.Auth": "1.49.0",
           "Grpc.Core.Api": "2.31.0"
         },
         "runtime": {
@@ -642,7 +688,17 @@
           "lib/netstandard2.0/Serilog.Sinks.File.dll": {}
         }
       },
-      "System.Collections.Immutable/1.4.0": {},
+      "System.Collections.Immutable/1.7.1": {
+        "runtime": {
+          "lib/netstandard2.0/System.Collections.Immutable.dll": {
+            "assemblyVersion": "1.2.5.0",
+            "fileVersion": "4.700.20.21406"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/System.Collections.Immutable.dll": {}
+        }
+      },
       "System.Console/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -1598,12 +1654,6 @@
         },
         "compileOnly": true
       },
-      "System.Collections.Immutable.Reference/1.2.5.0": {
-        "compile": {
-          "System.Collections.Immutable.dll": {}
-        },
-        "compileOnly": true
-      },
       "System.Collections.NonGeneric/4.1.2.0": {
         "compile": {
           "System.Collections.NonGeneric.dll": {}
@@ -2500,6 +2550,20 @@
       "serviceable": false,
       "sha512": ""
     },
+    "FirebaseAdmin/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Qm8UzfTcxqd/TfCdU6IS5Ek1eAt3v/kySLAw3kMxVi/I1nunifbzaVF76UZMDiiOmwqq2Ppgyitg1VFxcg4J/Q==",
+      "path": "firebaseadmin/2.0.0",
+      "hashPath": "firebaseadmin.2.0.0.nupkg.sha512"
+    },
+    "FirebaseAuthentication.net/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Qr+0XkRTZsS4vB80uJdYS9YYc/oX9e/k6AeB9z2jcoTM9MdFcvD7lDqhQDKNWaiVHX50ROUaYVo71cIq4HTYTQ==",
+      "path": "firebaseauthentication.net/1.0.0",
+      "hashPath": "firebaseauthentication.net.1.0.0.nupkg.sha512"
+    },
     "Google.Api.CommonProtos/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -2528,26 +2592,33 @@
       "path": "google.api.gax.grpc.grpccore/3.2.0",
       "hashPath": "google.api.gax.grpc.grpccore.3.2.0.nupkg.sha512"
     },
-    "Google.Apis/1.48.0": {
+    "Google.Api.Gax.Rest/3.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wnZJKPM7blcDzfTyMQ6kHvvDkd89a3C8m8uzTIJ8vrOdRqSAwHDE9nhht6GtcPe+sSfpuav0dX4RFAz2pKzp8w==",
-      "path": "google.apis/1.48.0",
-      "hashPath": "google.apis.1.48.0.nupkg.sha512"
+      "sha512": "sha512-YY4mD0nGxTx1uez7Perm+zAd3FH50dd3+7HTYsRFCywDEtj3RkrMjcAmw6mNpKkw2sRICu7aYNy1mgMjd3nVbw==",
+      "path": "google.api.gax.rest/3.2.0",
+      "hashPath": "google.api.gax.rest.3.2.0.nupkg.sha512"
     },
-    "Google.Apis.Auth/1.48.0": {
+    "Google.Apis/1.49.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-OwBOJLMr/4WH3svpoYjOhPu+GYN1N3sEsllBbMHxLYpfCKP13XheifjSnClzXnHuY19tDfN6aEwHpPv5jkG88Q==",
-      "path": "google.apis.auth/1.48.0",
-      "hashPath": "google.apis.auth.1.48.0.nupkg.sha512"
+      "sha512": "sha512-fmXQQTxZFOBlnvokvdQMzq0Lt+g2QzpZ4H6U8lMMFHgAR8ZqxQnPN5yHDpoHf7a++hJHb5W3pALxauGsq+afKQ==",
+      "path": "google.apis/1.49.0",
+      "hashPath": "google.apis.1.49.0.nupkg.sha512"
     },
-    "Google.Apis.Core/1.48.0": {
+    "Google.Apis.Auth/1.49.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DJ/2eNBneeqEJuTO0ZPNON9DdDMS2JXcHiszZ86MUNqPtQGhB3xbZoGg1p0sOfvGpyyoqsIMNeJXdSWUHB4E5g==",
-      "path": "google.apis.core/1.48.0",
-      "hashPath": "google.apis.core.1.48.0.nupkg.sha512"
+      "sha512": "sha512-3V9ohvixQtjaEvk7T9Ac7E/KvwEPa7eL4aMNreJDI0CEPzCdQdk2zCvaJPRrNIjhe+UuBeOeom1oAOMFB74JHg==",
+      "path": "google.apis.auth/1.49.0",
+      "hashPath": "google.apis.auth.1.49.0.nupkg.sha512"
+    },
+    "Google.Apis.Core/1.49.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9DgGdtyzgrCfHWwc/HiDXDbykNMeKQozbEHYEUEcezRuH+YR3fvq7YGVBDmUM8g6qEL3kDk6h5EU4h0IJwue1w==",
+      "path": "google.apis.core/1.49.0",
+      "hashPath": "google.apis.core.1.49.0.nupkg.sha512"
     },
     "Google.Cloud.Firestore/2.3.0": {
       "type": "package",
@@ -2654,12 +2725,12 @@
       "path": "serilog.sinks.file/4.1.0",
       "hashPath": "serilog.sinks.file.4.1.0.nupkg.sha512"
     },
-    "System.Collections.Immutable/1.4.0": {
+    "System.Collections.Immutable/1.7.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-71hw5RUJRu5+q/geUY69gpXD8Upd12cH+F3MwpXV2zle7Bqqkrmc1JblOTuvUcgmdnUtQvBlV5e1d6RH+H2lvA==",
-      "path": "system.collections.immutable/1.4.0",
-      "hashPath": "system.collections.immutable.1.4.0.nupkg.sha512"
+      "sha512": "sha512-B43Zsz5EfMwyEbnObwRxW5u85fzJma3lrDeGcSAV1qkhSRTNY5uXAByTn9h9ddNdhM+4/YoLc/CI43umjwIl9Q==",
+      "path": "system.collections.immutable/1.7.1",
+      "hashPath": "system.collections.immutable.1.7.1.nupkg.sha512"
     },
     "System.Console/4.3.0": {
       "type": "package",
@@ -3469,11 +3540,6 @@
       "sha512": ""
     },
     "System.Collections/4.1.2.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Collections.Immutable.Reference/1.2.5.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

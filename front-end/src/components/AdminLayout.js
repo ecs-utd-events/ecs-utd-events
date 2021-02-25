@@ -6,7 +6,7 @@ export default function AdminLayout({children, pageName}) {
         <div className="background" style={{ minHeight: '100vh' }}>
             <Container fluid>
                 <Row>
-                    <Col xs={3}>
+                    <Col xs={2}>
                         <AdminTab parent={pageName} />
                     </Col>
                     <Col>

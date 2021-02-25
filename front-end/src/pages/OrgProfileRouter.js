@@ -7,7 +7,7 @@ export default function OrgProfileRouter() {
     let match = useRouteMatch();
     return (
         <Switch>
-            <Route path={`${match.path}/:orgName`}>
+            <Route path={`${match.path}/:orgSlug`}>
                 <OrgProfile />
             </Route>
             <Route path={match.path}>

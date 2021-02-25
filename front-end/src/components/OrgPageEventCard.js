@@ -7,13 +7,9 @@ import IconButton from './IconButton';
 import { ButtonGroup, OverlayTrigger } from 'react-bootstrap';
 import { Tooltip } from 'bootstrap';
 
-export default function OrgPageEventCard({ event, pastEvent, isEditable }) {
-    const backgroundColor = pastEvent == true ? "org-page-past-event-card" : "";
-    const renderEditTooltip = (props) => (
-        <Tooltip id="edit-button-tooltip" {...props}>Edit card</Tooltip>
-    );
-
-    if (event && !isEditable) {
+export default function OrgPageEventCard({ event, pastEvent }) {
+    const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
+    if (event != null) {
         return (
             <Card className={"drop-shadow mb-4 " + backgroundColor}>
                 <Row>
@@ -22,7 +18,7 @@ export default function OrgPageEventCard({ event, pastEvent, isEditable }) {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={2} style={{ textAlign: 'left' }}>
+                    <Col xs={4} md={2} style={{ textAlign: 'left' }}>
                         {/* <p className="mb-0">{event.start.toDateString()}</p> */}
                         {/* <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span> */}
                         <p className="mb-0">{event.start}</p>
