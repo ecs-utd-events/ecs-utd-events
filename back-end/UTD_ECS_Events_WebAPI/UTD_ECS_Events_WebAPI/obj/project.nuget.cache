@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RnFnMy9v35SxkEYtkOjvjoGzCllSeoHAzwQDPIMk6vNDcIANPaa4ci2q2ozsw1ugoUqsboIeO1K2AAAlxfMWJg==",
+  "dgSpecHash": "pHYQoOSaiXdQ/MT5RvluZFpFsRT4alRWTTWSzH8y4f1iMYok6BfWuYq06JZYN2ZkbVg1o3QGeli4kJkrJj5ExQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
+  "projectFilePath": "C:\\Users\\jiwon\\source\\repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jiwon\\.nuget\\packages\\firebaseadmin\\2.0.0\\firebaseadmin.2.0.0.nupkg.sha512",
     "C:\\Users\\jiwon\\.nuget\\packages\\firebaseauthentication.net\\3.6.0\\firebaseauthentication.net.3.6.0.nupkg.sha512",

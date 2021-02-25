@@ -22,8 +22,7 @@ namespace UTD_ECS_Events_WebAPI.Auth
             var obj = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
             string email = "utdecsevents@google.com";
             string password = "Pass1234";
-            string tenantId = null;
-            await obj.SignInWithEmailAndPasswordAsync(email, password, tenantId);
+            var auth = await obj.SignInWithEmailAndPasswordAsync(email, password);   // line 161 of https://github.com/step-up-labs/firebase-authentication-dotnet/blob/master/src/Firebase.Auth/FirebaseAuthProvider.cs
         }
 
 

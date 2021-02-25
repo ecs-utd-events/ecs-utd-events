@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {}
+    "C:\\Users\\jiwon\\source\\repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {
+    "C:\\Users\\jiwon\\source\\repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\jiwon\\source\\repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
         "projectName": "UTD_ECS_Events_WebAPI",
-        "projectPath": "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
+        "projectPath": "C:\\Users\\jiwon\\source\\repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI.csproj",
         "packagesPath": "C:\\Users\\jiwon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jiwon\\Source\\Repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\obj\\",
+        "outputPath": "C:\\Users\\jiwon\\source\\repos\\utd-ecs-events\\back-end\\UTD_ECS_Events_WebAPI\\UTD_ECS_Events_WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jiwon\\AppData\\Roaming\\NuGet\\NuGet.Config",
