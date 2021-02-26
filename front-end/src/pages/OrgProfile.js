@@ -11,13 +11,13 @@ import React, { useEffect, useState } from "react";
 import './../styles/App.css';
 
 import LinkSVG from '../assets/link.svg';
-import Description from '../assets/product-description.svg';
+import DescriptionIcon from '../assets/product-description.svg';
 import Circle from '../assets/circle.png';
 
 
 export default function OrgProfile() {
     let { orgSlug } = useParams();
-    const [orgInfo, setOrgInfo] = useState({});
+    const [org, setOrgInfo] = useState({});
     const [allEvents, setOrgEvents] = useState([]);
     const [openUpcomingEvents, setUpcomingOpen] = useState(false);
     const [openPastEvents, setPastOpen] = useState(false);
@@ -38,8 +38,6 @@ export default function OrgProfile() {
                 console.error('There was an error fetching events for this org: ' + orgSlug, error);
             });
     }, [orgSlug]);
-
-    console.log(orgInfo);
 
     // Sort events into past and future based on endTime.
     const UPCOMING_EVENTS = [];
@@ -104,22 +102,22 @@ export default function OrgProfile() {
                 {/* Test Image */}
                 <Image src={Circle} style={{ width: '25vh', height: '25vh' }}></Image>
                 <Row className="my-4">
-                    <h1 className="item-align-center font-weight-bold">{orgSlug}</h1>
+                    <h1 className="item-align-center font-weight-bold">{org.name}</h1>
                 </Row>
                 <Row className="mb-3">
-                    <Col xs={3} style={{ textAlign: 'right' }}>
+                    <Col xs={2} style={{ textAlign: 'right' }}>
                         <Image src={LinkSVG}></Image>
                     </Col>
                     <Col style={{ textAlign: 'left' }}>
-                        <a href="https://www.google.com" target="_blank" rel="noreferrer">link</a>
+                        <a href={org.website} target="_blank" rel="noreferrer">{org.website}</a>
                     </Col>
                 </Row>
                 <Row className="mb-5">
-                    <Col xs={3} style={{ textAlign: 'right', marginTop: 'auto', marginBottom: 'auto' }}>
-                        <Image src={Description}></Image>
+                    <Col xs={2} style={{ textAlign: 'right', marginTop: 5, marginBottom: 'auto' }}>
+                        <Image src={DescriptionIcon}></Image>
                     </Col>
-                    <Col xs={6} style={{ textAlign: 'left' }}>
-                        this is the description of the organization im testing i hoep that this alignment works
+                    <Col xs={8} style={{ textAlign: 'left' }}>
+                        {org.description}
                     </Col>
                 </Row>
                 <Row className="mb-3" style={{ textAlign: 'center' }}>
