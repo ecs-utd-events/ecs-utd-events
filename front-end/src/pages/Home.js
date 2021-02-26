@@ -90,7 +90,7 @@ export default function Home() {
         console.error('There was an error fetching events!', error);
       });
 
-    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs')
+    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
       .then(response => response.json())
       .then(data => shuffleArray(data))
       .then(data => setOrganizations(data))

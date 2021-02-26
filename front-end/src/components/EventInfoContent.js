@@ -13,6 +13,7 @@ import Tag from "./Tag";
 import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
+import { useEffect, useState } from "react";
 
 export function ListItemLayout({ Icon, children }) {
     return (
@@ -32,6 +33,18 @@ export function getFormattedTime(time) {
 }
 
 export default function EventInfoContent({ event, mobile }) {
+    // Need to fetch orgName from the orgSlug given by: "event.extendedProps.org"
+    const [org, setOrgInfo] = useState({});
+    useEffect(() => {
+        // GET request using fetch inside useEffect React hook
+        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + event.extendedProps.org)
+            .then(response => response.json())
+            .then(data => setOrgInfo(data))
+            .catch(error => {
+                console.error('There was an error fetching events for this org: ' + event.extendedProps.org, error);
+            });
+    }, [event.extendedProps.org]);
+    
     return (
         <>
             <Card.Header className="card-header-no-border">
@@ -52,7 +65,7 @@ export default function EventInfoContent({ event, mobile }) {
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
                         <ListItemLayout Icon={GroupIcon}>
-                            {event.extendedProps.org || 'Organization'}
+                            {org.name || 'Organization'}
                         </ListItemLayout>
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
