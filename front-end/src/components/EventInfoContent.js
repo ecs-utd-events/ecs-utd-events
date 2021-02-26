@@ -36,7 +36,7 @@ export function lastUpdatedToString(time) {
     var lastUpdatedUnixTime = Date.parse(time);
     // difference in milliseconds
     var milliDiff = Date.now() - lastUpdatedUnixTime;
-    var minutes = Math.ceil(milliDiff / 60000);
+    var minutes = Math.floor(milliDiff / 60000);
     var hours = Math.floor(minutes / 60);
     var days = Math.floor(hours / 24);
     var months = Math.floor(days / 30);
