@@ -32,8 +32,33 @@ export function getFormattedTime(time) {
     return time.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
 }
 
+export function lastUpdatedToString(time) {
+    var lastUpdatedUnixTime = Date.parse(time);
+    // difference in milliseconds
+    var milliDiff = Date.now() - lastUpdatedUnixTime;
+    var minutes = Math.ceil(milliDiff / 60000);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+    var months = Math.floor(days / 30);
+    var years = Math.floor(months / 12);
+
+    if (minutes === 1)
+        return '1 minute ago.'
+    else if (minutes < 60)
+        return String(minutes) + ' minutes ago.'
+    else if (hours < 24)
+        return String(hours) + ' hours ago.'
+    else if (days < 30)
+        return String(days) + ' days ago.'
+    else if (months < 12)
+        return String(months) + ' months ago.'
+    else
+        return String(years) + ' years ago.'
+
+}
+
 export default function EventInfoContent({ event, mobile }) {
-    // Need to fetch orgName from the orgSlug given by: "event.extendedProps.org"
+    // Need to fetch orgName from the org with orgSlug given by: "event.extendedProps.org"
     const [org, setOrgInfo] = useState({});
     useEffect(() => {
         // GET request using fetch inside useEffect React hook
@@ -44,7 +69,9 @@ export default function EventInfoContent({ event, mobile }) {
                 console.error('There was an error fetching events for this org: ' + event.extendedProps.org, error);
             });
     }, [event.extendedProps.org]);
-    
+
+    var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
+
     return (
         <>
             <Card.Header className="card-header-no-border">
@@ -92,7 +119,7 @@ export default function EventInfoContent({ event, mobile }) {
             }
             <Row>
                 <Col className="d-flex align-items-end">
-                    <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated 2 mins ago</p>
+                    <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p>
                 </Col>
                 <Col className="d-flex align-item-end justify-content-end">
                     <ButtonGroup>

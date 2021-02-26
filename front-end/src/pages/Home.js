@@ -53,7 +53,9 @@ function parseEventsToFullCalendarFormat(eventData) {
         location: event.location,
         link: event.link,
         // default tags until sid implements tags
-        tags: ['Google', 'Industry', 'ML', 'WWC']
+        tags: ['Google', 'Industry', 'ML', 'WWC'],
+        // used for EventInfoCard "last updated"
+        lastUpdated: event.lastUpdated
       }
     }
   })
