@@ -4,13 +4,13 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import { Spinner } from 'react-bootstrap';
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { auth } from '../firebase';
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
 import './../styles/App.css';
-import { Spinner } from 'react-bootstrap';
 
 function getErrorMessage(errorCode) {
     if (errorCode === 'auth/invalid-email') {
@@ -52,7 +52,7 @@ export default function Login() {
     return (
         <div className="background-accent">
             {loading &&
-                <div  className="login-spinner-wrapper">
+                <div className="login-spinner-wrapper">
                     <Spinner animation="border" className="login-spinner" />
                 </div>
             }
@@ -75,7 +75,7 @@ export default function Login() {
                                         </Form.Group>
                                         <Row>
                                             <Col><CustomButton type="submit" className="drop-shadow" width={'10rem'}>Submit</CustomButton></Col>
-                                            <Col><a className="link-button" href="/" style={{ textAlign: 'center', lineHeight: '3.0rem' }}>Forgot password?</a></Col>
+                                            <Col><Link to="/reset-password" style={{ textAlign: 'center', lineHeight: '3.0rem' }}>Forgot password?</Link></Col>
                                         </Row>
                                         <Row>
                                             <Col className="mt-3">
