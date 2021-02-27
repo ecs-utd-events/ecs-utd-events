@@ -88,8 +88,10 @@ export default function Login() {
                                 </Card.Body>
                             </Card>
                         </Col>
-                        <Col className="d-flex align-items-center justify-content-center py-5" xs={{order: 'first'}} md={{order: 'last'}}>
-                            <ECSLogo/>
+                        <Col className="d-flex align-items-center justify-content-center py-5" xs={{ order: 'first' }} md={{ order: 'last' }}>
+                            <Link to="/">
+                                <ECSLogo />
+                            </Link>
                         </Col>
                     </Row>
                 </Container>
