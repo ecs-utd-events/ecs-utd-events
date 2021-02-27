@@ -39,7 +39,7 @@ function ResetPasswordCard({ username, onUsernameChange, submitHandler, errorCod
                             type="email"
                             placeholder="Email address" />
                     </Form.Group>
-                    <Row className="mt-4 px-0">
+                    <Row className="mt-2 px-0">
                         <Col className="pl-3 py-1">
                             <CustomButton
                                 wide
