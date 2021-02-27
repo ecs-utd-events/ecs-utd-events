@@ -11,22 +11,36 @@ import { auth } from '../firebase';
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
 import './../styles/App.css';
 
+function getErrorMessage(errorCode) {
+    if(errorCode === 'auth/invalid-email') {
+        return '😴 Please enter a valid email'
+    } else if (errorCode === 'auth/user-disabled') {
+        return 'Login failed: This username has been disabled. If you believe this to be a mistake then contact the site admin.'
+    } else if (errorCode === 'auth/user-not-found') {
+        return '😳 Login failed: Invalid username'
+    } else if (errorCode === 'auth/wrong-password') {
+        return '😢 Login failed: Invalid password'
+    } else {
+        return '😬 There was an unknown error while signing you in. Please try again'
+    }
+}
+
 export default function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorCode, setErrorCode] = useState('');
     const history = useHistory();
 
     const submitHandler = event => {
         event.preventDefault();
         auth.signInWithEmailAndPassword(username, password).then((authCredentials) => {
-            console.log('SIGNED IN')
+            setErrorCode('');
+            console.log('Welcome ' + authCredentials.user.email + ' 😎')
             history.push('/admin/profile');
         }
         ).catch((error) => {
-            console.log(error.code);
-            console.log(error.message);
-            alert('Looks like there was an error logging you in :( More detailed error messaging to come :((');
+            setErrorCode(error.code);
         })
     }
 
@@ -39,10 +53,11 @@ export default function Login() {
                             <Card>
                                 <Card.Header className="card-header-no-border"><h2>Organization Login</h2></Card.Header>
                                 <Card.Body>
+                                    {errorCode !== '' && <h6 className="text-danger">{getErrorMessage(errorCode)}</h6>}
                                     <Form onSubmit={submitHandler}>
                                         <Form.Group controlId="email">
                                             <Form.Label style={{ float: 'left' }}>Email address</Form.Label>
-                                            <Form.Control onChange={(event) => setUsername(event.target.value)} value={username} type="email" placeholder="Email address" />
+                                            <Form.Control required onChange={(event) => setUsername(event.target.value)} value={username} type="email" placeholder="Email address" />
                                         </Form.Group>
                                         <Form.Group controlId="password">
                                             <Form.Label style={{ float: 'left' }}>Password</Form.Label>

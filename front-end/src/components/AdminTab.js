@@ -59,6 +59,7 @@ export default function AdminTab({ parent }) {
     const history = useHistory();
     const logoutHandler = () => {
         auth.signOut().then(() => {
+            console.log('Adios! 👋')
             history.push('/');
         }).catch((error) => {
             console.log(error.message);
