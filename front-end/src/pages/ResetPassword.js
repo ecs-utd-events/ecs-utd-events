@@ -4,7 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import React, { useState } from 'react'
+import InputGroup from 'react-bootstrap/InputGroup';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { auth } from '../firebase';
@@ -24,31 +25,45 @@ function getErrorMessage(errorCode) {
 
 function ResetPasswordCard({ username, onUsernameChange, submitHandler, errorCode }) {
     return (
-        <Card style={{ width: '40vw' }}>
-            <Card.Header className="card-header-no-border"><h2>Reset Your Password</h2></Card.Header>
-            <Card.Body>
+        <Card className="px-5 pt-4">
+            <Card.Header className="card-header-no-border"><h2 className="font-weight-bold">Reset Your Password</h2></Card.Header>
+            <Card.Body className="px-0">
                 {errorCode !== '' && <h6 className="text-danger">{getErrorMessage(errorCode)}</h6>}
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId="email">
-                        <Form.Label style={{ float: 'left' }}>Email address</Form.Label>
-                        <Form.Control required onChange={onUsernameChange} value={username} type="email" placeholder="Email address" />
+                        <Form.Control
+                            className="py-4"
+                            required
+                            onChange={onUsernameChange}
+                            value={username}
+                            type="email"
+                            placeholder="Email address" />
                     </Form.Group>
-                    <Row className="mt-4">
-                        <Col>
+                    <Row className="mt-4 px-0">
+                        <Col className="pl-3 py-1">
                             <CustomButton
+                                wide
                                 secondary
-                                type="submit"
-                                className="drop-shadow"
-                                width={'10rem'}
+                                type="button"
+                                className="drop-shadow py-2"
                                 style={{ backgroundColor: 'var(--primary3)', color: 'var(--gray1)' }}
-                                href="/login">
+                                href="/login"
+                            >
                                 Return to Login
                             </CustomButton>
                         </Col>
-                        <Col><CustomButton type="submit" className="drop-shadow" width={'10rem'}>Submit</CustomButton></Col>
+                        <Col className="pr-3 py-1">
+                            <CustomButton
+                                wide
+                                type="submit"
+                                className="drop-shadow py-2"
+                            >
+                                Submit
+                            </CustomButton>
+                        </Col>
                     </Row>
                     <Row>
-                        <Col className="mt-4 mb-0">
+                        <Col className="mt-4">
                             <p className="main-text">Don't have an account yet? <a href="/">Sign up!</a></p>
                         </Col>
                     </Row>

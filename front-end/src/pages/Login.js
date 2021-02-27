@@ -60,22 +60,24 @@ export default function Login() {
                 <Container>
                     <Row>
                         <Col>
-                            <Card>
-                                <Card.Header className="card-header-no-border"><h2>Organization Login</h2></Card.Header>
-                                <Card.Body>
+                            <Card className="pt-4">
+                                <Card.Header className="card-header-no-border"><h2 className="font-weight-bold">Organization Login</h2></Card.Header>
+                                <Card.Body className="pt-3 mx-3">
                                     {errorCode !== '' && <h6 className="text-danger">{getErrorMessage(errorCode)}</h6>}
                                     <Form onSubmit={submitHandler}>
                                         <Form.Group controlId="email">
-                                            <Form.Label style={{ float: 'left' }}>Email address</Form.Label>
-                                            <Form.Control required onChange={(event) => setUsername(event.target.value)} value={username} type="email" placeholder="Email address" />
+                                            <Form.Control className="py-4" required onChange={(event) => setUsername(event.target.value)} value={username} type="email" placeholder="Email address" />
                                         </Form.Group>
                                         <Form.Group controlId="password">
-                                            <Form.Label style={{ float: 'left' }}>Password</Form.Label>
-                                            <Form.Control onChange={(event) => setPassword(event.target.value)} value={password} type="password" placeholder="Password" />
+                                            <Form.Control className="py-4" onChange={(event) => setPassword(event.target.value)} value={password} type="password" placeholder="Password" />
                                         </Form.Group>
                                         <Row>
-                                            <Col><CustomButton type="submit" className="drop-shadow" width={'10rem'}>Submit</CustomButton></Col>
-                                            <Col><Link to="/reset-password" style={{ textAlign: 'center', lineHeight: '3.0rem' }}>Forgot password?</Link></Col>
+                                            <Col>
+                                                <CustomButton type="submit" className="drop-shadow py-2" wide>Login</CustomButton>
+                                            </Col>
+                                            <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                <Link to="/reset-password" style={{ textAlign: 'center' }}>Forgot password?</Link>
+                                            </Col>
                                         </Row>
                                         <Row>
                                             <Col className="mt-3">
@@ -86,8 +88,8 @@ export default function Login() {
                                 </Card.Body>
                             </Card>
                         </Col>
-                        <Col>
-                            <ECSLogo className="mt-5" />
+                        <Col className="d-flex align-items-center justify-content-center py-5" xs={{order: 'first'}} md={{order: 'last'}}>
+                            <ECSLogo/>
                         </Col>
                     </Row>
                 </Container>
