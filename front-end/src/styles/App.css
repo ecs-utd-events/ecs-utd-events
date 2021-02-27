@@ -59,7 +59,7 @@
 .login-wrapper {
   display: flex;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100vw;
   padding: 5rem;
   text-align: center;
   align-items: center;
@@ -67,6 +67,39 @@
 
 .login-wrapper a {
   color: var(--primary1);
+}
+
+.login-spinner-wrapper {
+  z-index: 2;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-spinner-wrapper .login-spinner {
+  width: 20em;
+  height: 20em;
+  border: 1.25em solid var(--primary1);
+  border-right-color: transparent;
+  animation-duration: 1s;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  /*input has OS specific font-family*/
+  color: var(--primary1);
+  /* text-decoration: underline; */
+  cursor: pointer;
+}
+
+.link-button:hover {
+  color: darkblue;
+  text-decoration: underline;
 }
 
 .main-text {

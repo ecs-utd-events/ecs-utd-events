@@ -1,43 +1,43 @@
-.btn {
+button.btn, a.btn {
     margin: 5px;
     padding-left: 1rem;
     padding-right: 1rem;
 }
 
-.primary-btn {
-    transition: all ease-in .2s;
+button.primary-btn, a.primary-btn {
+    transition: all ease-in .15s;
     background-color: var(--primary1)!important;
-    color: var(--gray3);
+    color: var(--gray2);
 }
 
-.primary-btn:hover {
+button.primary-btn:hover, a.primary-btn:hover {
     transition: all ease-in .2s;
     background-color: transparent!important;
     box-shadow: 0 0 0 2pt var(--primary1);
     filter: none!important;
 }
 
-.rounded-btn {
-    border-radius: 50px;
-}
-
-.square-btn {
-    border-radius: 8px;
-}
-
-.wide-btn {
-    width: 100%;
-    margin: 0;
-}
-
-.secondary-btn {
+button.secondary-btn, a.secondary-btn {
     background-color: var(--secondary2);
     color: var(--gray3);
 }
 
-.secondary-btn:hover {
+button.secondary-btn:hover, a.secondary-btn:hover {
     background-color: var(--secondary1);
     color: var(--gray2);
+}
+
+button.rounded-btn, a.rounded-btn {
+    border-radius: 50px;
+}
+
+button.square-btn, a.square-btn {
+    border-radius: 8px;
+}
+
+button.wide-btn, a.wide-btn {
+    width: 100%;
+    margin: 0;
 }
 
 .icon-btn {
