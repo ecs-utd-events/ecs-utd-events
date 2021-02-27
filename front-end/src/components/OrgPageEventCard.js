@@ -5,24 +5,25 @@ import EditIcon from '@iconify/icons-gg/edit-markup';
 import TrashIcon from '@iconify/icons-gg/trash';
 import IconButton from './IconButton';
 import { ButtonGroup, OverlayTrigger } from 'react-bootstrap';
+import { getFormattedTime } from './TimeUtils';
 
-export default function OrgPageEventCard({ event, pastEvent, isEditable}) {
+export default function OrgPageEventCard({ event, pastEvent, isEditable }) {
     const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
     if (event && !isEditable) {
+        console.log(event.start)
         return (
             <Card className={"drop-shadow mb-4 " + backgroundColor}>
                 <Row>
-                    <Col style={{ textAlign: 'left' }}>
+                    <Col style={{ textAlign: 'left', wordBreak: 'break-all' }}>
                         <h5 className="font-weight-bold">{event.title}</h5>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={4} md={2} style={{ textAlign: 'left' }}>
                         {/* <p className="mb-0">{event.start.toDateString()}</p> */}
-                        {/* <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span> */}
-                        <p className="mb-0">{event.start}</p>
+                        <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                         <p className="mb-0">{event.location}</p>
-                        <p className="mb-0">{event.org}</p>
+                        <p className="mb-0">{event.orgs}</p>
                         <a className="mb-0" href={event.link}>More Info</a>
                     </Col>
                     <Col style={{ textAlign: 'left' }}>
@@ -31,7 +32,7 @@ export default function OrgPageEventCard({ event, pastEvent, isEditable}) {
                 </Row>
             </Card>
         )
-    } else if(event && isEditable) {
+    } else if (event && isEditable) {
         return (
             <Card className={"drop-shadow mb-4"}>
                 <Row>
@@ -42,10 +43,10 @@ export default function OrgPageEventCard({ event, pastEvent, isEditable}) {
                 <Row>
                     <Col xs={2} style={{ textAlign: 'left' }}>
                         {/* <p className="mb-0">{event.start.toDateString()}</p> */}
-                        {/* <span>{!event.allDay ? event.start.toLocaleTimeString() + " - " + event.end.toLocaleTimeString() : null}</span> */}
+                        <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                         <p className="mb-0">{event.start}</p>
                         <p className="mb-0">{event.location}</p>
-                        <p className="mb-0">{event.org}</p>
+                        <p className="mb-0">{event.orgs}</p>
                         <a className="mb-0" href={event.link}>More Info</a>
                     </Col>
                     <Col style={{ textAlign: 'left' }}>
