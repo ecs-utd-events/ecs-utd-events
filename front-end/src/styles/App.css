@@ -162,3 +162,21 @@
   color: var(--gray3);
   font-style: italic;
 }
+
+.login-spinner-wrapper {
+  z-index: 2;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-spinner-wrapper .login-spinner {
+  width: 20em;
+  height: 20em;
+  border: 1.25em solid var(--primary1);
+  border-right-color: transparent;
+  animation-duration: 1s;
+}
