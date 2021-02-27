@@ -11,6 +11,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
 import './../styles/App.css';
+import FullPageLoading from '../components/FullPageLoading';
 
 function getErrorMessage(errorCode) {
     if (errorCode === 'auth/invalid-email') {
@@ -51,11 +52,7 @@ export default function Login() {
 
     return (
         <div className="background-accent">
-            {loading &&
-                <div className="login-spinner-wrapper">
-                    <Spinner animation="border" className="login-spinner" />
-                </div>
-            }
+            <FullPageLoading loading={loading} />
             <div className="login-wrapper">
                 <Container>
                     <Row>

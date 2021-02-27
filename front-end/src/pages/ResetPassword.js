@@ -4,14 +4,11 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import InputGroup from 'react-bootstrap/InputGroup';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
 import { auth } from '../firebase';
-import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
+
+import FullPageLoading from './../components/FullPageLoading';
 import './../styles/App.css';
-import { Spinner } from 'react-bootstrap';
 
 function getErrorMessage(errorCode) {
     if (errorCode === 'auth/invalid-email') {
@@ -126,11 +123,7 @@ export default function ResetPassword() {
 
     return (
         <div className="background-accent">
-            {loading &&
-                <div className="login-spinner-wrapper">
-                    <Spinner animation="border" className="login-spinner" />
-                </div>
-            }
+            <FullPageLoading loading={loading} />
             <div className="login-wrapper">
                 <Container fluid>
                     <Row>
