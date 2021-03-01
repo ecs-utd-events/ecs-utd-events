@@ -99,12 +99,14 @@ export default function OrgProfile() {
                 </Collapse>
             </div>
     }
+
+    var imageSource = org.imageUrl || Circle;
+
     return (
         <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
             <NavbarComponent page='OrgProfilePage' />
             <Container>
-                {/* Test Image */}
-                <Image src={Circle} style={{ width: '25vh', height: '25vh' }}></Image>
+                <Image src={ imageSource } style={{ width: '25vh', height: '25vh' }}></Image>
                 <Row className="my-4">
                     <h1 className="item-align-center font-weight-bold">{org.name}</h1>
                 </Row>
