@@ -13,7 +13,7 @@ export default function OrgInfoCard({ orgName, orgImageUrl }) {
                     <Row>
                         <Col xs={4}>
                             <div className="org-info-card-style">
-                                <Image src={imageSource} fluid/>
+                                <Image src={imageSource} roundedCircle style={{ width: '10vh', height: '10vh' }}/>
                             </div>
                         </Col>
                         <Col xs={8}>
