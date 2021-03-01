@@ -10,7 +10,6 @@ import { getFormattedTime } from './TimeUtils';
 export default function OrgPageEventCard({ event, pastEvent, isEditable }) {
     const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
     if (event && !isEditable) {
-        console.log(event.start)
         return (
             <Card className={"drop-shadow mb-4 " + backgroundColor}>
                 <Row>
@@ -24,7 +23,7 @@ export default function OrgPageEventCard({ event, pastEvent, isEditable }) {
                         <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                         <p className="mb-0">{event.location}</p>
                         <p className="mb-0">{event.orgs}</p>
-                        <a className="mb-0" href={event.link}>More Info</a>
+                        <a className="mb-0" href={event.link }target="_blank">More Info</a>
                     </Col>
                     <Col style={{ textAlign: 'left' }}>
                         <p>{event.description}</p>

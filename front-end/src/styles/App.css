@@ -195,7 +195,3 @@
   color: var(--gray3);
   font-style: italic;
 }
-
-.tooltip-css {
-  color: var(--primary1)!important;
-}

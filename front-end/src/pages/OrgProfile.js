@@ -14,139 +14,179 @@ import LinkSVG from '../assets/link.svg';
 import DescriptionIcon from '../assets/product-description.svg';
 import Circle from '../assets/circle.png';
 
+function findThisOrg(allOrgs, orgSlug) {
+    if (allOrgs != null && orgSlug != null) {
+        for (var i = 0; i < allOrgs.length; i++) {
+            if (allOrgs[i].slug === orgSlug)
+                return allOrgs[i];
+        }
+    }
 
-export default function OrgProfile() {
+    return null;
+}
+
+export default function OrgProfile({ orgs }) {
     let { orgSlug } = useParams();
-    const [org, setOrgInfo] = useState({});
-    const [allEvents, setOrgEvents] = useState([]);
+    const [organizations, setOrganizations] = useState(null);
+    const [thisOrg, setThisOrg] = useState(null);
+    const [allEvents, setAllEvents] = useState(null);
     const [openUpcomingEvents, setUpcomingOpen] = useState(false);
     const [openPastEvents, setPastOpen] = useState(false);
     const maxEventsDisplayed = 3;
 
+    // If the data was not passed from the home page, we have to fetch _all_ organizations. This is because we do
+    // not know the names of collaborators for the OrgPageEventCards.
     useEffect(() => {
-        // GET request using fetch inside useEffect React hook
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/slug=' + orgSlug)
-            .then(response => response.json())
-            .then(data => setOrgInfo(data))
-            .catch(error => {
-                console.error('There was an error fetching the org info for this org: ' + orgSlug, error);
-            });
-
-    }, [orgSlug]);
-
-    useEffect(() => {
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + org.uId)
-            .then(response => response.json())
-            .then(data => setOrgEvents(data))
-            .catch(error => {
-                console.error('There was an error fetching events for this org: ' + org.name, error);
-            });
-    }, [org])
-
-    // Sort events into past and future based on endTime.
-    const UPCOMING_EVENTS = [];
-    const PAST_EVENTS = [];
-    for (var i = 0; i < allEvents.length; i++) {
-        var eventEndTime = Date.parse(allEvents[i].endTime);
-        if (Date.now() < eventEndTime) {
-            UPCOMING_EVENTS.push(allEvents[i]);
+        // GET request for organizations
+        if (orgs != null) {
+            setOrganizations(orgs);
         }
         else {
-            PAST_EVENTS.push(allEvents[i]);
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
+                .then(response => response.json())
+                .then(data => setOrganizations(data))
+                .catch(error => {
+                    console.error('There was an error fetching organizations!', error);
+                });
         }
-    }
+    }, [orgs, orgSlug]);
 
-    // These objects allow us to put "expand" for additional (more than 3) events.
-    var additionalUpcomingEvents;
-    if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
-        additionalUpcomingEvents =
-            <div>
-                <button
-                    onClick={() => setUpcomingOpen(!openUpcomingEvents)}
-                    aria-controls="expand-events"
-                    aria-expanded={openUpcomingEvents}>
-                    expand...
+    useEffect(() => {
+        setThisOrg(findThisOrg(organizations, orgSlug));
+    }, [organizations, orgSlug])
+
+    useEffect(() => {
+        if (thisOrg != null) {
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + thisOrg.uId)
+                .then(response => response.json())
+                .then(data => setAllEvents(data))
+                .catch(error => {
+                    console.error('There was an error fetching events for this org: ' + thisOrg.name, error);
+                });
+        }
+    }, [thisOrg])
+
+    if (thisOrg != null && allEvents != null) {
+        // Sort events into past and future based on endTime.
+        const UPCOMING_EVENTS = [];
+        const PAST_EVENTS = [];
+        for (var i = 0; i < allEvents.length; i++) {
+            var eventEndTime = Date.parse(allEvents[i].endTime);
+            if (Date.now() < eventEndTime) {
+                UPCOMING_EVENTS.push(allEvents[i]);
+            }
+            else {
+                PAST_EVENTS.push(allEvents[i]);
+            }
+        }
+
+        // These objects allow us to put "expand" for additional (more than 3) events.
+        var additionalUpcomingEvents;
+        if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
+            additionalUpcomingEvents =
+                <div>
+                    <button
+                        onClick={() => setUpcomingOpen(!openUpcomingEvents)}
+                        aria-controls="expand-events"
+                        aria-expanded={openUpcomingEvents}>
+                        expand...
                 </button>
-                <Collapse in={openUpcomingEvents}>
-                    <div>
-                        {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
+                    <Collapse in={openUpcomingEvents}>
+                        <div>
+                            {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
+                                return (
+                                    <OrgPageEventCard key={event.id} event={event} pastEvent={false} ></OrgPageEventCard>
+                                );
+                            })}
+                        </div>
+                    </Collapse>
+                </div>
+        }
+
+        if (UPCOMING_EVENTS.length === 0) {
+            additionalUpcomingEvents = <h6><i>No upcoming events.</i></h6>;
+        }
+        var additionalPastEvents;
+        if (PAST_EVENTS.length > maxEventsDisplayed) {
+            additionalPastEvents =
+                <div>
+                    <button
+                        onClick={() => setPastOpen(!openPastEvents)}
+                        aria-controls="expand-events"
+                        aria-expanded={openPastEvents}>
+                        expand...
+                </button>
+                    <Collapse in={openPastEvents}>
+                        <div>
+                            {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
+                                return (
+                                    <OrgPageEventCard key={event.id} event={event} pastEvent={true} ></OrgPageEventCard>
+                                );
+                            })}
+                        </div>
+                    </Collapse>
+                </div>
+        }
+
+        if (PAST_EVENTS.length === 0) {
+            additionalPastEvents = <h6><i>No recent events.</i></h6>;
+        }
+
+        // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
+        var imageSource = thisOrg != null ? (thisOrg.imageUrl != null ? thisOrg.imageUrl : Circle) : Circle;
+
+        return (
+            <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
+                <NavbarComponent page='OrgProfilePage' />
+                <Container>
+                    <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
+                    <Row className="my-4">
+                        <h1 className="item-align-center font-weight-bold">{thisOrg.name}</h1>
+                    </Row>
+                    <Row className="mb-3">
+                        <Col xs={2} style={{ textAlign: 'right' }}>
+                            <Image src={LinkSVG}></Image>
+                        </Col>
+                        <Col style={{ textAlign: 'left' }}>
+                            <a href={thisOrg.website} target="_blank" rel="noreferrer">{thisOrg.website}</a>
+                        </Col>
+                    </Row>
+                    <Row className="mb-5">
+                        <Col xs={2} style={{ textAlign: 'right', marginTop: 5, marginBottom: 'auto' }}>
+                            <Image src={DescriptionIcon}></Image>
+                        </Col>
+                        <Col xs={8} style={{ textAlign: 'left' }}>
+                            {thisOrg.description}
+                        </Col>
+                    </Row>
+                    <Container style={{ paddingBottom: "40px" }}>
+                        <Row className="mb-3" style={{ textAlign: 'center' }}>
+                            <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
+                        </Row>
+                        {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
+                        {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                             return (
-                                <OrgPageEventCard key={event.id} event={event} pastEvent={false} ></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={false} isEditable={false}></OrgPageEventCard>
                             );
                         })}
-                    </div>
-                </Collapse>
-            </div>
-    }
-    var additionalPastEvents;
-    if (PAST_EVENTS.length > maxEventsDisplayed) {
-        additionalPastEvents =
-            <div>
-                <button
-                    onClick={() => setPastOpen(!openPastEvents)}
-                    aria-controls="expand-events"
-                    aria-expanded={openPastEvents}>
-                    expand...
-                </button>
-                <Collapse in={openPastEvents}>
-                    <div>
-                        {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
+                        {additionalUpcomingEvents}
+                    </Container>
+                    <Container>
+                        {/* DISPLAY PAST EVENTS */}
+                        <Row className="mb-3" style={{ textAlign: 'center' }}>
+                            <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
+                        </Row>
+                        {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                             return (
-                                <OrgPageEventCard key={event.id} event={event} pastEvent={true} ></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={true} isEditable={false}></OrgPageEventCard>
                             );
                         })}
-                    </div>
-                </Collapse>
-            </div>
+                        {additionalPastEvents}
+                    </Container>
+                </Container>
+            </div >
+        )
     }
-
-    var imageSource = org.imageUrl || Circle;
-
-    return (
-        <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
-            <NavbarComponent page='OrgProfilePage' />
-            <Container>
-                <Image src={ imageSource } style={{ width: '25vh', height: '25vh' }}></Image>
-                <Row className="my-4">
-                    <h1 className="item-align-center font-weight-bold">{org.name}</h1>
-                </Row>
-                <Row className="mb-3">
-                    <Col xs={2} style={{ textAlign: 'right' }}>
-                        <Image src={LinkSVG}></Image>
-                    </Col>
-                    <Col style={{ textAlign: 'left' }}>
-                        <a href={org.website} target="_blank" rel="noreferrer">{org.website}</a>
-                    </Col>
-                </Row>
-                <Row className="mb-5">
-                    <Col xs={2} style={{ textAlign: 'right', marginTop: 5, marginBottom: 'auto' }}>
-                        <Image src={DescriptionIcon}></Image>
-                    </Col>
-                    <Col xs={8} style={{ textAlign: 'left' }}>
-                        {org.description}
-                    </Col>
-                </Row>
-                <Row className="mb-3" style={{ textAlign: 'center' }}>
-                    <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
-                </Row>
-                {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
-                {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
-                    return (
-                        <OrgPageEventCard key={event.id} event={event} pastEvent={false} isEditable={false}></OrgPageEventCard>
-                    );
-                })}
-                {additionalUpcomingEvents}
-                {/* DISPLAY PAST EVENTS */}
-                <Row className="mb-3" style={{ textAlign: 'center' }}>
-                    <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
-                </Row>
-                {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
-                    return (
-                        <OrgPageEventCard key={event.id} event={event} pastEvent={true} isEditable={false}></OrgPageEventCard>
-                    );
-                })}
-                {additionalPastEvents}
-            </Container>
-        </div >
-    )
+    else
+        return null;
 }

@@ -202,10 +202,10 @@ export default function Home() {
         </Container>
         {/* We put a tooltip on only the asterisk in "Organizations*" */}
         <h1 className="font-weight-bold" style={{ display: "inline" }}>Organizations</h1>
-        <h3 style={{ display: "inline", verticalAlign: "10px" }}><sup data-tip="Randomized ordering. See <a target=&quot _blank &quot href= https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/ >here</a> for the dangers of alphabetical order."
+        <h3 style={{ display: "inline", verticalAlign: "10px" }}><sup data-tip="Randomized ordering. See <a target=&quot _blank &quot href=https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/>here</a> for the dangers of alphabetical order."
           className="font-weight-bold">ⓘ</sup></h3>
         {/* backgroundColor = --var(primary1) from App.css. */}
-        <ReactTooltip backgroundColor="#FEC5BB" textColor="black" clickable='true' delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
+        <ReactTooltip backgroundColor="#FEC5BB" textColor="black" clickable={true} delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
         <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
@@ -213,7 +213,7 @@ export default function Home() {
                 return (
                   <Col md={4} key={org.slug} className='align-items-stretch'>
                     <Container style={{ paddingTop: 20 }}>
-                      <Link to={`org/${org.slug}`} style={{ textDecoration: 'none' }}>
+                      <Link to={{pathname: `org/${org.slug}`, state: {organizations: organizations}}} style={{ textDecoration: 'none' }}>
                         <OrgInfoCard orgName={org.name} orgImageUrl={org.imageUrl} />
                       </Link>
                     </Container>
