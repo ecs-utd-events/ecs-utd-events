@@ -25,19 +25,23 @@ export default function OrgProfile() {
 
     useEffect(() => {
         // GET request using fetch inside useEffect React hook
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + orgSlug)
+        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/slug=' + orgSlug)
             .then(response => response.json())
             .then(data => setOrgInfo(data))
             .catch(error => {
                 console.error('There was an error fetching the org info for this org: ' + orgSlug, error);
             });
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + orgSlug)
+
+    }, [orgSlug]);
+
+    useEffect(() => {
+        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + org.uId)
             .then(response => response.json())
             .then(data => setOrgEvents(data))
             .catch(error => {
                 console.error('There was an error fetching events for this org: ' + orgSlug, error);
             });
-    }, [orgSlug]);
+    }, [org])
 
     // Sort events into past and future based on endTime.
     const UPCOMING_EVENTS = [];
