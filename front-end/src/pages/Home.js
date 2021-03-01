@@ -5,6 +5,7 @@ import {
   Link
 } from "react-router-dom";
 import React, { useState, useEffect } from 'react'
+import ReactTooltip from 'react-tooltip';
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -200,7 +201,13 @@ export default function Home() {
             </Col>
           </Row>
         </Container>
-        <h1 className="font-weight-bold">Organizations</h1>
+        {/* We put a tooltip on only the asterisk in "Organizations*" */}
+        <h1 className="font-weight-bold" style={{display: "inline"}}>Organizations</h1>
+        <h1 data-tip="Randomized. See <a target=&quot _blank &quot href= https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/ >here</a> for the dangers of alphabetical ordering." 
+        className="font-weight-bold" 
+        style={{display: "inline"}}>*</h1>
+        {/* backgroundColor = --var(primary1) from App.css. */}
+        <ReactTooltip backgroundColor="#FEC5BB" textColor="black" clickable='true' delayHide={500} effect="solid" offset={{top:0}} html={true}/>
         <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
