@@ -21,22 +21,6 @@ import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
 
-// Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
-// let eventGuid = 0
-// const today = new Date()
-// const tomorrow = new Date(today)
-// tomorrow.setDate(tomorrow.getDate() + 1)
-// const yday = new Date(today)
-// yday.setDate(yday.getDate() + -1)
-
-// let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-// let tmrwStr = tomorrow.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-// let ydayStr = yday.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-
-// export function createEventId() {
-//   return String(eventGuid++)
-// }
-
 const oneDayInMilliseconds = 86400000 - 1000;
 function parseEventsToFullCalendarFormat(eventData) {
   return eventData.map(event => {
@@ -102,18 +86,20 @@ export default function Home() {
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
 
+  console.log(organizations);
+
   return (
     <div className="App">
       <NavbarComponent page='Home' />
       <div className="background">
-        <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} />
+        <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} orgs={organizations} />
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
               <div className="main-page-sidebar">
                 <div>
                   <h2 style={{ fontWeight: 600 }}>Event Information</h2>
-                  <EventInfoCard event={selectedEvent} animateCard={animateCard} setAnimateCard={setAnimateCard} />
+                  <EventInfoCard event={selectedEvent} orgs={organizations} animateCard={animateCard} setAnimateCard={setAnimateCard} />
                 </div>
               </div>
             </Col>

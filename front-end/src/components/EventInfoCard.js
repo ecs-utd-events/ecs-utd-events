@@ -6,7 +6,7 @@ import {
 import EventInfoContent from './EventInfoContent.js';
 
 
-export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
+export default function EventInfoCard({ event, animateCard, setAnimateCard, orgs }) {
     const onAnimationEnd = () => {
         setAnimateCard('')
     }
@@ -22,7 +22,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard }) {
                         </div>
                     </div>
                 </div>
-                <EventInfoContent event={event} />
+                <EventInfoContent event={event} orgs={orgs} />
             </Card >
         );
     } else {

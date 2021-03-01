@@ -30,18 +30,32 @@ export function ListItemLayout({ Icon, children }) {
     )
 }
 
-export default function EventInfoContent({ event, mobile }) {
+
+function getRelevantOrgs(allOrgs, event) {
+    if (allOrgs == null || event == null || event.extendedProps.org == null || event.extendedProps.org.length === 0) {
+        return null;
+    }
+    var filteredArr = [];
+    event.extendedProps.org.forEach(id => {
+        filteredArr.push(
+            allOrgs.find(item => {
+                return item.uId === id
+            })
+        )
+    })
+    console.log(filteredArr);
+    return filteredArr
+}
+
+export default function EventInfoContent({ event, mobile, orgs }) {
     // Need to fetch orgName from the org with orgSlug given by: "event.extendedProps.org"
-    const [org, setOrgInfo] = useState({});
+    const [relevantOrgs, setRelevantOrgs] = useState(null);
     useEffect(() => {
-        // GET request using fetch inside useEffect React hook
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + event.extendedProps.org)
-            .then(response => response.json())
-            .then(data => setOrgInfo(data))
-            .catch(error => {
-                console.error('There was an error fetching events for this org: ' + event.extendedProps.org, error);
-            });
-    }, [event.extendedProps.org]);
+        const filteredOrgs = getRelevantOrgs(orgs, event);
+        console.log(orgs)
+        console.log(event);
+        setRelevantOrgs(filteredOrgs);
+    }, [orgs, event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
 
@@ -65,7 +79,7 @@ export default function EventInfoContent({ event, mobile }) {
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
                         <ListItemLayout Icon={GroupIcon}>
-                            {org.name || 'Organization'}
+                            {relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}
                         </ListItemLayout>
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
