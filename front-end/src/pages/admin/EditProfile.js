@@ -1,9 +1,8 @@
-import { useParams } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 
 import AdminLayout from "../../components/AdminLayout";
@@ -15,6 +14,18 @@ import Circle from '../../assets/circle.png';
 
 export default function EditProfile() {
     const user = useContext(UserContext);
+    const [org, setOrg] = useState(null);
+
+    useEffect(() => {
+        if (user != null) {
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + user.uid)
+                .then(response => response.json())
+                .then(data => setOrg(data))
+                .catch(error => {
+                    console.error('There was an error fetching the Org!', error);
+                });
+        }
+    }, [user])
 
     return (
         <AdminLayout pageName="Profile">
@@ -22,14 +33,14 @@ export default function EditProfile() {
                 <Container>
                     <Image src={Circle} style={{ width: '25vh', height: '25vh' }}></Image>
                     <Row className="my-4">
-                        <h1 className="item-align-center font-weight-bold">{user.name}</h1>
+                        <h1 className="item-align-center font-weight-bold">{org != null ? org.name : 'Name'}</h1>
                     </Row>
                     <Row style={{ textAlign: "left" }}>
                         <h3 className="item-align-center font-weight-bold">Website</h3>
                     </Row>
                     <Row>
                         <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
-                            {user.website}
+                            {org != null ? org.website : 'Website'}
                         </Card>
                     </Row>
                     <Row style={{ textAlign: "left" }}>
@@ -37,25 +48,25 @@ export default function EditProfile() {
                     </Row>
                     <Row>
                         <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
-                            {user.description}
+                            {org != null ? org.description : 'Description'}
                         </Card>
                     </Row>
                     <Row style={{ textAlign: "left" }}>
                         <h3 className="item-align-center font-weight-bold">Social Media Links</h3>
                     </Row>
                     <Row>
-                        {user.socialMedia.facebook &&
+                        {org != null && org.socialMedia.facebook &&
                             <div>
                                 <h5>Facebook:</h5>
                                 <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
-                                    {user.socialMedia.facebook}
+                                    {org.socialMedia.facebook}
                                 </Card>
                             </div>}
-                        {user.socialMedia.LinkedIn &&
+                        {org != null && org.socialMedia.linkedin &&
                             <div>
                                 <h5>LinkedIn:</h5>
                                 <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
-                                    {user.socialMedia.linkedin}
+                                    {org.socialMedia.linkedin}
                                 </Card>
                             </div>}
                     </Row>

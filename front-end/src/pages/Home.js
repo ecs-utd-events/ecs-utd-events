@@ -87,8 +87,6 @@ export default function Home() {
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
 
-  console.log(organizations);
-
   return (
     <div className="App">
       <NavbarComponent page='Home' />
@@ -202,12 +200,14 @@ export default function Home() {
           </Row>
         </Container>
         {/* We put a tooltip on only the asterisk in "Organizations*" */}
-        <h1 className="font-weight-bold" style={{display: "inline"}}>Organizations</h1>
-        <h1 data-tip="Randomized. See <a target=&quot _blank &quot href= https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/ >here</a> for the dangers of alphabetical ordering." 
+        <h1 className="font-weight-bold" style={{ display: "inline" }}>Organizations</h1>
+        <h1 data-tip="Randomized. See <a target=&quot _blank &quot href= https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/ >here</a> for the dangers of alphabetical ordering."
+          className="font-weight-bold"
         className="font-weight-bold" 
-        style={{display: "inline"}}>*</h1>
+          className="font-weight-bold"
+          style={{ display: "inline" }}>*</h1>
         {/* backgroundColor = --var(primary1) from App.css. */}
-        <ReactTooltip backgroundColor="#FEC5BB" textColor="black" clickable='true' delayHide={500} effect="solid" offset={{top:0}} html={true}/>
+        <ReactTooltip backgroundColor="#FEC5BB" textColor="black" clickable='true' delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
         <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {

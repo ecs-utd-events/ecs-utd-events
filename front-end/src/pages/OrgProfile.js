@@ -39,7 +39,7 @@ export default function OrgProfile() {
             .then(response => response.json())
             .then(data => setOrgEvents(data))
             .catch(error => {
-                console.error('There was an error fetching events for this org: ' + orgSlug, error);
+                console.error('There was an error fetching events for this org: ' + org.name, error);
             });
     }, [org])
 

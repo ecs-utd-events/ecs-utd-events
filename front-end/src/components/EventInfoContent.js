@@ -30,7 +30,6 @@ export function ListItemLayout({ Icon, children }) {
     )
 }
 
-
 function getRelevantOrgs(allOrgs, event) {
     if (allOrgs == null || event == null || event.extendedProps.org == null || event.extendedProps.org.length === 0) {
         return null;
@@ -43,19 +42,15 @@ function getRelevantOrgs(allOrgs, event) {
             })
         )
     })
-    console.log(filteredArr);
     return filteredArr
 }
 
 export default function EventInfoContent({ event, mobile, orgs }) {
-    // Need to fetch orgName from the org with orgSlug given by: "event.extendedProps.org"
     const [relevantOrgs, setRelevantOrgs] = useState(null);
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
-        console.log(orgs)
-        console.log(event);
         setRelevantOrgs(filteredOrgs);
-    }, [orgs, event]);
+    }, [event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
 
