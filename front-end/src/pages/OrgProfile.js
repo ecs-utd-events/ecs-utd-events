@@ -7,6 +7,7 @@ import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
 import Collapse from 'react-bootstrap/Collapse'
 import React, { useEffect, useState } from "react";
+import CustomButton from '../components/CustomButton';
 
 import './../styles/App.css';
 
@@ -85,13 +86,11 @@ export default function OrgProfile({ orgs }) {
         if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
             additionalUpcomingEvents =
                 <div>
-                    <button
-                        onClick={() => setUpcomingOpen(!openUpcomingEvents)}
+                    <CustomButton className="drop-shadow" onClick={() => setPastOpen(!openPastEvents)}
                         aria-controls="expand-events"
-                        aria-expanded={openUpcomingEvents}>
-                        expand...
-                </button>
-                    <Collapse in={openUpcomingEvents}>
+                        aria-expanded={openPastEvents}>
+                        see all events...</CustomButton>
+                    <Collapse in={openUpcomingEvents} style={{ paddingTop: '1vh' }}>
                         <div>
                             {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
                                 return (
@@ -103,20 +102,18 @@ export default function OrgProfile({ orgs }) {
                 </div>
         }
 
-        if (UPCOMING_EVENTS.length === 0) {
+        if (UPCOMING_EVENTS.length === 0)
             additionalUpcomingEvents = <h6><i>No upcoming events.</i></h6>;
-        }
+
         var additionalPastEvents;
         if (PAST_EVENTS.length > maxEventsDisplayed) {
             additionalPastEvents =
                 <div>
-                    <button
-                        onClick={() => setPastOpen(!openPastEvents)}
+                    <CustomButton className="drop-shadow" onClick={() => setPastOpen(!openPastEvents)}
                         aria-controls="expand-events"
                         aria-expanded={openPastEvents}>
-                        expand...
-                </button>
-                    <Collapse in={openPastEvents}>
+                        see all events...</CustomButton>
+                    <Collapse in={openPastEvents} style={{ paddingTop: '1vh' }}>
                         <div>
                             {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
                                 return (
@@ -128,9 +125,9 @@ export default function OrgProfile({ orgs }) {
                 </div>
         }
 
-        if (PAST_EVENTS.length === 0) {
+        if (PAST_EVENTS.length === 0)
             additionalPastEvents = <h6><i>No recent events.</i></h6>;
-        }
+
 
         // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
         var imageSource = thisOrg != null ? (thisOrg.imageUrl != null ? thisOrg.imageUrl : Circle) : Circle;
