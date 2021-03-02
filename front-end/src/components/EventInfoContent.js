@@ -7,9 +7,12 @@ import Col from 'react-bootstrap/Col';
 import ShowMoreText from 'react-show-more-text';
 import ShareIcon from '@iconify/icons-gg/share';
 import LinkIcon from '@iconify/icons-gg/link';
+import { useEffect, useState } from "react";
 
 import IconButton from '../components/IconButton';
 import Tag from "./Tag";
+import { getFormattedTime, lastUpdatedToString } from './TimeUtils';
+
 import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
@@ -27,11 +30,30 @@ export function ListItemLayout({ Icon, children }) {
     )
 }
 
-export function getFormattedTime(time) {
-    return time.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
+function getRelevantOrgs(allOrgs, event) {
+    if (allOrgs == null || event == null || event.extendedProps.org == null || event.extendedProps.org.length === 0) {
+        return null;
+    }
+    var filteredArr = [];
+    event.extendedProps.org.forEach(id => {
+        filteredArr.push(
+            allOrgs.find(item => {
+                return item.uId === id
+            })
+        )
+    })
+    return filteredArr
 }
 
-export default function EventInfoContent({ event, mobile }) {
+export default function EventInfoContent({ event, mobile, orgs }) {
+    const [relevantOrgs, setRelevantOrgs] = useState(null);
+    useEffect(() => {
+        const filteredOrgs = getRelevantOrgs(orgs, event);
+        setRelevantOrgs(filteredOrgs);
+    }, [event]);
+
+    var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
+
     return (
         <>
             <Card.Header className="card-header-no-border">
@@ -52,7 +74,7 @@ export default function EventInfoContent({ event, mobile }) {
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
                         <ListItemLayout Icon={GroupIcon}>
-                            {event.extendedProps.org || 'Organization'}
+                            {relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}
                         </ListItemLayout>
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
@@ -79,7 +101,7 @@ export default function EventInfoContent({ event, mobile }) {
             }
             <Row>
                 <Col className="d-flex align-items-end">
-                    <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated 2 mins ago</p>
+                    <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p>
                 </Col>
                 <Col className="d-flex align-item-end justify-content-end">
                     <ButtonGroup>

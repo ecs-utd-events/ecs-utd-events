@@ -1,12 +1,13 @@
-import { Container, Row, Col, Card } from "react-bootstrap/esm";
-import { Link } from 'react-router-dom';
+import { Container, Row, Col } from "react-bootstrap/esm";
+import { Link, useHistory } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import profileIcon from '@iconify/icons-gg/profile';
 import calendarIcon from '@iconify/icons-gg/feed';
 import helpIcon from '@iconify/icons-gg/info';
 import logoutIcon from '@iconify/icons-gg/log-out';
+import { auth } from "../firebase";
 
-export const TAB_CONTENTS = [
+const TAB_CONTENTS = [
     {
         title: 'Profile',
         icon: profileIcon,
@@ -25,16 +26,17 @@ export const TAB_CONTENTS = [
     {
         title: 'Log Out',
         icon: logoutIcon,
-        link: '/'
+        link: '#',
+        flag: true
     }
 ];
 
-export const Tab = ({ tab, index, parent }) => {
+export const Tab = ({ tab, index, parent, logoutHandler }) => {
     const selected = tab.title === parent;
     const orderClass = index === 0 ? 'first' : index === TAB_CONTENTS.length - 1 ? 'last' : ''
     const rowClass = orderClass.concat(' ').concat(selected ? 'selected' : '')
     return (
-        <Link to={tab.link}>
+        <Link to={tab.link} onClick={tab.flag ? logoutHandler : null}>
             <Row className={"admin-tab " + rowClass} disabled={tab.title === parent}>
                 <Col>
                     <Container className="mx-0 px-0">
@@ -54,10 +56,20 @@ export const Tab = ({ tab, index, parent }) => {
 }
 
 export default function AdminTab({ parent }) {
+    const history = useHistory();
+    const logoutHandler = () => {
+        auth.signOut().then(() => {
+            console.log('Adios! 👋')
+            history.push('/');
+        }).catch((error) => {
+            console.log(error.message);
+            alert('Sorry there was an issue signing you out 😔. Why not wait for a second then try again 😊');
+        })
+    }
     return (
         <Container className="admin-tab-wrapper mx-0">
             {
-                TAB_CONTENTS.map((value, index) => <Tab tab={value} index={index} parent={parent} />)
+                TAB_CONTENTS.map((value, index) => <Tab tab={value} index={index} parent={parent} logoutHandler={logoutHandler} />)
             }
         </Container>
     )

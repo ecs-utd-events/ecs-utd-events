@@ -1,70 +1,75 @@
-import AdminLayout from "../../components/AdminLayout";
-import { useParams } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 
-import '../../styles/AdminPages.css';
+import AdminLayout from "../../components/AdminLayout";
+import { UserContext } from "../../providers/UserProvider";
 
-import LinkSVG from '../../assets/link.svg';
-import Description from '../../assets/product-description.svg';
+import '../../styles/AdminPages.css';
 import Circle from '../../assets/circle.png';
 
-const testOrg = {
-    "slug": "association-for-computing-machinery",
-    "name": "Association for Computing Machinery",
-    "shortName": "ACM",
-    "website": "http://acmutd.co/",
-    "description": "We're the Association for Computing Machinery at UT Dallas. We're focused on giving back to the engineering community here at UT Dallas and beyond through events projects, HackUTD, and more.",
-    "socialMedia": {
-        "linkedin": "https://www.linkedin.com/company/acmutd",
-        "facebook": "https://www.facebook.com/acmatutd/"
-    }
-}
 
 export default function EditProfile() {
+    const user = useContext(UserContext);
+    const [org, setOrg] = useState(null);
+
+    useEffect(() => {
+        if (user != null) {
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + user.uid)
+                .then(response => response.json())
+                .then(data => setOrg(data))
+                .catch(error => {
+                    console.error('There was an error fetching the Org!', error);
+                });
+        }
+    }, [user])
+
     return (
         <AdminLayout pageName="Profile">
             <div className="edit-profile-page">
                 <Container>
                     <Image src={Circle} style={{ width: '25vh', height: '25vh' }}></Image>
                     <Row className="my-4">
-                        <h1 className="item-align-center font-weight-bold">{testOrg.name}</h1>
+                        <h1 className="item-align-center font-weight-bold">{org != null ? org.name : 'Name'}</h1>
                     </Row>
                     <Row style={{ textAlign: "left" }}>
                         <h3 className="item-align-center font-weight-bold">Website</h3>
                     </Row>
                     <Row>
-                        <Card className="drop-shadow mb-4 edit-profile-info-card" style={{width: '100%'}}>
-                            {testOrg.website}
+                        <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
+                            {org != null ? org.website : 'Website'}
                         </Card>
                     </Row>
                     <Row style={{ textAlign: "left" }}>
                         <h3 className="item-align-center font-weight-bold">Description</h3>
                     </Row>
                     <Row>
-                        <Card className="drop-shadow mb-4 edit-profile-info-card" style={{width: '100%'}}>
-                            {testOrg.description}
+                        <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
+                            {org != null ? org.description : 'Description'}
                         </Card>
                     </Row>
                     <Row style={{ textAlign: "left" }}>
                         <h3 className="item-align-center font-weight-bold">Social Media Links</h3>
                     </Row>
                     <Row>
-                        Facebook: 
-                        <Card className="drop-shadow mb-4 edit-profile-info-card" style={{width: '100%'}}>
-                            {testOrg.socialMedia.facebook}
-                        </Card>
-                        LinkedIn: 
-                        <Card className="drop-shadow mb-4 edit-profile-info-card" style={{width: '100%'}}>
-                            {testOrg.socialMedia.linkedin}
-                        </Card>
-
+                        {org != null && org.socialMedia.facebook &&
+                            <div>
+                                <h5>Facebook:</h5>
+                                <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
+                                    {org.socialMedia.facebook}
+                                </Card>
+                            </div>}
+                        {org != null && org.socialMedia.linkedin &&
+                            <div>
+                                <h5>LinkedIn:</h5>
+                                <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
+                                    {org.socialMedia.linkedin}
+                                </Card>
+                            </div>}
                     </Row>
-
                 </Container>
             </div>
         </AdminLayout>

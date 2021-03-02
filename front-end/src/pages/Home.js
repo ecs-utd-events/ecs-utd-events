@@ -5,6 +5,7 @@ import {
   Link
 } from "react-router-dom";
 import React, { useState, useEffect } from 'react'
+import ReactTooltip from 'react-tooltip';
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -20,22 +21,6 @@ import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
-
-// Placeholder events for FullCalendar. Demonstrates creating events with unique ids.
-// let eventGuid = 0
-// const today = new Date()
-// const tomorrow = new Date(today)
-// tomorrow.setDate(tomorrow.getDate() + 1)
-// const yday = new Date(today)
-// yday.setDate(yday.getDate() + -1)
-
-// let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-// let tmrwStr = tomorrow.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-// let ydayStr = yday.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-
-// export function createEventId() {
-//   return String(eventGuid++)
-// }
 
 const oneDayInMilliseconds = 86400000 - 1000;
 function parseEventsToFullCalendarFormat(eventData) {
@@ -53,7 +38,9 @@ function parseEventsToFullCalendarFormat(eventData) {
         location: event.location,
         link: event.link,
         // default tags until sid implements tags
-        tags: ['Google', 'Industry', 'ML', 'WWC']
+        tags: ['Google', 'Industry', 'ML', 'WWC'],
+        // used for EventInfoCard "last updated"
+        lastUpdated: event.lastUpdated
       }
     }
   })
@@ -81,7 +68,7 @@ export default function Home() {
   const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
-    // GET request using fetch inside useEffect React hook
+    // GET request for all events using fetch inside useEffect React hook
     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
       .then(response => response.json())
       .then(data => parseEventsToFullCalendarFormat(data))
@@ -90,7 +77,8 @@ export default function Home() {
         console.error('There was an error fetching events!', error);
       });
 
-    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs')
+    // GET request for organizations
+    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
       .then(response => response.json())
       .then(data => shuffleArray(data))
       .then(data => setOrganizations(data))
@@ -104,14 +92,14 @@ export default function Home() {
     <div className="App">
       <NavbarComponent page='Home' />
       <div className="background">
-        <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} />
+        <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} orgs={organizations} />
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
           <Row>
             <Col className="d-none d-md-block">
               <div className="main-page-sidebar">
                 <div>
                   <h2 style={{ fontWeight: 600 }}>Event Information</h2>
-                  <EventInfoCard event={selectedEvent} animateCard={animateCard} setAnimateCard={setAnimateCard} />
+                  <EventInfoCard event={selectedEvent} orgs={organizations} animateCard={animateCard} setAnimateCard={setAnimateCard} />
                 </div>
               </div>
             </Col>
@@ -212,16 +200,21 @@ export default function Home() {
             </Col>
           </Row>
         </Container>
-        <h1 className="font-weight-bold">Organizations</h1>
+        {/* We put a tooltip on only the asterisk in "Organizations*" */}
+        <h1 className="font-weight-bold" style={{ display: "inline" }}>Organizations</h1>
+        <h3 style={{ display: "inline", verticalAlign: "10px" }}><sup data-tip="Randomized ordering. See <a target=&quot _blank &quot href=https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/>here</a> for the dangers of alphabetical order."
+          className="font-weight-bold">ⓘ</sup></h3>
+        {/* backgroundColor = --var(primary1) from App.css. */}
+        <ReactTooltip backgroundColor="#FEC5BB" textColor="black" clickable={true} delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
         <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
               organizations.map(org => {
                 return (
-                  <Col md={4} key={org.slug}>
+                  <Col md={4} key={org.slug} className='align-items-stretch'>
                     <Container style={{ paddingTop: 20 }}>
-                      <Link to={`org/${org.slug}`} style={{ textDecoration: 'none' }}>
-                        <OrgInfoCard orgName={org.name} />
+                      <Link to={{pathname: `org/${org.slug}`, state: {organizations: organizations}}} style={{ textDecoration: 'none' }}>
+                        <OrgInfoCard orgName={org.name} orgImageUrl={org.imageUrl} />
                       </Link>
                     </Container>
                   </Col>

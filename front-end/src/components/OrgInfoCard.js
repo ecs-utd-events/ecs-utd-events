@@ -4,7 +4,8 @@ import Col from 'react-bootstrap/Col';
 import PlaceholderOrgImage from '../assets/placeholder_org_image.svg';
 import Image from 'react-bootstrap/Image'
 
-export default function OrgInfoCard({ orgName }) {
+export default function OrgInfoCard({ orgName, orgImageUrl }) {
+    var imageSource = orgImageUrl || PlaceholderOrgImage;
     return (
         <Card className="drop-shadow card interactive-card">
             <div >
@@ -12,7 +13,7 @@ export default function OrgInfoCard({ orgName }) {
                     <Row>
                         <Col xs={4}>
                             <div className="org-info-card-style">
-                                <Image src={PlaceholderOrgImage} fluid />
+                                <Image src={imageSource} roundedCircle style={{ width: '10vh', height: '10vh' }}/>
                             </div>
                         </Col>
                         <Col xs={8}>
