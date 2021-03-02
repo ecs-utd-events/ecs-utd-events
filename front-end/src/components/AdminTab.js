@@ -69,7 +69,7 @@ export default function AdminTab({ parent }) {
     return (
         <Container className="admin-tab-wrapper mx-0">
             {
-                TAB_CONTENTS.map((value, index) => <Tab tab={value} index={index} parent={parent} logoutHandler={logoutHandler} />)
+                TAB_CONTENTS.map((value, index) => <Tab tab={value} key={index} parent={parent} logoutHandler={logoutHandler} />)
             }
         </Container>
     )
