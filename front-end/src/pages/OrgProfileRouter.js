@@ -12,7 +12,7 @@ export default function OrgProfileRouter() {
     return (
         <Switch>
             <Route path={`${match.path}/:orgSlug`}>
-                <OrgProfile orgs={location.state.organizations} />
+                <OrgProfile orgs={location.state != null ? location.state.organizations : null} />
             </Route>
             <Route path={match.path}>
                 <div>
