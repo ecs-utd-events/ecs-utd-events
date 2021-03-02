@@ -9,8 +9,8 @@ import HelpPage from "./HelpPage";
 
 export default function AdminRouter() {
     let match = useRouteMatch();
-    const user = useContext(UserContext);
-    if(user == null) {
+    const { user } = useContext(UserContext);
+    if (user == null) {
         return <Redirect to="/login" />
     }
     return (
