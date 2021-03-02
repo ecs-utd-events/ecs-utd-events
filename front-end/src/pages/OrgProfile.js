@@ -229,7 +229,7 @@ export default function OrgProfile() {
                 {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
                 {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
-                        <OrgPageEventCard key={event.id} event={event} pastEvent={false} isEditable={false}></OrgPageEventCard>
+                        <OrgPageEventCard key={event.id} event={event} pastEvent={false}></OrgPageEventCard>
                     );
                 })}
                 {additionalUpcomingEvents}
@@ -239,7 +239,7 @@ export default function OrgProfile() {
                 </Row>
                 {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                     return (
-                        <OrgPageEventCard key={event.id} event={event} pastEvent={true} isEditable={false}></OrgPageEventCard>
+                        <OrgPageEventCard key={event.id} event={event} pastEvent={true}></OrgPageEventCard>
                     );
                 })}
                 {additionalPastEvents}
