@@ -7,9 +7,11 @@ import IconButton from './IconButton';
 import { ButtonGroup, OverlayTrigger } from 'react-bootstrap';
 import { getFormattedTime } from './TimeUtils';
 
-export default function OrgPageEventCard({ event, pastEvent, isEditable }) {
+export default function OrgPageEventCard({ event, pastEvent, isEditable, orgs }) {
     const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
-    if (event && !isEditable) {
+    if (event != null && !isEditable && orgs != null) {
+        // Get the relevant other organizations for this event
+        var relevantOrgs = orgs.filter(org => event.orgs.includes(org.uId));
         return (
             <Card className={"drop-shadow mb-4 " + backgroundColor}>
                 <Row>
@@ -22,7 +24,7 @@ export default function OrgPageEventCard({ event, pastEvent, isEditable }) {
                         {/* <p className="mb-0">{event.start.toDateString()}</p> */}
                         <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                         <p className="mb-0">{event.location}</p>
-                        <p className="mb-0">{event.orgs}</p>
+                        <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>
                         <a className="mb-0" href={event.link }target="_blank">More Info</a>
                     </Col>
                     <Col style={{ textAlign: 'left' }}>

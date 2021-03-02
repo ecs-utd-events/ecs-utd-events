@@ -94,7 +94,7 @@ export default function OrgProfile({ orgs }) {
                         <div>
                             {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
                                 return (
-                                    <OrgPageEventCard key={event.id} event={event} pastEvent={false} ></OrgPageEventCard>
+                                    <OrgPageEventCard key={event.id} event={event} pastEvent={false} orgs={organizations}></OrgPageEventCard>
                                 );
                             })}
                         </div>
@@ -117,7 +117,7 @@ export default function OrgProfile({ orgs }) {
                         <div>
                             {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
                                 return (
-                                    <OrgPageEventCard key={event.id} event={event} pastEvent={true} ></OrgPageEventCard>
+                                    <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
                                 );
                             })}
                         </div>
@@ -163,7 +163,7 @@ export default function OrgProfile({ orgs }) {
                         {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
                         {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                             return (
-                                <OrgPageEventCard key={event.id} event={event} pastEvent={false} isEditable={false}></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={false} isEditable={false} orgs={organizations}></OrgPageEventCard>
                             );
                         })}
                         {additionalUpcomingEvents}
@@ -175,7 +175,7 @@ export default function OrgProfile({ orgs }) {
                         </Row>
                         {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                             return (
-                                <OrgPageEventCard key={event.id} event={event} pastEvent={true} isEditable={false}></OrgPageEventCard>
+                                <OrgPageEventCard key={event.id} event={event} pastEvent={true} isEditable={false} orgs={organizations}></OrgPageEventCard>
                             );
                         })}
                         {additionalPastEvents}
