@@ -19,8 +19,39 @@ export default function EditableEventCard({ event }) {
 
 
     return(
-        <OrgPageEventCard event={event} pastEvent={false} isEditable={true}></OrgPageEventCard>
+        <OrgPageEventCard event={event} pastEvent={false}></OrgPageEventCard>
     );
    
-    
 }
+// if (event) {
+//     return (
+//         <Card className={"drop-shadow mb-4"}>
+//             <Row>
+//                 <Col style={{ textAlign: 'left' }}>
+//                     <h5 className="font-weight-bold">{event.title}</h5>
+//                 </Col>
+//             </Row>
+//             <Row>
+//                 <Col xs={2} style={{ textAlign: 'left' }}>
+//                     {/* <p className="mb-0">{event.start.toDateString()}</p> */}
+//                     <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
+//                     <p className="mb-0">{event.start}</p>
+//                     <p className="mb-0">{event.location}</p>
+//                     <p className="mb-0">{event.orgs}</p>
+//                     <a className="mb-0" href={event.link}>More Info</a>
+//                 </Col>
+//                 <Col style={{ textAlign: 'left' }}>
+//                     <p>{event.description}</p>
+//                 </Col>
+//             </Row>
+//             <Row>
+//                 <Col md={{ span: 10, offset: 10 }}>
+//                     <ButtonGroup>
+//                         <IconButton className="mr-2" icon={EditIcon}></IconButton>
+//                         <IconButton icon={TrashIcon}></IconButton>
+//                     </ButtonGroup>
+//                 </Col>
+//             </Row>
+//         </Card>
+//     );
+// } else {
