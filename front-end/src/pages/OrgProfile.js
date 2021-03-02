@@ -31,8 +31,8 @@ export default function OrgProfile({ orgs }) {
     const [organizations, setOrganizations] = useState(null);
     const [thisOrg, setThisOrg] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
-    const [openUpcomingEvents, setUpcomingOpen] = useState(false);
-    const [openPastEvents, setPastOpen] = useState(false);
+    const [openUpcomingEvents, setOpenUpcomingEvents] = useState(false);
+    const [openPastEvents, setOpenPastEvents] = useState(false);
     const maxEventsDisplayed = 3;
 
     // If the data was not passed from the home page, we have to fetch _all_ organizations. This is because we do
@@ -86,9 +86,9 @@ export default function OrgProfile({ orgs }) {
         if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
             additionalUpcomingEvents =
                 <div>
-                    <CustomButton className="drop-shadow" onClick={() => setPastOpen(!openPastEvents)}
+                    <CustomButton className="drop-shadow" onClick={() => setOpenUpcomingEvents(!openUpcomingEvents)}
                         aria-controls="expand-events"
-                        aria-expanded={openPastEvents}>
+                        aria-expanded={openUpcomingEvents}>
                         see all events...</CustomButton>
                     <Collapse in={openUpcomingEvents} style={{ paddingTop: '1vh' }}>
                         <div>
@@ -109,7 +109,7 @@ export default function OrgProfile({ orgs }) {
         if (PAST_EVENTS.length > maxEventsDisplayed) {
             additionalPastEvents =
                 <div>
-                    <CustomButton className="drop-shadow" onClick={() => setPastOpen(!openPastEvents)}
+                    <CustomButton className="drop-shadow" onClick={() => setOpenPastEvents(!openPastEvents)}
                         aria-controls="expand-events"
                         aria-expanded={openPastEvents}>
                         see all events...</CustomButton>
