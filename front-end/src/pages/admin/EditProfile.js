@@ -27,11 +27,14 @@ export default function EditProfile() {
         }
     }, [user])
 
+    // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
+    const imageSource = org != null ? (org.imageUrl != null ? org.imageUrl : Circle) : Circle;
+
     return (
         <AdminLayout pageName="Profile">
             <div className="edit-profile-page">
                 <Container>
-                    <Image src={Circle} style={{ width: '25vh', height: '25vh' }}></Image>
+                    <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
                     <Row className="my-4">
                         <h1 className="item-align-center font-weight-bold">{org != null ? org.name : 'Name'}</h1>
                     </Row>
@@ -58,7 +61,7 @@ export default function EditProfile() {
                         {org != null && org.socialMedia.facebook &&
                             <div>
                                 <h5>Facebook:</h5>
-                                <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '100%' }}>
+                                <Card className="drop-shadow mb-4 edit-profile-info-card" style={{ width: '80%' }}>
                                     {org.socialMedia.facebook}
                                 </Card>
                             </div>}
