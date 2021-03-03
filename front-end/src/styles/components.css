@@ -40,6 +40,19 @@ button.wide-btn, a.wide-btn {
     margin: 0;
 }
 
+.form-group label {
+    margin-bottom: 0;
+    font-size: .75rem;
+}
+
+.form-group input, .form-group textarea {
+    font-size: .75rem;
+}
+
+div.form-group {
+    margin-bottom: .5rem;
+}
+
 .icon-btn {
     background-color: var(--accent2);
     border-radius: 50%;

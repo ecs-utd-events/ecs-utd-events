@@ -13,19 +13,7 @@ import Circle from '../../assets/circle.png';
 
 
 export default function EditProfile() {
-    const user = useContext(UserContext);
-    const [org, setOrg] = useState(null);
-
-    useEffect(() => {
-        if (user != null) {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + user.uid)
-                .then(response => response.json())
-                .then(data => setOrg(data))
-                .catch(error => {
-                    console.error('There was an error fetching the Org!', error);
-                });
-        }
-    }, [user])
+    const { org } = useContext(UserContext);
 
     // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
     const imageSource = org != null ? (org.imageUrl != null ? org.imageUrl : Circle) : Circle;
