@@ -205,7 +205,7 @@ export default function Home() {
                 return (
                   <Col md={4} key={org.slug} className='align-items-stretch'>
                     <Container style={{ paddingTop: 20 }}>
-                      <Link to={{ pathname: `org/${org.slug}`, state: { organizations: organizations } }} style={{ textDecoration: 'none' }}>
+                      <Link to={`org/${org.slug}`} style={{ textDecoration: 'none' }}>
                         <OrgInfoCard orgName={org.name} orgImageUrl={org.imageUrl} />
                       </Link>
                     </Container>
