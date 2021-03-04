@@ -1,10 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import EditIcon from '@iconify/icons-gg/edit-markup';
-import TrashIcon from '@iconify/icons-gg/trash';
-import IconButton from './IconButton';
-import { ButtonGroup, OverlayTrigger } from 'react-bootstrap';
 import { getFormattedTime } from './TimeUtils';
 
 export default function OrgPageEventCard({ event, pastEvent, orgs }) {
