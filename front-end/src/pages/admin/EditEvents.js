@@ -8,32 +8,36 @@ import { UserContext } from "../../providers/UserProvider";
 
 
 export default function EditEvents() {
-    const { org } = useContext(UserContext);
+    // const { org } = useContext(UserContext);
+    const [isAdding, setIsAdding] = useState(false);
+    const org = 'this';
     // const [organizations, setOrganizations] = useState(null);
-    const [allEvents, setAllEvents] = useState(null);
-    let btnRef = createRef();
-    const disableAddNewEvents = e => {
-        console.log('button click');
-        if (btnRef.current) {
-            console.log('Inside')
-            btnRef.current.setAttribute("disabled", "disabled");
-        }
-    }
+    const [allEvents, setAllEvents] = useState([{
+        id: 'test',
+        title: 'test',
+        date: 'test',
+        startTime: 'test',
+        endTime: 'test',
+        description: 'test',
+        org: 'test',
+        location: 'test',
+        link: 'test'
+    }]);
 
-    useEffect(() => {
-        if (org != null) {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + org.uId)
-                .then(response => response.json())
-                .then(data => setAllEvents(data))
-                .catch(error => {
-                    console.error('There was an error fetching events for this org: ' + org.name, error);
-                });
-        }
-    }, [org])
+    // useEffect(() => {
+    //     if (org != null) {
+    //         fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + org.uId)
+    //             .then(response => response.json())
+    //             .then(data => setAllEvents(data))
+    //             .catch(error => {
+    //                 console.error('There was an error fetching events for this org: ' + org.name, error);
+    //             });
+    //     }
+    // }, [org])
 
     const addEvent = event => {
         event.preventDefault();
-        disableAddNewEvents();
+        setIsAdding(!isAdding);
         setAllEvents([
             ...allEvents,
             {
@@ -53,6 +57,7 @@ export default function EditEvents() {
     const deleteEvent = (event, id) => {
         event.preventDefault();
         setAllEvents(allEvents.filter(event => event.id !== id));
+        setIsAdding(allEvents === null && isAdding)
     }
 
     const saveEvent = (event, id) => {
@@ -70,7 +75,7 @@ export default function EditEvents() {
                         )
                     })
                 }
-                <IconButton icon={AddIcon} ref={btnRef} onClick={addEvent}></IconButton>
+                {!isAdding && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
             </AdminLayout>
         )
     }

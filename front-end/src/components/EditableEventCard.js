@@ -14,12 +14,15 @@ import TrashIcon from '@iconify/icons-gg/trash';
 import Container from 'react-bootstrap/Container';
 import SaveIcon from '@iconify/icons-gg/check';
 import CancelIcon from '@iconify/icons-gg/close';
+import {ErrorIcon} from '@iconify/icons-gg/danger';
 
 
 export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
     const [orgs, setOrganizations] = useState(null);
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
     
     const onSubmit = (event) => {
         setEditing(!isEditing);
@@ -27,7 +30,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
     }
 
     const validateTime = async () => {
-
+        if(startTime > endTime) return false;
     }
 
     const validateDate = async (date) => {
@@ -41,20 +44,20 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
         setEditing(!isEditing);
     };
 
-    useEffect(() => {
-        // GET request for organizations
-        if (orgs != null) {
-            setOrganizations(orgs);
-        }
-        else {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
-                .then(response => response.json())
-                .then(data => setOrganizations(data))
-                .catch(error => {
-                    console.error('There was an error fetching organizations!', error);
-                });
-        }
-    }, [orgs]);
+    // useEffect(() => {
+    //     // GET request for organizations
+    //     if (orgs != null) {
+    //         setOrganizations(orgs);
+    //     }
+    //     else {
+    //         fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
+    //             .then(response => response.json())
+    //             .then(data => setOrganizations(data))
+    //             .catch(error => {
+    //                 console.error('There was an error fetching organizations!', error);
+    //             });
+    //     }
+    // }, [orgs]);
 
     if (event && !isEditing) {
         return (
@@ -106,11 +109,12 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="startTime">
                                     <Form.Label>Start time</Form.Label>
-                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true, validate: validateTime })} defaultValue={event.startTime}/>
+                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={event.startTime}/>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="endTime">
                                     <Form.Label>End time</Form.Label>
-                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} defaultValue={event.endTime}/>
+                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={event.endTime}/>
+                                    { errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row>
