@@ -5,6 +5,7 @@ import profileIcon from '@iconify/icons-gg/profile';
 import calendarIcon from '@iconify/icons-gg/feed';
 import helpIcon from '@iconify/icons-gg/info';
 import logoutIcon from '@iconify/icons-gg/log-out';
+import homeIcon from '@iconify/icons-gg/home';
 import { auth } from "../firebase";
 
 const TAB_CONTENTS = [
@@ -24,6 +25,11 @@ const TAB_CONTENTS = [
         link: '/admin/help',
     },
     {
+        title: 'Home',
+        icon: homeIcon,
+        link: '/'
+    },
+    {
         title: 'Log Out',
         icon: logoutIcon,
         link: '#',
@@ -37,9 +43,9 @@ export const Tab = ({ tab, index, parent, logoutHandler }) => {
     const rowClass = orderClass.concat(' ').concat(selected ? 'selected' : '')
     return (
         <Link to={tab.link} onClick={tab.flag ? logoutHandler : null}>
-            <Row className={"admin-tab " + rowClass} disabled={tab.title === parent}>
+            <Row className={"admin-tab py-2 " + rowClass} disabled={tab.title === parent}>
                 <Col>
-                    <Container className="mx-0 px-0">
+                    <Container className="mx-0 px-0 my-0 py-1">
                         <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Col xs={2}>
                                 <Icon icon={tab.icon} style={{ color: 'var(--gray1)', fontSize: '1.5rem' }} />
@@ -69,7 +75,7 @@ export default function AdminTab({ parent }) {
     return (
         <Container className="admin-tab-wrapper mx-0">
             {
-                TAB_CONTENTS.map((value, index) => <Tab tab={value} key={index} parent={parent} logoutHandler={logoutHandler} />)
+                TAB_CONTENTS.map((value, index) => <Tab tab={value} key={index} index={index} parent={parent} logoutHandler={logoutHandler} />)
             }
         </Container>
     )
