@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { Spinner } from 'react-bootstrap';
 import React, { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { auth } from '../firebase';
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
@@ -34,6 +34,7 @@ export default function Login() {
     const [errorCode, setErrorCode] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory();
+    let location = useLocation();
 
     const submitHandler = event => {
         event.preventDefault();

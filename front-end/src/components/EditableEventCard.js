@@ -19,9 +19,9 @@ import CancelIcon from '@iconify/icons-gg/close';
 export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
-    const onSubmit = data => {
+    const onSubmit = (event) => {
         setEditing(!isEditing);
-        console.log(data);
+        console.log(event);
     }
 
     const validateTime = async () => {
@@ -44,7 +44,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                 <p className="mb-0">{event.start}</p>
                                 <p className="mb-0">{event.location}</p>
                                 <p className="mb-0">{event.orgs}</p>
-                                <a className="mb-0" href={event.link}>More Info</a>
+                                <a className="mb-0" href={event.link} target="_blank">More Info</a>
                             </Col>
                             <Col style={{ textAlign: 'left' }}>
                                 <p>{event.description}</p>
@@ -107,7 +107,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Description</Form.Label>
-                                        <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" defaultValue={event.description} />
+                                        <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true })} defaultValue={event.description} />
                                     </Form.Group>
 
                                 </Col>

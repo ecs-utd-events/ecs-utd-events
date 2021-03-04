@@ -202,7 +202,8 @@ export default function Home() {
         </Container>
         {/* We put a tooltip on only the asterisk in "Organizations*" */}
         <h1 className="font-weight-bold" style={{ display: "inline" }}>Organizations</h1>
-        <h3 style={{ display: "inline", verticalAlign: "2px", color: "var(--gray3)" }} data-tip="Randomized ordering. See <a target=&quot _blank &quot href=https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/>here</a> for the dangers of alphabetical order."
+        <h3 style={{ display: "inline", verticalAlign: "2px", color: "var(--gray3)" }}
+          data-tip="Randomized ordering. See <a target=&quot _blank &quot href=https://researchonresearch.blog/2018/11/28/theres-lots-in-a-name/>here</a> for the dangers of alphabetical order."
           className="font-weight-bold"> ⓘ</h3>
         {/* backgroundColor = var(--primary4) from App.css. */}
         <ReactTooltip className="drop-shadow" backgroundColor="#F8EDEB" textColor="black" clickable={true} delayHide={500} effect="solid" offset={{ top: 0 }} html={true} />
@@ -213,7 +214,7 @@ export default function Home() {
                 return (
                   <Col md={4} key={org.slug} className='align-items-stretch'>
                     <Container style={{ paddingTop: 20 }}>
-                      <Link to={{pathname: `org/${org.slug}`, state: {organizations: organizations}}} style={{ textDecoration: 'none' }}>
+                      <Link to={{ pathname: `org/${org.slug}`, state: { organizations: organizations } }} style={{ textDecoration: 'none' }}>
                         <OrgInfoCard orgName={org.name} orgImageUrl={org.imageUrl} />
                       </Link>
                     </Container>
@@ -223,13 +224,7 @@ export default function Home() {
             }
           </Row>
         </Container>
-        <div style={{ padding: "5rem" }}>
-          <Link to="/" style={{ padding: 10 }}>Home</Link>
-          <Link to="/login">Organization Login</Link>
-          <Link to="/org" style={{ paddingLeft: 10 }}>Org Profile</Link>
-          <Link to="/admin/create" style={{ padding: 10 }}>Create Event</Link>
-          <Link to="/admin/profile" style={{ padding: 10 }}>Admin</Link>
-        </div>
+        <div style={{ padding: "3rem" }} />
       </div>
     </div >
   );

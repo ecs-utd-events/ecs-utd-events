@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, createRef } from "react";
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard from '../../components/EditableEventCard';
 import AddIcon from '@iconify/icons-gg/add';
@@ -12,6 +12,14 @@ export default function EditEvents() {
     const { org } = useContext(UserContext);
     // const [organizations, setOrganizations] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
+    let btnRef = createRef();
+    const disableAddNewEvents = e => {
+        console.log('button click');
+        if (btnRef.current) {
+            console.log('Inside')
+            btnRef.current.setAttribute("disabled", "disabled");
+        }
+    }
 
     useEffect(() => {
         if (org != null) {
@@ -26,6 +34,7 @@ export default function EditEvents() {
 
     const addEvent = event => {
         event.preventDefault();
+        disableAddNewEvents();
         setAllEvents([
             ...allEvents,
             {
@@ -53,14 +62,15 @@ export default function EditEvents() {
     if (org != null) {
         return (
             <AdminLayout pageName="Events">
+                <div style={{ padding: "1rem" }} />
                 { allEvents &&
                     allEvents.map(event => {
                         return (
-                            <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} ></EditableEventCard>
+                            <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent}></EditableEventCard>
                         )
                     })
                 }
-                <IconButton icon={AddIcon} onClick={addEvent}></IconButton>
+                <IconButton icon={AddIcon} ref={btnRef} onClick={addEvent}></IconButton>
             </AdminLayout>
         )
     }
