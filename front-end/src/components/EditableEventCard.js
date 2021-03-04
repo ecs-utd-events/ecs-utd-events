@@ -44,6 +44,10 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
         setEditing(!isEditing);
     };
 
+    const organs = [
+        "acm", "wwc", "test1"
+    ]
+
     // useEffect(() => {
     //     // GET request for organizations
     //     if (orgs != null) {
@@ -126,7 +130,9 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                     <Form.Group controlId="orgs">
                                         <Form.Label>Collaborator(s)</Form.Label>
                                         <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" custom>
-                                            <option>1</option>
+                                            {organs.map(org => {
+                                                return (<option>{org}</option>)
+                                            })}
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
