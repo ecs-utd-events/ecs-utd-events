@@ -20,9 +20,10 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
     const [orgs, setOrganizations] = useState(null);
-    const onSubmit = data => {
+    
+    const onSubmit = (event) => {
         setEditing(!isEditing);
-        console.log(data);
+        console.log(event);
     }
 
     const validateTime = async () => {
@@ -71,6 +72,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                 <p className="mb-0">{event.startTime + " - " + event.endTime}</p>
                                 <p className="mb-0">{event.location}</p>
                                 <p className="mb-0">{event.orgs}</p>
+                                <a className="mb-0" href={event.link} target="_blank">More Info</a>
                             </Col>
                             <Col style={{ textAlign: 'left' }}>
                                 <a className="mb-0" href={event.link}>Link</a>
@@ -131,7 +133,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Description</Form.Label>
-                                        <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" defaultValue={event.description} />
+                                        <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true })} defaultValue={event.description} />
                                     </Form.Group>
                                 </Col>
                             </Form.Row>
