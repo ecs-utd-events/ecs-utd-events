@@ -10,7 +10,6 @@ let todayStr = today.toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
 export default function EditEvents() {
     const { org } = useContext(UserContext);
-    // const [organizations, setOrganizations] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
     let btnRef = createRef();
     const disableAddNewEvents = e => {

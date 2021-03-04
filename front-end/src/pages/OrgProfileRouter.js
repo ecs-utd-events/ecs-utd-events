@@ -5,8 +5,6 @@ import OrgProfile from './OrgProfile';
 
 export default function OrgProfileRouter() {
     let match = useRouteMatch();
-    // location state param passes the list of organizations to each individual org page 
-    // so we don't have to re-fetch in the majority of cases.
 
     return (
         <Switch>

@@ -36,23 +36,6 @@ export default function OrgProfile({ orgs }) {
     const maxEventsDisplayed = 3;
     const organizations = useContext(AllOrgContext);
 
-    // If the data was not passed from the home page, we have to fetch _all_ organizations. This is because we do
-    // not know the names of collaborators for the OrgPageEventCards.
-    // useEffect(() => {
-    //     // GET request for organizations
-    //     if (orgs != null) {
-    //         setOrganizations(orgs);
-    //     }
-    //     else {
-    //         fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
-    //             .then(response => response.json())
-    //             .then(data => setOrganizations(data))
-    //             .catch(error => {
-    //                 console.error('There was an error fetching organizations!', error);
-    //             });
-    //     }
-    // }, [orgs, orgSlug]);
-
     useEffect(() => {
         setThisOrg(findThisOrg(organizations, orgSlug));
     }, [organizations, orgSlug])
