@@ -45,7 +45,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
     };
 
     const organs = [
-        "acm", "wwc", "test1"
+        "acm", "wwc", "test1", "test2", "test3"
     ]
 
     // useEffect(() => {
@@ -129,7 +129,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                     </Form.Group>
                                     <Form.Group controlId="orgs">
                                         <Form.Label>Collaborator(s)</Form.Label>
-                                        <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" custom>
+                                        <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple>
                                             {organs.map(org => {
                                                 return (<option>{org}</option>)
                                             })}
