@@ -53,6 +53,10 @@ div.form-group {
     margin-bottom: .5rem;
 }
 
+.login-wrapper .form-group input {
+    font-size: 1rem;
+}
+
 .icon-btn {
     background-color: var(--accent2);
     border-radius: 50%;
