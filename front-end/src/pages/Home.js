@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/esm/Col';
 import {
   Link
 } from "react-router-dom";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ReactTooltip from 'react-tooltip';
 
 import FullCalendar from '@fullcalendar/react'
@@ -21,6 +21,7 @@ import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
+import { AllOrgContext } from '../providers/AllOrgProvider';
 
 const oneDayInMilliseconds = 86400000 - 1000;
 function parseEventsToFullCalendarFormat(eventData) {
@@ -65,7 +66,7 @@ export default function Home() {
   const [animateCard, setAnimateCard] = useState('');
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
-  const [organizations, setOrganizations] = useState([]);
+  const organizations = useContext(AllOrgContext);
 
   useEffect(() => {
     // GET request for all events using fetch inside useEffect React hook
@@ -76,16 +77,6 @@ export default function Home() {
       .catch(error => {
         console.error('There was an error fetching events!', error);
       });
-
-    // GET request for organizations
-    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
-      .then(response => response.json())
-      .then(data => shuffleArray(data))
-      .then(data => setOrganizations(data))
-      .catch(error => {
-        console.error('There was an error fetching organizations!', error);
-      });
-    // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
 
   return (
