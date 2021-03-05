@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { Editable } from './Editable';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import OrgPageEventCard from './OrgPageEventCard';
@@ -14,8 +13,6 @@ import TrashIcon from '@iconify/icons-gg/trash';
 import Container from 'react-bootstrap/Container';
 import SaveIcon from '@iconify/icons-gg/check';
 import CancelIcon from '@iconify/icons-gg/close';
-import {ErrorIcon} from '@iconify/icons-gg/danger';
-
 
 export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable }) {
     const { register, handleSubmit, watch, errors } = useForm();
