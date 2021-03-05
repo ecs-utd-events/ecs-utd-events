@@ -17,7 +17,10 @@ export default function EditEvents() {
     // const { org } = useContext(UserContext);
     const [isAdding, setIsAdding] = useState(false);
     const org = 'this';
+    // const [allEvents, setAllEvents] = useState(null);
+    const [dbEvents, setDbEvents] = useState(null);
     // const [organizations, setOrganizations] = useState(null);
+    let calendarRef = createRef()
     const [allEvents, setAllEvents] = useState([{
         id: 'test',
         title: 'test',

@@ -14,10 +14,12 @@ import SaveIcon from '@iconify/icons-gg/check';
 import CancelIcon from '@iconify/icons-gg/close';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 
-
 export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable, changeCalendarView }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
+    // const [orgs, setOrganizations] = useState(null);
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
     const orgs = useContext(AllOrgContext);
     const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
 
