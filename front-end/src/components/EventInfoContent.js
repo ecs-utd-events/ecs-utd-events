@@ -99,18 +99,20 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                     </Col>
                 </Row>
             }
-            <Row>
-                <Col className="d-flex align-items-end">
-                    <p className="text-muted " style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p>
-                </Col>
+            <Row className="mb-0">
                 <Col className="d-flex align-item-end justify-content-end">
                     <ButtonGroup>
                         {event.extendedProps.link != null &&
-                            <IconButton className="mr-1 color-black" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
+                            <IconButton className="mr-1 color-black mb-0" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
                         }
-                        <IconButton className="mr-1" SVGComponent={CalendarIcon}></IconButton>
-                        <IconButton className="mr-1" icon={ShareIcon}></IconButton>
+                        {/* <IconButton className="mr-1" SVGComponent={CalendarIcon}></IconButton>
+                        <IconButton className="mr-1" icon={ShareIcon}></IconButton> */}
                     </ButtonGroup>
+                </Col>
+            </Row>
+            <Row className="my-0">
+                <Col className="d-flex align-items-end">
+                    <p className="text-muted my-0 mb-2 ml-0" style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p>
                 </Col>
             </Row>
         </>
