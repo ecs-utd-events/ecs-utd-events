@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState, useRef, useEffect } from 'react';
-=======
 import { useState, useRef, useContext } from 'react';
->>>>>>> 9fe38ed284713bde9ac92f6fd6dc847243b69f48
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
