@@ -6,7 +6,6 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Editable } from './Editable';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
-import OrgPageEventCard from './OrgPageEventCard';
 import IconButton from './IconButton';
 import { getFormattedTime } from './TimeUtils';
 import EditIcon from '@iconify/icons-gg/pen';
@@ -17,11 +16,11 @@ import CancelIcon from '@iconify/icons-gg/close';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 
 
-export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable }) {
+export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable, changeCalendarView }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
     const orgs = useContext(AllOrgContext);
-    var relevantOrgs = orgs.filter(org => event.orgs.includes(org.uId));
+    const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
 
     const onSubmit = (event) => {
         setEditing(!isEditing);
@@ -45,7 +44,6 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                         <Row>
                             <Col xs={2} style={{ textAlign: 'left' }}>
                                 <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
-                                <p className="mb-0">{event.start}</p>
                                 <p className="mb-0">{event.location}</p>
                                 <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>
                                 <a className="mb-0" href={event.link} target="_blank">More Info</a>
@@ -56,7 +54,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                         </Row>
                         <Row>
                             <Col md={{ span: 10, offset: 10 }}>
-                                <IconButton className="mr-2" icon={EditIcon} onClick={() => setEditing(!isEditing)}></IconButton>
+                                <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
                                 <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton>
                             </Col>
                         </Row>

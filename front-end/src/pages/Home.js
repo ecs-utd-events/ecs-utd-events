@@ -22,30 +22,7 @@ import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
 import { AllOrgContext } from '../providers/AllOrgProvider';
-
-const oneDayInMilliseconds = 86400000 - 1000;
-function parseEventsToFullCalendarFormat(eventData) {
-  return eventData.map(event => {
-    const allDay = new Date(event.endTime) - (new Date(event.startTime)) >= oneDayInMilliseconds ? true : false;
-    return {
-      id: event.id,
-      title: event.title,
-      start: event.startTime,
-      end: event.endTime,
-      allDay: allDay,
-      extendedProps: {
-        description: event.description,
-        org: event.orgs,
-        location: event.location,
-        link: event.link,
-        // default tags until sid implements tags
-        tags: ['Google', 'Industry', 'ML', 'WWC'],
-        // used for EventInfoCard "last updated"
-        lastUpdated: event.lastUpdated
-      }
-    }
-  })
-}
+import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
 to randomize the order of presented organizations. 
