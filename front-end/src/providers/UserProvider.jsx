@@ -10,7 +10,7 @@ function UserProvider({ children }) {
         auth.onAuthStateChanged(userAuth => {
             setUser(userAuth);
         })
-    })
+    }, [])
 
     // useEffect(() => {
     //     if (user) {

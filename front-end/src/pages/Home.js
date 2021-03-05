@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/esm/Col';
 import {
   Link
 } from "react-router-dom";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ReactTooltip from 'react-tooltip';
 
 import FullCalendar from '@fullcalendar/react'
@@ -21,30 +21,8 @@ import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
-
-const oneDayInMilliseconds = 86400000 - 1000;
-function parseEventsToFullCalendarFormat(eventData) {
-  return eventData.map(event => {
-    const allDay = new Date(event.endTime) - (new Date(event.startTime)) >= oneDayInMilliseconds ? true : false;
-    return {
-      id: event.id,
-      title: event.title,
-      start: event.startTime,
-      end: event.endTime,
-      allDay: allDay,
-      extendedProps: {
-        description: event.description,
-        org: event.orgs,
-        location: event.location,
-        link: event.link,
-        // default tags until sid implements tags
-        tags: ['Google', 'Industry', 'ML', 'WWC'],
-        // used for EventInfoCard "last updated"
-        lastUpdated: event.lastUpdated
-      }
-    }
-  })
-}
+import { AllOrgContext } from '../providers/AllOrgProvider';
+import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
 to randomize the order of presented organizations. 
@@ -65,7 +43,7 @@ export default function Home() {
   const [animateCard, setAnimateCard] = useState('');
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
-  const [organizations, setOrganizations] = useState([]);
+  const organizations = useContext(AllOrgContext);
 
   useEffect(() => {
     // GET request for all events using fetch inside useEffect React hook
@@ -76,16 +54,6 @@ export default function Home() {
       .catch(error => {
         console.error('There was an error fetching events!', error);
       });
-
-    // GET request for organizations
-    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
-      .then(response => response.json())
-      .then(data => shuffleArray(data))
-      .then(data => setOrganizations(data))
-      .catch(error => {
-        console.error('There was an error fetching organizations!', error);
-      });
-    // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
 
   return (
@@ -214,7 +182,7 @@ export default function Home() {
                 return (
                   <Col md={4} key={org.slug} className='align-items-stretch'>
                     <Container style={{ paddingTop: 20 }}>
-                      <Link to={{ pathname: `org/${org.slug}`, state: { organizations: organizations } }} style={{ textDecoration: 'none' }}>
+                      <Link to={`org/${org.slug}`} style={{ textDecoration: 'none' }}>
                         <OrgInfoCard orgName={org.name} orgImageUrl={org.imageUrl} />
                       </Link>
                     </Container>

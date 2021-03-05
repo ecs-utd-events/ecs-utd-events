@@ -4,14 +4,15 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import { Spinner } from 'react-bootstrap';
-import React, { useState } from 'react'
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import firebase from "firebase/app";
+import React, { useContext, useState } from 'react'
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import { auth } from '../firebase';
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
 import './../styles/App.css';
 import FullPageLoading from '../components/FullPageLoading';
+import { UserContext } from '../providers/UserProvider';
 
 function getErrorMessage(errorCode) {
     if (errorCode === 'auth/invalid-email') {
@@ -33,22 +34,32 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [errorCode, setErrorCode] = useState('');
     const [loading, setLoading] = useState(false);
+    const { user } = useContext(UserContext);
     const history = useHistory();
     let location = useLocation();
 
     const submitHandler = event => {
         event.preventDefault();
-        auth.signInWithEmailAndPassword(username, password).then((authCredentials) => {
-            setErrorCode('');
-            setLoading(true);
-            setTimeout(() => {
-                console.log('Welcome ' + authCredentials.user.email + ' 😎');
-                setLoading(false);
-                history.push('/admin/profile');
-            }, 1000);
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+            auth.signInWithEmailAndPassword(username, password).then((authCredentials) => {
+                setErrorCode('');
+                setLoading(true);
+                setTimeout(() => {
+                    console.log('Welcome ' + authCredentials.user.email + ' 😎');
+                    setLoading(false);
+                    history.push('/admin/profile');
+                }, 1000);
+            }).catch((error) => {
+                setErrorCode(error.code);
+            })
         }).catch((error) => {
             setErrorCode(error.code);
+            console.log("Error setting auth persistence: " + error.message);
         })
+    }
+
+    if(user != null) {
+        history.replace(location.state != null ? location.state.redirectRoute : '/admin/profile');
     }
 
     return (

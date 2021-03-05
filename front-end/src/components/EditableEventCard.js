@@ -1,11 +1,14 @@
+<<<<<<< HEAD
 import { useState, useRef, useEffect } from 'react';
+=======
+import { useState, useRef, useContext } from 'react';
+>>>>>>> 9fe38ed284713bde9ac92f6fd6dc847243b69f48
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
-import OrgPageEventCard from './OrgPageEventCard';
 import IconButton from './IconButton';
 import { getFormattedTime } from './TimeUtils';
 import EditIcon from '@iconify/icons-gg/pen';
@@ -13,14 +16,15 @@ import TrashIcon from '@iconify/icons-gg/trash';
 import Container from 'react-bootstrap/Container';
 import SaveIcon from '@iconify/icons-gg/check';
 import CancelIcon from '@iconify/icons-gg/close';
+import { AllOrgContext } from '../providers/AllOrgProvider';
 
-export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable }) {
+
+export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable, changeCalendarView }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
-    const [orgs, setOrganizations] = useState(null);
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
-    
+    const orgs = useContext(AllOrgContext);
+    const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
+
     const onSubmit = (event) => {
         setEditing(!isEditing);
         console.log(event);
@@ -72,10 +76,9 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                         </Row>
                         <Row>
                             <Col xs={2} style={{ textAlign: 'left' }}>
-                                <p className="mb-0">{event.date}</p>
-                                <p className="mb-0">{event.startTime + " - " + event.endTime}</p>
+                                <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                                 <p className="mb-0">{event.location}</p>
-                                <p className="mb-0">{event.orgs}</p>
+                                <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>
                                 <a className="mb-0" href={event.link} target="_blank">More Info</a>
                             </Col>
                             <Col style={{ textAlign: 'left' }}>
@@ -85,7 +88,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                         </Row>
                         <Row>
                             <Col md={{ span: 10, offset: 10 }}>
-                                <IconButton className="mr-2" icon={EditIcon} onClick={() => setEditing(!isEditing)}></IconButton>
+                                <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
                                 <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton>
                             </Col>
                         </Row>
@@ -126,10 +129,8 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                     </Form.Group>
                                     <Form.Group controlId="orgs">
                                         <Form.Label>Collaborator(s)</Form.Label>
-                                        <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple>
-                                            {organs.map(org => {
-                                                return (<option>{org}</option>)
-                                            })}
+                                        <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" custom>
+                                            {orgs.map(org => { return <option key={org.uId} value={org.uId}>{org.shortName}</option> })}
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>

@@ -6,11 +6,12 @@ import Image from 'react-bootstrap/Image';
 import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
 import Collapse from 'react-bootstrap/Collapse'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CustomButton from '../components/CustomButton';
 
 import './../styles/App.css';
 
+import { AllOrgContext } from '../providers/AllOrgProvider';
 import LinkSVG from '../assets/link.svg';
 import DescriptionIcon from '../assets/product-description.svg';
 import Circle from '../assets/circle.png';
@@ -28,29 +29,12 @@ function findThisOrg(allOrgs, orgSlug) {
 
 export default function OrgProfile({ orgs }) {
     let { orgSlug } = useParams();
-    const [organizations, setOrganizations] = useState(null);
     const [thisOrg, setThisOrg] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
     const [openUpcomingEvents, setOpenUpcomingEvents] = useState(false);
     const [openPastEvents, setOpenPastEvents] = useState(false);
     const maxEventsDisplayed = 3;
-
-    // If the data was not passed from the home page, we have to fetch _all_ organizations. This is because we do
-    // not know the names of collaborators for the OrgPageEventCards.
-    useEffect(() => {
-        // GET request for organizations
-        if (orgs != null) {
-            setOrganizations(orgs);
-        }
-        else {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
-                .then(response => response.json())
-                .then(data => setOrganizations(data))
-                .catch(error => {
-                    console.error('There was an error fetching organizations!', error);
-                });
-        }
-    }, [orgs, orgSlug]);
+    const organizations = useContext(AllOrgContext);
 
     useEffect(() => {
         setThisOrg(findThisOrg(organizations, orgSlug));
