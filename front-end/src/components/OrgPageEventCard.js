@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Tag from './Tag';
 import { getFormattedTime } from './TimeUtils';
 
 export default function OrgPageEventCard({ event, pastEvent, orgs }) {
@@ -16,7 +17,7 @@ export default function OrgPageEventCard({ event, pastEvent, orgs }) {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={4} md={2} style={{ textAlign: 'left' }}>
+                    <Col xs={4} md={2} style={{ textAlign: 'left', paddingBottom: '5px' }}>
                         {/* <p className="mb-0">{event.start.toDateString()}</p> */}
                         <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                         <p className="mb-0">{event.location}</p>
@@ -27,6 +28,19 @@ export default function OrgPageEventCard({ event, pastEvent, orgs }) {
                         <p>{event.description}</p>
                     </Col>
                 </Row>
+                {event.tags != null && <Row className="ml-0">
+                    {
+                        event.tags.map((label, index) =>
+                            <Tag
+                                key={index}
+                                type={pastEvent ? "" : "accent"}
+                                style={{ backgroundColor: pastEvent && 'var(--secondary3)', margin: '2px' }}
+                            >
+                                {label}
+                            </Tag>
+                        )
+                    }
+                </Row>}
             </Card>
         )
     } else {

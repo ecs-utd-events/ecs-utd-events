@@ -14,7 +14,6 @@ export function parseEventsToFullCalendarFormat(eventData) {
         org: event.orgs,
         location: event.location,
         link: event.link,
-        // default tags until sid implements tags
         tags: event.tags,
         // used for EventInfoCard "last updated"
         lastUpdated: event.lastUpdated
