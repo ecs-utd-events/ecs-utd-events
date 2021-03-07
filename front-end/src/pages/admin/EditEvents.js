@@ -14,9 +14,9 @@ import { parseEventsToFullCalendarFormat } from "../../components/FullCalendarUt
 
 
 export default function EditEvents() {
-    // const { org } = useContext(UserContext);
+    const { org } = useContext(UserContext);
     const [isAdding, setIsAdding] = useState(false);
-    const org = 'this';
+    // const org = 'this';
     // const [allEvents, setAllEvents] = useState(null);
     const [dbEvents, setDbEvents] = useState(null);
     // const [organizations, setOrganizations] = useState(null);
@@ -33,16 +33,16 @@ export default function EditEvents() {
         link: 'test'
     }]);
 
-    // useEffect(() => {
-    //     if (org != null) {
-    //         fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + org.uId)
-    //             .then(response => response.json())
-    //             .then(data => setAllEvents(data))
-    //             .catch(error => {
-    //                 console.error('There was an error fetching events for this org: ' + org.name, error);
-    //             });
-    //     }
-    // }, [org])
+    useEffect(() => {
+        if (org != null) {
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + org.uId)
+                .then(response => response.json())
+                .then(data => setAllEvents(data))
+                .catch(error => {
+                    console.error('There was an error fetching events for this org: ' + org.name, error);
+                });
+        }
+    }, [org])
 
     useEffect(() => {
         // GET request for all events using fetch inside useEffect React hook
