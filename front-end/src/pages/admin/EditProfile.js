@@ -37,11 +37,10 @@ function sanitizeFormOrg(submittedOrgInfo, socialMediaRefs) {
 
 export default function EditProfile() {
     const { org } = useContext(UserContext);
-    const { allOrgs } = useContext(AllOrgContext);
+    const allOrgs = useContext(AllOrgContext);
 
-    const { register, handleSubmit, watch, reset, errors } = useForm();
+    const { register, handleSubmit, watch, reset, errors, clearErrors } = useForm();
     const [isEditing, setEditing] = useState(false);
-    const [slug, setSlug] = useState('');
 
     const socialMediaPlatforms =
         [{ title: 'Facebook', ref: 'facebook' },
@@ -71,12 +70,17 @@ export default function EditProfile() {
         setEditing(!isEditing);
     };
 
-    const validateSlug = () => {
+    const validateSlug = (value) => {
+        clearErrors('slug')
         if (org != null && allOrgs != null) {
             for (var i = 0; i < allOrgs.length; i++) {
-                if (org.uId != allOrgs[i].uId && slug === allOrgs[i].slug) return false;
+                if (org.uId !== allOrgs[i].uId && value === allOrgs[i].slug) {
+                    console.log('CAUGHT')
+                    return false;
+                };
             }
         }
+        return true;
     }
 
     // console.log('OG');
@@ -131,11 +135,11 @@ export default function EditProfile() {
                             <Row>
                                 <Form.Control type="text"
                                     defaultValue={org != null ? org.slug : 'Organization Slug'}
-                                    ref={register({ required: true, validate: validateSlug })}
+                                    ref={register({ required: true, validate: value => validateSlug(value) })}
                                     name="slug"
-                                    onChange={s => setSlug(s)}
                                     disabled={!isEditing} />
-                                {errors.slug && <p className="error-edit-profile">⚠ A ~unique~ organization slug is required!</p>}
+                                {errors.slug?.type === 'required' && <p className="error-edit-profile">⚠ An organization slug is required!</p>}
+                                {errors.slug?.type === 'validate' && <p className="error-edit-profile">⚠ The organization slug must be A ~unique~!</p>}
 
                             </Row>
 
