@@ -47,21 +47,6 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
         "acm", "wwc", "test1", "test2", "test3"
     ]
 
-    // useEffect(() => {
-    //     // GET request for organizations
-    //     if (orgs != null) {
-    //         setOrganizations(orgs);
-    //     }
-    //     else {
-    //         fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
-    //             .then(response => response.json())
-    //             .then(data => setOrganizations(data))
-    //             .catch(error => {
-    //                 console.error('There was an error fetching organizations!', error);
-    //             });
-    //     }
-    // }, [orgs]);
-
     if (event && !isEditing) {
         return (
             <Container>
