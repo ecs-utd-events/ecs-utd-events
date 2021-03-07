@@ -20,21 +20,6 @@ import CancelIcon from '@iconify/icons-gg/close';
 import { AllOrgContext } from '../../providers/AllOrgProvider';
 
 
-function sanitizeFormOrg(submittedOrgInfo, socialMediaRefs) {
-    var sanitizedOrg = {};
-    var socialMedia = {};
-    for (var i = 0; i < socialMediaRefs.length; i++) {
-        socialMedia[socialMediaRefs[i]] = submittedOrgInfo[socialMediaRefs[i]];
-    }
-    for (var [key, value] of Object.entries(submittedOrgInfo)) {
-        if (!socialMediaRefs.includes(key)) {
-            sanitizedOrg[key] = submittedOrgInfo[key];
-        }
-    }
-    sanitizedOrg["socialMedia"] = socialMedia;
-    return sanitizedOrg;
-}
-
 export default function EditProfile() {
     const { org } = useContext(UserContext);
     const allOrgs = useContext(AllOrgContext);
@@ -48,20 +33,25 @@ export default function EditProfile() {
         { title: 'Discord', ref: 'discord' },
         { title: 'Instagram', ref: 'instagram' },
         { title: 'Snapchat', ref: 'snapchat' }];
-    const socialMediaRefs = socialMediaPlatforms.map(item => item.ref);
 
     const onSubmit = (newOrgData) => {
         // If currently not editing, set editing.
         if (isEditing == false) {
-            setEditing(!isEditing)
+            setEditing(!isEditing);
         }
         // otherwise, we were actually editing the form so do the real submission here.
         else {
-            setEditing(!isEditing)
-            var sanitizedOrg = sanitizeFormOrg(newOrgData, socialMediaRefs);
-            console.log(sanitizedOrg);
+            setEditing(!isEditing);
+            newOrgData["uId"] = org.uId;
+            console.log(org);
+            console.log(newOrgData);
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(newOrgData),
+                    headers: { 'Content-Type': 'application/json' }
+                });
         }
-
         return null;
     }
 
@@ -71,7 +61,7 @@ export default function EditProfile() {
     };
 
     const validateSlug = (value) => {
-        clearErrors('slug')
+        clearErrors('slug');
         if (org != null && allOrgs != null) {
             for (var i = 0; i < allOrgs.length; i++) {
                 if (org.uId !== allOrgs[i].uId && value === allOrgs[i].slug) {
@@ -139,7 +129,7 @@ export default function EditProfile() {
                                     name="slug"
                                     disabled={!isEditing} />
                                 {errors.slug?.type === 'required' && <p className="error-edit-profile">⚠ An organization slug is required!</p>}
-                                {errors.slug?.type === 'validate' && <p className="error-edit-profile">⚠ The organization slug must be A ~unique~!</p>}
+                                {errors.slug?.type === 'validate' && <p className="error-edit-profile">⚠ This organization slug is already taken!</p>}
 
                             </Row>
 
@@ -193,7 +183,7 @@ export default function EditProfile() {
                                                 <Form.Control type="text"
                                                     defaultValue={org.socialMedia[platform.ref] != null ? org.socialMedia[platform.ref] : ""}
                                                     placeholder={`(your ${platform.title} link here)`}
-                                                    name={`${platform.ref}`}
+                                                    name={`socialMedia.${platform.ref}`}
                                                     ref={register()}
                                                     disabled={!isEditing} />
                                             </Col>
