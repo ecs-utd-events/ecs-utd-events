@@ -17,41 +17,70 @@ import '../../styles/AdminPages.css';
 import Circle from '../../assets/circle.png';
 import FullPageLoading from '../../components/FullPageLoading';
 import CancelIcon from '@iconify/icons-gg/close';
+import { AllOrgContext } from '../../providers/AllOrgProvider';
 
+
+function sanitizeFormOrg(submittedOrgInfo, socialMediaRefs) {
+    var sanitizedOrg = {};
+    var socialMedia = {};
+    for (var i = 0; i < socialMediaRefs.length; i++) {
+        socialMedia[socialMediaRefs[i]] = submittedOrgInfo[socialMediaRefs[i]];
+    }
+    for (var [key, value] of Object.entries(submittedOrgInfo)) {
+        if (!socialMediaRefs.includes(key)) {
+            sanitizedOrg[key] = submittedOrgInfo[key];
+        }
+    }
+    sanitizedOrg["socialMedia"] = socialMedia;
+    return sanitizedOrg;
+}
 
 export default function EditProfile() {
     const { org } = useContext(UserContext);
+    const { allOrgs } = useContext(AllOrgContext);
+
     const { register, handleSubmit, watch, reset, errors } = useForm();
     const [isEditing, setEditing] = useState(false);
+    const [slug, setSlug] = useState('');
+
     const socialMediaPlatforms =
         [{ title: 'Facebook', ref: 'facebook' },
         { title: 'LinkedIn', ref: 'linkedIn' },
         { title: 'Discord', ref: 'discord' },
         { title: 'Instagram', ref: 'instagram' },
         { title: 'Snapchat', ref: 'snapchat' }];
+    const socialMediaRefs = socialMediaPlatforms.map(item => item.ref);
 
     const onSubmit = (newOrgData) => {
         // If currently not editing, set editing.
         if (isEditing == false) {
             setEditing(!isEditing)
-            return null;
         }
         // otherwise, we were actually editing the form so do the real submission here.
         else {
             setEditing(!isEditing)
-            console.log(newOrgData);
-            return null;
+            var sanitizedOrg = sanitizeFormOrg(newOrgData, socialMediaRefs);
+            console.log(sanitizedOrg);
         }
+
+        return null;
     }
 
-    // TODO: get previous state and revert.
     const cancelEditing = () => {
         reset();
         setEditing(!isEditing);
     };
 
-    console.log('OG');
-    console.log(org);
+    const validateSlug = () => {
+        if (org != null && allOrgs != null) {
+            for (var i = 0; i < allOrgs.length; i++) {
+                if (org.uId != allOrgs[i].uId && slug === allOrgs[i].slug) return false;
+            }
+        }
+    }
+
+    // console.log('OG');
+    // console.log(org);
     // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
     const imageSource = org != null ? (org.imageUrl != null ? org.imageUrl : Circle) : Circle;
 
@@ -92,7 +121,7 @@ export default function EditProfile() {
                                     ref={register({ required: true })}
                                     name="shortName"
                                     disabled={!isEditing} />
-                                {errors.shortName && <p className="error-edit-profile">⚠ A short name for your organization is required.</p>}
+                                {errors.shortName && <p className="error-edit-profile">⚠ A short name for your organization is required!</p>}
 
                             </Row>
 
@@ -102,10 +131,12 @@ export default function EditProfile() {
                             <Row>
                                 <Form.Control type="text"
                                     defaultValue={org != null ? org.slug : 'Organization Slug'}
-                                    ref={register({ required: true })}
+                                    ref={register({ required: true, validate: validateSlug })}
                                     name="slug"
+                                    onChange={s => setSlug(s)}
                                     disabled={!isEditing} />
-                                {errors.slug && <p className="error-edit-profile">⚠ An organization slug is required.</p>}
+                                {errors.slug && <p className="error-edit-profile">⚠ A ~unique~ organization slug is required!</p>}
+
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
@@ -113,10 +144,12 @@ export default function EditProfile() {
                             </Row>
                             <Row>
                                 <Form.Control type="text"
-                                    defaultValue={org != null ? org.website : 'website.url'}
+                                    defaultValue={org != null ? org.website : 'https://www.utdallas.edu/'}
                                     ref={register({ required: true })}
                                     name="website"
                                     disabled={!isEditing} />
+                                {errors.website && <p className="error-edit-profile">⚠ A website where students can find out more information about your organization is required!</p>}
+
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
@@ -139,6 +172,8 @@ export default function EditProfile() {
                                     name="description"
                                     disabled={!isEditing} defaultValue={org != null ? org.description : 'Description'}
                                     ref={register({ required: true })} />
+                                {errors.description && <p className="error-edit-profile">⚠ A short description of your organization is required!</p>}
+
                             </Row>
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
                                 <h3 className="item-align-center font-weight-bold">Social Media Links</h3>
@@ -146,7 +181,7 @@ export default function EditProfile() {
                             {org != null &&
                                 socialMediaPlatforms.map(platform => {
                                     return (
-                                        <Row style={{ paddingTop: 10 }}>
+                                        <Row style={{ padding: 10 }}>
                                             <Col xs={3}>
                                                 <h4 className="item-align-center">{platform.title}</h4>
                                             </Col>
