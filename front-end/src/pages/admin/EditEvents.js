@@ -69,8 +69,6 @@ export default function EditEvents() {
     }
 
     const saveEvent = (event, id) => {
-   
-        // if existing event
         var body = {
             "description": event.description,
             "endTime": eventCardFormatToISO(event.date, event.endTime),
@@ -91,8 +89,9 @@ export default function EditEvents() {
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
-            .then(events => setAllEvents([
-                ...events
+            .then(editedEvent => setAllEvents([
+                ...allEvents,
+                editedEvent
             ]))
             .catch(
             error => {
