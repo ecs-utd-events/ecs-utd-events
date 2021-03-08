@@ -63,7 +63,8 @@ export default function EditEvents() {
 
     const deleteEvent = (event, id) => {
         event.preventDefault();
-        setAllEvents(allEvents.filter(event => event.id !== id));
+        var remainingEvents = allEvents.filter(event => event.id !== id);
+        setAllEvents(remainingEvents);
         setIsAdding(allEvents === null && isAdding)
     }
 
@@ -80,36 +81,41 @@ export default function EditEvents() {
             "location": event.location,
             "tags": null
         };
+        
+
         if (id !== '') {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
                 method: 'PUT',
                 body: JSON.stringify(body),
                 headers: { 'Content-Type': 'application/json' }
             })
-                .then(_ => setAllEvents([
-                    ...allEvents,
-                ]))
-                .catch(
-                    error => {
-                        console.error('There was an error editing the event.', error)
-                    });
+            .then(response => {console.log(response)})
+            .then(_ => {
+                var remainingEvents = allEvents.filter(event => event.id !== id);
+                remainingEvents.push(event);
+                setAllEvents(remainingEvents);
+            })
+            .catch(
+                error => {
+                    console.error('There was an error editing the event.', error)
+                });
         }
-        // else {
-        //     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
-        //         method: 'POST',
-        //         body: JSON.stringify(body),
-        //         headers: { 'Content-Type': 'application/json' }
-        //     })
-        //     .then(response => response.json())
-        //     .then(newEvent => setAllEvents([
-        //         ...allEvents,
-        //         newEvent
-        //     ]))
-        //     .catch(
-        //     error => {
-        //         console.error('There was an error adding a new Event', error)
-        //     });
-        // }
+        else {
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(_ => { 
+                    var events = allEvents.push(event);
+                    setAllEvents(events);
+                }
+            )
+            .catch(
+            error => {
+                console.error('There was an error adding a new Event', error)
+            });
+        }
     }
 
     const changeCalendarView = (dateStr) => {
