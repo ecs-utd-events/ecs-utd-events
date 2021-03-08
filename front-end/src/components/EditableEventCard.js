@@ -57,6 +57,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                         </Row>
                         <Row>
                             <Col xs={2} style={{ textAlign: 'left' }}>
+                                <p className="mb-0">{(new Date(event.startTime)).toLocaleDateString()}</p>
                                 <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                                 <p className="mb-0">{event.location}</p>
                                 <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>
