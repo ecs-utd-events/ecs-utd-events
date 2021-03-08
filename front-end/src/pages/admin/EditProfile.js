@@ -43,16 +43,27 @@ export default function EditProfile() {
         else {
             setEditing(!isEditing);
             newOrgData["uId"] = org.uId;
-            console.log(newOrgData);
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
                 {
                     method: 'PUT',
                     body: JSON.stringify(newOrgData),
                     headers: { 'Content-Type': 'application/json' }
-                });
-            // window.location.reload(false);
+                })
+                .then(response => {
+                    console.log(response);
+                    if (response.status != 200) {
+                        console.log('There was an issue sending the updated profile data to the server. Please try again!');
+                        setEditing(!isEditing);
+                    }
+                })
+                .catch(error => handleErrors());
         }
         return null;
+    }
+
+    const handleErrors = () => {
+        console.log('There was an issue sending the updated profile data to the server. Please try again!');
+        setEditing(!isEditing);
     }
 
     const cancelEditing = () => {
