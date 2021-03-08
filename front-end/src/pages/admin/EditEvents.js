@@ -79,13 +79,13 @@ export default function EditEvents() {
             "startTime": eventCardFormatToISO(event.date, event.startTime),
             "title": event.title,
             "location": event.location,
-            "tags": []
+            "tags": null
         };
-
+        console.log(body)
         if(id !== '') {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
                 method: 'PUT',
-                body: JSON.stringify(body),
+                body: body,
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
@@ -98,22 +98,22 @@ export default function EditEvents() {
                 console.error('There was an error editing the event.', error)
             });
         }
-        else {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => response.json())
-            .then(newEvent => setAllEvents([
-                ...allEvents,
-                newEvent
-            ]))
-            .catch(
-            error => {
-                console.error('There was an error adding a new Event', error)
-            });
-        }
+        // else {
+        //     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+        //         method: 'POST',
+        //         body: JSON.stringify(body),
+        //         headers: { 'Content-Type': 'application/json' }
+        //     })
+        //     .then(response => response.json())
+        //     .then(newEvent => setAllEvents([
+        //         ...allEvents,
+        //         newEvent
+        //     ]))
+        //     .catch(
+        //     error => {
+        //         console.error('There was an error adding a new Event', error)
+        //     });
+        // }
     }
 
     const changeCalendarView = (dateStr) => {
