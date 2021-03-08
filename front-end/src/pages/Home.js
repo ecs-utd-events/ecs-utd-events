@@ -159,12 +159,12 @@ export default function Home() {
           </Row>
           <Row className="justify-content-md-center">
             <Col md={{ size: 2, offset: 3 }}>
-              <Link to="/login" style={{ padding: 10 }}>
+              <Link to="/login">
                 <CustomButton className="drop-shadow button-org-login-main-page">Organization Login</CustomButton>
               </Link>
-              <Link to="/" style={{ padding: 10 }}>
+              <a href="https://github.com/siddharthnaik99/utdecsevents_backend" target="_blank">
                 <CustomButton className="drop-shadow button-api-docs-main-page">API Documentation</CustomButton>
-              </Link>
+              </a>
             </Col>
           </Row>
         </Container>
