@@ -3,6 +3,25 @@ export function getFormattedTime(time) {
     return time.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
 }
 
+//form control date format: yyyy-mm-dd
+export function getEventCardFormattedDate(date){
+    var eventCardFormattedDate = date.substring(0,10);
+    return eventCardFormattedDate;
+}
+
+export function getEventCardFormattedTime(date){
+    
+    var t = date.indexOf('T')
+    var colon = date.lastIndexOf(':');
+    var eventCardFormattedTime = date.substring(t + 1, colon);
+    return eventCardFormattedTime;
+}
+
+export function eventCardFormatToISO(date, time){
+    var dbFormat = date + 'T' + time + ':00Z';
+    return dbFormat;
+}
+
 export function lastUpdatedToString(time) {
     var lastUpdatedUnixTime = Date.parse(time);
     // difference in milliseconds

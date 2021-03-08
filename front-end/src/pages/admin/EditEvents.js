@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, createRef } from "react";
 
-import FullCalendar from '@fullcalendar/react'
+import FullCalendar, { isArraysEqual } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import AddIcon from '@iconify/icons-gg/add';
@@ -10,28 +10,15 @@ import EditableEventCard from '../../components/EditableEventCard';
 import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat } from "../../components/FullCalendarUtils";
-
+import { eventCardFormatToISO } from '../../components/TimeUtils';
 
 
 export default function EditEvents() {
     const { org } = useContext(UserContext);
     const [isAdding, setIsAdding] = useState(false);
-    // const org = 'this';
-    // const [allEvents, setAllEvents] = useState(null);
     const [dbEvents, setDbEvents] = useState(null);
-    // const [organizations, setOrganizations] = useState(null);
-    let calendarRef = createRef()
-    const [allEvents, setAllEvents] = useState([{
-        id: 'test',
-        title: 'test',
-        date: 'test',
-        startTime: 'test',
-        endTime: 'test',
-        description: 'test',
-        org: 'test',
-        location: 'test',
-        link: 'test'
-    }]);
+    const [allEvents, setAllEvents] = useState(null);
+    let calendarRef = createRef();
 
     useEffect(() => {
         if (org != null) {
@@ -76,12 +63,57 @@ export default function EditEvents() {
 
     const deleteEvent = (event, id) => {
         event.preventDefault();
+        
         setAllEvents(allEvents.filter(event => event.id !== id));
         setIsAdding(allEvents === null && isAdding)
     }
 
     const saveEvent = (event, id) => {
-        event.preventDefault();
+        var body = {
+            "description": event.description,
+            "endTime": eventCardFormatToISO(event.date, event.endTime),
+            "id": id,
+            "link": event.link,
+            "orgs": event.orgs,
+            "lastUpdated": (new Date()).toISOString().split('.')[0]+"Z",
+            "startTime": eventCardFormatToISO(event.date, event.startTime),
+            "title": event.title,
+            "location": event.location,
+            "tags": null
+        };
+        console.log(body)
+        if(id !== '') {
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                method: 'PUT',
+                body: body,
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(editedEvent => setAllEvents([
+                ...allEvents,
+                editedEvent
+            ]))
+            .catch(
+            error => {
+                console.error('There was an error editing the event.', error)
+            });
+        }
+        // else {
+        //     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+        //         method: 'POST',
+        //         body: JSON.stringify(body),
+        //         headers: { 'Content-Type': 'application/json' }
+        //     })
+        //     .then(response => response.json())
+        //     .then(newEvent => setAllEvents([
+        //         ...allEvents,
+        //         newEvent
+        //     ]))
+        //     .catch(
+        //     error => {
+        //         console.error('There was an error adding a new Event', error)
+        //     });
+        // }
     }
 
     const changeCalendarView = (dateStr) => {
@@ -95,7 +127,7 @@ export default function EditEvents() {
                 { allEvents &&
                     allEvents.map(event => {
                         return (
-                            <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView}></EditableEventCard>
+                            <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>
                         )
                     })
                 }

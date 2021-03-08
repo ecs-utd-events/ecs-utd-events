@@ -1,51 +1,49 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import IconButton from './IconButton';
-import { getFormattedTime } from './TimeUtils';
+import { getFormattedTime, getEventCardFormattedDate, getEventCardFormattedTime } from './TimeUtils';
 import EditIcon from '@iconify/icons-gg/pen';
 import TrashIcon from '@iconify/icons-gg/trash';
 import Container from 'react-bootstrap/Container';
 import SaveIcon from '@iconify/icons-gg/check';
 import CancelIcon from '@iconify/icons-gg/close';
+import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 
-export default function EditableEventCard({ event, deleteEvent, saveEvent, isEditable, changeCalendarView }) {
+export default function EditableEventCard({ event, deleteEvent, isEditable, changeCalendarView, saveEvent }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
-    // const [orgs, setOrganizations] = useState(null);
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const orgs = useContext(AllOrgContext);
+    const { org } = useContext(UserContext);
     const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
 
-    const onSubmit = (event) => {
+    const onSubmit = (eventInfo) => {
         setEditing(!isEditing);
-        console.log(event);
+        saveEvent(eventInfo, event.id);
     }
 
     const validateTime = async () => {
-        if(startTime > endTime) return false;
+        // if(startTime > endTime) return false;
     }
 
     const validateDate = async (date) => {
         const today = new Date()
         
-        if(new Date(date) <= today) return false;
+        // if(new Date(date) <= today) return false;
     }
 
     const cancelEditing = (e) => {
-        deleteEvent(e, event.id);
+        if(event.id === ''){
+            deleteEvent(e, event.id);
+        }
         setEditing(!isEditing);
     };
-
-    const organs = [
-        "acm", "wwc", "test1", "test2", "test3"
-    ]
 
     if (event && !isEditing) {
         return (
@@ -80,6 +78,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
             </Container>
         );
     } else if (event && isEditing) {
+        console.log(event.id)
         return (
             <Container>
                 <Col>
@@ -92,15 +91,15 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                             <Form.Row>
                                 <Form.Group as={Col} controlId="date">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Date" name="Date" ref={register({ required: true, validate: validateDate })} defaultValue={event.date}/>
+                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} defaultValue={getEventCardFormattedDate(event.startTime)}/>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="startTime">
                                     <Form.Label>Start time</Form.Label>
-                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={event.startTime}/>
+                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.startTime)}/>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="endTime">
                                     <Form.Label>End time</Form.Label>
-                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={event.endTime}/>
+                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.endTime)}/>
                                     { errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
                                 </Form.Group>
                             </Form.Row>
@@ -112,7 +111,7 @@ export default function EditableEventCard({ event, deleteEvent, saveEvent, isEdi
                                     </Form.Group>
                                     <Form.Group controlId="orgs">
                                         <Form.Label>Collaborator(s)</Form.Label>
-                                        <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" custom>
+                                        <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple ref={register({ required: false })} defaultValue={event.orgs}>
                                             {orgs.map(org => { return <option key={org.uId} value={org.uId}>{org.shortName}</option> })}
                                         </Form.Control>
                                     </Form.Group>
