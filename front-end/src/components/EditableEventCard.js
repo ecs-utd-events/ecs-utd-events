@@ -49,7 +49,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
         return (
             <Container>
                 <Col>
-                    <Card className={"drop-shadow mb-4"}>
+                    <Card className={"drop-shadow mb-4 pb-0"}>
                         <Row>
                             <Col style={{ textAlign: 'left' }}>
                                 <h5 className="font-weight-bold">{event.title}</h5>
@@ -69,7 +69,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                             </Col>
                         </Row>
                         <Row>
-                            <Col md={{ span: 10, offset: 10 }}>
+                            <Col className="d-flex justify-content-end m-0">
                                 <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
                                 <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton>
                             </Col>
