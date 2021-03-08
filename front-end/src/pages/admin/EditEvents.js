@@ -63,7 +63,6 @@ export default function EditEvents() {
 
     const deleteEvent = (event, id) => {
         event.preventDefault();
-        
         setAllEvents(allEvents.filter(event => event.id !== id));
         setIsAdding(allEvents === null && isAdding)
     }
@@ -75,28 +74,25 @@ export default function EditEvents() {
             "id": id,
             "link": event.link,
             "orgs": event.orgs,
-            "lastUpdated": (new Date()).toISOString().split('.')[0]+"Z",
+            "lastUpdated": (new Date()).toISOString().split('.')[0] + "Z",
             "startTime": eventCardFormatToISO(event.date, event.startTime),
             "title": event.title,
             "location": event.location,
             "tags": null
         };
-        console.log(body)
-        if(id !== '') {
+        if (id !== '') {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
                 method: 'PUT',
-                body: body,
+                body: JSON.stringify(body),
                 headers: { 'Content-Type': 'application/json' }
             })
-            .then(response => response.json())
-            .then(editedEvent => setAllEvents([
-                ...allEvents,
-                editedEvent
-            ]))
-            .catch(
-            error => {
-                console.error('There was an error editing the event.', error)
-            });
+                .then(_ => setAllEvents([
+                    ...allEvents,
+                ]))
+                .catch(
+                    error => {
+                        console.error('There was an error editing the event.', error)
+                    });
         }
         // else {
         //     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
