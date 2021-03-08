@@ -43,6 +43,7 @@ export default function EditProfile() {
         else {
             setEditing(!isEditing);
             newOrgData["uId"] = org.uId;
+            newOrgData["name"] = org.name;
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
                 {
                     method: 'PUT',
@@ -127,19 +128,8 @@ export default function EditProfile() {
                                 <IconButton className="mr-2" icon={CancelIcon} onClick={cancelEditing} />
                             }
 
-                            <Row style={{ textAlign: "left" }}>
-                                <h3 className="item-align-center font-weight-bold">Name</h3>
-                                <p>
-                                    This will appear on your organization profile. You can change your org name, but probably shouldn't without letting us
-                                    know and showing the proper SOC documentation...
-                                </p>
-                            </Row>
-                            <Row>
-                                <Form.Control type="text"
-                                    ref={register({ required: true })}
-                                    name="name"
-                                    defaultValue={org != null ? org.name : 'Organization Name'}
-                                    disabled={!isEditing} />
+                            <Row style={{ textAlign: "center" }}>
+                                <h2 className="item-align-center font-weight-bold">{org.name}</h2>
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
