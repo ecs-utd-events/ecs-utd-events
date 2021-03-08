@@ -19,6 +19,7 @@ export default function OrgPageEventCard({ event, pastEvent, orgs }) {
                 <Row>
                     <Col xs={4} md={2} style={{ textAlign: 'left', paddingBottom: '5px' }}>
                         {/* <p className="mb-0">{event.start.toDateString()}</p> */}
+                        <p className="mb-0">{(new Date(event.startTime)).toDateString()}</p>
                         <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                         <p className="mb-0">{event.location}</p>
                         <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>

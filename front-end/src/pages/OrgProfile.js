@@ -8,6 +8,7 @@ import NavbarComponent from '../components/NavbarComponent';
 import Collapse from 'react-bootstrap/Collapse'
 import React, { useContext, useEffect, useState } from "react";
 import CustomButton from '../components/CustomButton';
+import { ToggleButton } from "../components/ToggleButton";
 
 import './../styles/App.css';
 
@@ -33,6 +34,7 @@ export default function OrgProfile({ orgs }) {
     const [allEvents, setAllEvents] = useState(null);
     const [openUpcomingEvents, setOpenUpcomingEvents] = useState(false);
     const [openPastEvents, setOpenPastEvents] = useState(false);
+    const [selected, setSelected] = useState(false);
     const maxEventsDisplayed = 3;
     const organizations = useContext(AllOrgContext);
 
@@ -114,7 +116,7 @@ export default function OrgProfile({ orgs }) {
 
 
         // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
-        var imageSource = thisOrg != null ? (thisOrg.imageUrl != null ? thisOrg.imageUrl : Circle) : Circle;
+        var imageSource = thisOrg != null ? (thisOrg.imageUrl != "" ? thisOrg.imageUrl : Circle) : Circle;
 
         return (
             <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
@@ -140,7 +142,13 @@ export default function OrgProfile({ orgs }) {
                             {thisOrg.description}
                         </Col>
                     </Row>
-                    <Container style={{ paddingBottom: "40px" }}>
+                    <ToggleButton
+                        selected={selected}
+                        toggleSelected={() => {
+                            setSelected(!selected);
+                        }}
+                    />
+                    {!selected && <Container style={{ paddingBottom: "40px" }}>
                         <Row className="mb-3" style={{ textAlign: 'center' }}>
                             <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
                         </Row>
@@ -152,20 +160,24 @@ export default function OrgProfile({ orgs }) {
                         })}
                         {additionalUpcomingEvents}
                     </Container>
-                    <Container>
-                        {/* DISPLAY PAST EVENTS */}
-                        <Row className="mb-3" style={{ textAlign: 'center' }}>
-                            <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
-                        </Row>
-                        {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
-                            return (
-                                <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
-                            );
-                        })}
-                        {additionalPastEvents}
-                    </Container>
+                    }
+                    {selected &&
+                        <Container>
+                            {/* DISPLAY PAST EVENTS */}
+                            <Row className="mb-3" style={{ textAlign: 'center' }}>
+                                <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
+                            </Row>
+                            {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
+                                return (
+                                    <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
+                                );
+                            })}
+                            {additionalPastEvents}
+                        </Container>
+                    }
                 </Container>
             </div >
+
         )
     }
     else
