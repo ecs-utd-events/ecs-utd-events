@@ -1,25 +1,25 @@
 
 export function getFormattedTime(time) {
-    return time.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
+    return new Date(time).toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
 }
 
 //form control date format: yyyy-mm-dd
-export function getEventCardFormattedDate(date){
-    var eventCardFormattedDate = date.substring(0,10);
+export function getEventCardFormattedDate(date) {
+    var eventCardFormattedDate = date.substring(0, 10);
     return eventCardFormattedDate;
 }
 
-export function getEventCardFormattedTime(date){
-    
-    var t = date.indexOf('T')
-    var colon = date.lastIndexOf(':');
-    var eventCardFormattedTime = date.substring(t + 1, colon);
-    return eventCardFormattedTime;
+export function getEventCardFormattedTime(date) {
+    return new Date(date).toLocaleTimeString('en-US', { hour12: false }).replace(/(.*)\D\d+/, '$1');
 }
 
-export function eventCardFormatToISO(date, time){
-    var dbFormat = date + 'T' + time + ':00Z';
-    return dbFormat;
+export function lastUpdatedToISO() {
+    return (new Date()).toISOString().split('.')[0] + "Z"
+}
+
+export function eventCardFormatToISO(date, time) {
+    var dbFormat = date + 'T' + time;
+    return (new Date(dbFormat)).toISOString().split('.')[0] + "Z"
 }
 
 export function lastUpdatedToString(time) {

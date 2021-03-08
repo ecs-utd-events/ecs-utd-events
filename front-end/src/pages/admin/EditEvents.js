@@ -10,7 +10,7 @@ import EditableEventCard from '../../components/EditableEventCard';
 import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat } from "../../components/FullCalendarUtils";
-import { eventCardFormatToISO } from '../../components/TimeUtils';
+import { eventCardFormatToISO, lastUpdatedToISO } from '../../components/TimeUtils';
 
 
 export default function EditEvents() {
@@ -75,7 +75,7 @@ export default function EditEvents() {
             "id": id,
             "link": event.link,
             "orgs": event.orgs,
-            "lastUpdated": (new Date()).toISOString().split('.')[0] + "Z",
+            "lastUpdated": lastUpdatedToISO(),
             "startTime": eventCardFormatToISO(event.date, event.startTime),
             "title": event.title,
             "location": event.location,
@@ -92,7 +92,7 @@ export default function EditEvents() {
             .then(response => {console.log(response)})
             .then(_ => {
                 var remainingEvents = allEvents.filter(event => event.id !== id);
-                remainingEvents.push(event);
+                remainingEvents.push(body);
                 setAllEvents(remainingEvents);
             })
             .catch(

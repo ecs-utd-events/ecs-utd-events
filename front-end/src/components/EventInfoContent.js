@@ -50,6 +50,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
+        console.log(event);
     }, [event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
