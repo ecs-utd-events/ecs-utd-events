@@ -1,11 +1,11 @@
 import { Container, Row, Col } from "react-bootstrap/esm";
 import { Link, useHistory } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import profileIcon from '@iconify/icons-gg/profile';
-import calendarIcon from '@iconify/icons-gg/feed';
-import helpIcon from '@iconify/icons-gg/info';
-import logoutIcon from '@iconify/icons-gg/log-out';
-import homeIcon from '@iconify/icons-gg/home';
+import profileIcon from '@iconify/icons-mdi/account-circle-outline';
+import calendarIcon from '@iconify/icons-mdi/format-list-text';
+import helpIcon from '@iconify/icons-mdi/help-circle-outline';
+import logoutIcon from '@iconify/icons-mdi/logout';
+import homeIcon from '@iconify/icons-mdi/home';
 import { auth } from "../firebase";
 
 const TAB_CONTENTS = [

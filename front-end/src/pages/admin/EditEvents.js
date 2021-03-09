@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext, createRef } from "react";
 import FullCalendar, { isArraysEqual } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import AddIcon from '@iconify/icons-gg/add';
+import AddIcon from '@iconify/icons-mdi/plus-circle-outline';
 
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard from '../../components/EditableEventCard';

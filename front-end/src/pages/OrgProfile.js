@@ -3,6 +3,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
+
+import { Icon } from '@iconify/react';
+import linkIcon from '@iconify/icons-mdi/link-variant'
+import descriptionIcon from '@iconify/icons-mdi/format-align-left'
+
 import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
 import Collapse from 'react-bootstrap/Collapse'
@@ -13,9 +18,7 @@ import { ToggleButton } from "../components/ToggleButton";
 import './../styles/App.css';
 
 import { AllOrgContext } from '../providers/AllOrgProvider';
-import LinkSVG from '../assets/link.svg';
-import DescriptionIcon from '../assets/product-description.svg';
-import Circle from '../assets/circle.png';
+import Circle from '../assets/placeholder_org_image.svg';
 
 function findThisOrg(allOrgs, orgSlug) {
     if (allOrgs != null && orgSlug != null) {
@@ -28,7 +31,7 @@ function findThisOrg(allOrgs, orgSlug) {
     return null;
 }
 
-export default function OrgProfile({ orgs }) {
+export default function OrgProfile() {
     let { orgSlug } = useParams();
     const [thisOrg, setThisOrg] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
@@ -116,7 +119,7 @@ export default function OrgProfile({ orgs }) {
 
 
         // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
-        var imageSource = thisOrg != null ? (thisOrg.imageUrl != "" ? thisOrg.imageUrl : Circle) : Circle;
+        var imageSource = thisOrg != null ? (thisOrg.imageUrl != null && thisOrg.imageUrl !== "" ? thisOrg.imageUrl : Circle) : Circle;
 
         return (
             <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
@@ -127,16 +130,16 @@ export default function OrgProfile({ orgs }) {
                         <h1 className="item-align-center font-weight-bold">{thisOrg.name}</h1>
                     </Row>
                     <Row className="mb-3">
-                        <Col xs={2} style={{ textAlign: 'right' }}>
-                            <Image src={LinkSVG}></Image>
+                        <Col xs={2} style={{ textAlign: 'right', marginTop: '-4px' }}>
+                            <Icon icon={linkIcon} style={{fontSize: '2rem', color: 'var(--gray3)'}}/>
                         </Col>
                         <Col style={{ textAlign: 'left' }}>
                             <a href={thisOrg.website} target="_blank" rel="noreferrer">{thisOrg.website}</a>
                         </Col>
                     </Row>
                     <Row className="mb-5">
-                        <Col xs={2} style={{ textAlign: 'right', marginTop: 5, marginBottom: 'auto' }}>
-                            <Image src={DescriptionIcon}></Image>
+                        <Col xs={2} style={{ textAlign: 'right', marginTop: '3px', marginBottom: 'auto' }}>
+                            <Icon icon={descriptionIcon} style={{fontSize: '2rem', color: 'var(--gray3)'}}/>
                         </Col>
                         <Col xs={8} style={{ textAlign: 'left' }}>
                             {thisOrg.description}

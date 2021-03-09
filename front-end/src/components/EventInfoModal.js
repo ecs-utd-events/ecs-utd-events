@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap/esm";
-import CloseIcon from '@iconify/icons-gg/close';
+import CloseIcon from '@iconify/icons-mdi/close';
 import Slide from '@material-ui/core/Slide';
 import { AppBar, Dialog, Toolbar } from "@material-ui/core";
 

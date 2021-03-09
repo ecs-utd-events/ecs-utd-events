@@ -6,11 +6,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import IconButton from './IconButton';
 import { getFormattedTime, getEventCardFormattedDate, getEventCardFormattedTime } from './TimeUtils';
-import EditIcon from '@iconify/icons-gg/pen';
-import TrashIcon from '@iconify/icons-gg/trash';
+import EditIcon from '@iconify/icons-mdi/lead-pencil';
+import TrashIcon from '@iconify/icons-mdi/delete';
 import Container from 'react-bootstrap/Container';
-import SaveIcon from '@iconify/icons-gg/check';
-import CancelIcon from '@iconify/icons-gg/close';
+import SaveIcon from '@iconify/icons-mdi/content-save';
+import CancelIcon from '@iconify/icons-mdi/close';
 import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 
