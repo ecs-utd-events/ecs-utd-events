@@ -1497,6 +1497,11 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@iconify/icons-bx@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-bx/-/icons-bx-1.1.0.tgz#6ce5251aee266ad5a8ee3effab1d031281edb61e"
+  integrity sha512-4TyjNcB4hO5e5pTe/M0xaW1vqK92DcK3y9n0cDx/bUaBBa/xt2K3OM6uBGVbna2yIcmDvQJGPJpd5hnXtgZrBw==
+
 "@iconify/icons-gg@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@iconify/icons-gg/-/icons-gg-1.1.0.tgz#ae6451fa5573304357248d84e310acaaf0b90b6e"
