@@ -231,14 +231,12 @@ export default function EditProfile() {
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
-                                <Col className="p-0">
-                                    <TitleWithDescription>
-                                        Description
+                                <TitleWithDescription>
+                                    Description
                                     <p>
-                                            A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
+                                        A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
                                     </p>
-                                    </TitleWithDescription>
-                                </Col>
+                                </TitleWithDescription>
                                 <Col className="d-flex justify-content-end align-items-end">
                                     <h5 style={errors.description?.type === 'maxDescriptionLength' ? { color: 'red' } : null}>{watchDescription.length}/600 chars</h5>
                                 </Col>
