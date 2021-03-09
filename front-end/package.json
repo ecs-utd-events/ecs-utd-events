@@ -7,8 +7,6 @@
     "@fullcalendar/list": "^5.5.0",
     "@fullcalendar/react": "^5.5.0",
     "@fullcalendar/timegrid": "^5.5.1",
-    "@iconify/icons-bx": "^1.1.0",
-    "@iconify/icons-gg": "^1.1.0",
     "@iconify/icons-mdi": "^1.1.12",
     "@iconify/react": "^1.1.4",
     "@material-ui/core": "^4.11.3",
