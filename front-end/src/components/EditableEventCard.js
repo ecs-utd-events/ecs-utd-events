@@ -22,20 +22,21 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
     const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
-    console.log(currOrg)
     const onSubmit = (eventInfo) => {
         setEditing(!isEditing);
         saveEvent(eventInfo, event.id);
     }
 
     const validateTime = async () => {
-        // if(startTime > endTime) return false;
+        if(startTime > endTime) return false;
     }
 
     const validateDate = async (date) => {
-        const today = new Date()
-        
-        // if(new Date(date) <= today) return false;
+        var today = new Date().getTime(),
+        date = date.split("/");
+
+        date = new Date(date[2], date[1] - 1, date[0]).getTime();
+        return (today - date) < 0;
     }
 
     const cancelEditing = (e) => {

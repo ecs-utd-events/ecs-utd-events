@@ -78,6 +78,9 @@ export default function EditEvents() {
     }
 
     const saveEvent = (event, id) => {
+        // to ensure that current id is in list
+        event.orgs.push(id);
+        
         var body = {
             "description": event.description,
             "endTime": eventCardFormatToISO(event.date, event.endTime),
