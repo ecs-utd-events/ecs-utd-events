@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import firebase from "firebase/app";
 import React, { useContext, useState } from 'react'
-import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { auth } from '../firebase';
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';

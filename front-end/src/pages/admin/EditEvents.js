@@ -63,11 +63,11 @@ export default function EditEvents() {
 
     const deleteEvent = (event, id) => {
         event.preventDefault();
-        if(event !== null){
+        if (event !== null) {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
-                    method: 'DELETE',
-                })
-                .then(response => {console.log(response)})
+                method: 'DELETE',
+            })
+                .then(response => { console.log(response) })
 
 
             var remainingEvents = allEvents.filter(event => event.id !== id);
@@ -79,13 +79,12 @@ export default function EditEvents() {
 
     const saveEvent = (event, id, orgId) => {
         // to ensure that current id is in list
-        
+
         event.orgs.push(orgId);
         var body = {
             "description": event.description,
             "endTime": eventCardFormatToISO(event.date, event.endTime),
             "id": id,
-            "link": event.link,
             "orgs": event.orgs,
             "lastUpdated": lastUpdatedToISO(),
             "startTime": eventCardFormatToISO(event.date, event.startTime),
@@ -93,7 +92,11 @@ export default function EditEvents() {
             "location": event.location,
             "tags": null
         };
-        
+
+        if (event.link != null && event.link !== '') {
+            body.link = event.link;
+        }
+
 
         if (id !== '') {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
@@ -101,16 +104,16 @@ export default function EditEvents() {
                 body: JSON.stringify(body),
                 headers: { 'Content-Type': 'application/json' }
             })
-            .then(response => {console.log(response)})
-            .then(_ => {
-                var remainingEvents = allEvents.filter(event => event.id !== id);
-                remainingEvents.push(body);
-                setAllEvents(remainingEvents);
-            })
-            .catch(
-                error => {
-                    console.error('There was an error editing the event.', error)
-                });
+                .then(response => { console.log(response) })
+                .then(_ => {
+                    var remainingEvents = allEvents.filter(event => event.id !== id);
+                    remainingEvents.push(body);
+                    setAllEvents(remainingEvents);
+                })
+                .catch(
+                    error => {
+                        console.error('There was an error editing the event.', error)
+                    });
         }
         else {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
@@ -118,16 +121,16 @@ export default function EditEvents() {
                 body: JSON.stringify(body),
                 headers: { 'Content-Type': 'application/json' }
             })
-            .then(_ => { 
+                .then(_ => {
                     var events = allEvents;
-                    events.push(event);
+                    events.push(body);
                     setAllEvents(events);
                 }
-            )
-            .catch(
-            error => {
-                console.error('There was an error adding a new Event', error)
-            });
+                )
+                .catch(
+                    error => {
+                        console.error('There was an error adding a new Event', error)
+                    });
         }
     }
 

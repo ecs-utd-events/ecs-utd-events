@@ -28,7 +28,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     }
 
     const validateTime = async () => {
-        if(startTime > endTime) return false;
+        if (startTime > endTime) return false;
     }
 
     const validateDate = async (date) => {
@@ -37,7 +37,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     }
 
     const cancelEditing = (e) => {
-        if(event.id === ''){
+        if (event.id === '') {
             deleteEvent(e, event.id);
         }
         setEditing(!isEditing);
@@ -59,10 +59,9 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                 <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                                 <p className="mb-0">{event.location}</p>
                                 <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>
-                                <a className="mb-0" href={event.link} target="_blank">More Info</a>
+                                {event.link != null && event.link !== '' && <a className="mb-0" href={event.link} target="_blank">Link</a>}
                             </Col>
                             <Col style={{ textAlign: 'left' }}>
-                                <a className="mb-0" href={event.link}>Link</a>
                                 <p>{event.description}</p>
                             </Col>
                         </Row>
@@ -89,16 +88,16 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                             <Form.Row>
                                 <Form.Group as={Col} controlId="date">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} defaultValue={getEventCardFormattedDate(event.startTime)}/>
+                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true })} defaultValue={getEventCardFormattedDate(event.startTime)} />
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="startTime">
                                     <Form.Label>Start time</Form.Label>
-                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.startTime)}/>
+                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.startTime)} />
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="endTime">
                                     <Form.Label>End time</Form.Label>
-                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.endTime)}/>
-                                    { errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
+                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.endTime)} />
+                                    {errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row>
@@ -110,14 +109,14 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                     <Form.Group controlId="orgs">
                                         <Form.Label>Collaborator(s)</Form.Label>
                                         <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple ref={register({ required: false })} defaultValue={event.orgs}>
-                                            {orgs.map(org => { if(currOrg.org.uId !== org.uId) { return <option key={org.uId} value={org.uId}>{org.shortName}</option> }})}
+                                            {orgs.map(org => { if (currOrg.org.uId !== org.uId) { return <option key={org.uId} value={org.uId}>{org.shortName}</option> } })}
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>
                                 <Col style={{ textAlign: 'left' }}>
                                     <Form.Group controlId="link">
                                         <Form.Label>Link</Form.Label>
-                                        <Form.Control type="url" placeholder="Link" name="link" ref={register({ required: true })} defaultValue={event.link} />
+                                        <Form.Control type="url" placeholder="Link" name="link" ref={register()} defaultValue={event.link || ''} />
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Description</Form.Label>
@@ -126,7 +125,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                 </Col>
                             </Form.Row>
                             <Form.Row>
-                                <Col md={{ span: 10, offset: 10 }}>
+                                <Col className="d-flex justify-content-end m-0">
                                     <IconButton className="mr-2" icon={SaveIcon} type="submit" disabled={orgs.some(org => org.uId === currOrg.org)} onClick={handleSubmit(onSubmit)}></IconButton>
                                     <IconButton className="mr-2" icon={CancelIcon} onClick={cancelEditing}></IconButton>
                                     {/* <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton> */}

@@ -11,7 +11,7 @@ function UserProvider({ children }) {
             setUser(userAuth);
         })
     }, [])
-    console.log(process.env.REACT_APP_SERVER_URL)
+
     useEffect(() => {
         if (user) {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/' + user.uid)
