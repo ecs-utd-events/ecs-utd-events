@@ -134,7 +134,7 @@ export default function EditProfile() {
                             </Row>
                             {!isEditing &&
                                 <div className="sticky-button-wrapper">
-                                    <CustomButton className="drop-shadow" type="submit" onClick={handleSubmit(() => setEditing(!isEditing))}>
+                                    <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(() => setEditing(!isEditing))}>
                                         <h4 className="font-weight-bold my-0">
                                             <InlineIcon icon={EditIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> edit
                                         </h4>
@@ -145,12 +145,12 @@ export default function EditProfile() {
                             {/* If editing, give user the option to undo changes. */}
                             {isEditing &&
                                 <div className="sticky-button-wrapper">
-                                    <CustomButton className="drop-shadow" type="submit" onClick={handleSubmit(onSubmit)}>
+                                    <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(onSubmit)}>
                                         <h4 className="font-weight-bold my-0">
                                             <InlineIcon icon={SaveIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> save
                                         </h4>
                                     </CustomButton>
-                                    <CustomButton className="drop-shadow" type="submit" onClick={cancelEditing} secondary>
+                                    <CustomButton secondary className="drop-shadow" type="submit" onClick={cancelEditing}>
                                         <h4 className="font-weight-bold my-0">
                                             <InlineIcon icon={CancelIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> cancel
                                         </h4>
@@ -231,13 +231,15 @@ export default function EditProfile() {
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
-                                <TitleWithDescription>
-                                    Description
+                                <Col className="p-0">
+                                    <TitleWithDescription>
+                                        Description
                                     <p>
-                                        A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
+                                            A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
                                     </p>
-                                </TitleWithDescription>
-                                <Col className="d-flex justify-content-end align-items-end">
+                                    </TitleWithDescription>
+                                </Col>
+                                <Col xs={2} className="d-flex justify-content-end align-items-end">
                                     <h5 style={errors.description?.type === 'maxDescriptionLength' ? { color: 'red' } : null}>{watchDescription.length}/600 chars</h5>
                                 </Col>
                             </Row>

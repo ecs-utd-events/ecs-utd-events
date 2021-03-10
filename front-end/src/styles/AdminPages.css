@@ -15,8 +15,8 @@
     --gray4: #BDBDBD;
     --gray5: #E0E0E0;
     --gray6: #F2F2F2;
-  }
-  
+}
+
 .edit-profile-page {
     text-align: center;
 }
@@ -24,4 +24,38 @@
 .edit-profile-info-card {
     background-color: var(--secondary2)!important;
     text-align: left;
+}
+
+.error-edit-profile {
+    color: red;
+    font-size: 15px;
+    margin-top: 2px;
+    margin-bottom: 0;
+}
+
+.edit-profile-page .form-control:disabled, .edit-profile-page .form-control:read-only {
+    background-color: transparent!important;
+    border: none;
+    color: var(--gray1);
+    filter: none;
+    font-weight: 500;
+}
+
+.edit-profile-page .sticky-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0.5rem;
+    z-index: 2;
+}
+
+.edit-profile-page .secondary-btn.primary {
+    background-color: var(--accent2);
+    color: var(--gray2)
+}
+
+.edit-profile-page .secondary-btn.primary:hover {
+    background-color: var(--accent1);
+    color: var(--gray1)
 }
