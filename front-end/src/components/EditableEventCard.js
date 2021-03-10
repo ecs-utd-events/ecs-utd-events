@@ -20,9 +20,9 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const orgs = useContext(AllOrgContext);
-    const { org } = useContext(UserContext);
+    const currOrg = useContext(UserContext);
     const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
-
+    console.log(currOrg)
     const onSubmit = (eventInfo) => {
         setEditing(!isEditing);
         saveEvent(eventInfo, event.id);
@@ -112,7 +112,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                     <Form.Group controlId="orgs">
                                         <Form.Label>Collaborator(s)</Form.Label>
                                         <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple ref={register({ required: false })} defaultValue={event.orgs}>
-                                            {orgs.map(org => { return <option key={org.uId} value={org.uId}>{org.shortName}</option> })}
+                                            {orgs.map(org => { if(currOrg.org.uId !== org.uId) { return <option key={org.uId} value={org.uId}>{org.shortName}</option> }})}
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>

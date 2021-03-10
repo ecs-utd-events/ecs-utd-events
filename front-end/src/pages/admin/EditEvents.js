@@ -127,7 +127,7 @@ export default function EditEvents() {
         return (
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
-                { allEvents != null &&
+                { allEvents !== null &&
                     allEvents.map(event => {
                         return (
                             <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>
