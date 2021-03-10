@@ -63,9 +63,18 @@ export default function EditEvents() {
 
     const deleteEvent = (event, id) => {
         event.preventDefault();
-        var remainingEvents = allEvents.filter(event => event.id !== id);
-        setAllEvents(remainingEvents);
-        setIsAdding(allEvents === null && isAdding)
+        if(event !== null){
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
+                    method: 'DELETE',
+                })
+                .then(response => {console.log(response)})
+
+
+            var remainingEvents = allEvents.filter(event => event.id !== id);
+            setAllEvents(remainingEvents);
+            setIsAdding(allEvents === null && isAdding)
+        }
+
     }
 
     const saveEvent = (event, id) => {
