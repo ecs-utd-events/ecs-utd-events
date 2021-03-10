@@ -24,7 +24,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
     const onSubmit = (eventInfo) => {
         setEditing(!isEditing);
-        saveEvent(eventInfo, event.id);
+        saveEvent(eventInfo, event.id, currOrg.org.uId);
     }
 
     const validateTime = async () => {
@@ -32,11 +32,8 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     }
 
     const validateDate = async (date) => {
-        var today = new Date().getTime(),
-        date = date.split("/");
-
-        date = new Date(date[2], date[1] - 1, date[0]).getTime();
-        return (today - date) < 0;
+        var today = new Date();
+        return today < new Date(date);
     }
 
     const cancelEditing = (e) => {
