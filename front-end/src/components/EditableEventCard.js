@@ -79,7 +79,6 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
             </Container>
         );
     } else if (event && isEditing) {
-        console.log(event.id)
         return (
             <Container>
                 <Col>

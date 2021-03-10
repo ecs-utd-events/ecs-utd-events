@@ -107,7 +107,7 @@ export default function EditEvents() {
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(_ => { 
-                    var events = allEvents.push(event);
+                    var events = [ ...allEvents, event ];
                     setAllEvents(events);
                 }
             )

@@ -16,7 +16,7 @@ export function getEventCardFormattedTime(date){
     var eventCardFormattedTime = date.substring(t + 1, colon);
     return eventCardFormattedTime;
 }
-
+//form control date format: yyyy-mm-dd
 export function eventCardFormatToISO(date, time){
     var dbFormat = date + 'T' + time + ':00Z';
     return dbFormat;
