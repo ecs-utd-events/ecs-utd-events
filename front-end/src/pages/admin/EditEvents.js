@@ -107,7 +107,8 @@ export default function EditEvents() {
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(_ => { 
-                    var events = allEvents.push(event);
+                    var events = allEvents;
+                    events.push(event);
                     setAllEvents(events);
                 }
             )
@@ -126,7 +127,7 @@ export default function EditEvents() {
         return (
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
-                { allEvents &&
+                { allEvents != null &&
                     allEvents.map(event => {
                         return (
                             <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>
