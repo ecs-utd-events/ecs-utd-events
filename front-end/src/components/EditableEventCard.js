@@ -129,9 +129,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                             </Form.Row>
                             <Form.Row>
                                 <Col md={{ span: 10, offset: 10 }}>
-                                    {console.log(orgs)}
-                                    {console.log(currOrg.org )}
-                                    <IconButton className="mr-2" icon={SaveIcon} type="submit" disabled={orgs.includes(currOrg.org)} onClick={handleSubmit(onSubmit)}></IconButton>
+                                    <IconButton className="mr-2" icon={SaveIcon} type="submit" disabled={orgs.some(org => org.uId === currOrg.org)} onClick={handleSubmit(onSubmit)}></IconButton>
                                     <IconButton className="mr-2" icon={CancelIcon} onClick={cancelEditing}></IconButton>
                                     {/* <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton> */}
                                 </Col>
