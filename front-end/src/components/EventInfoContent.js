@@ -5,8 +5,8 @@ import Card from "react-bootstrap/esm/Card";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ShowMoreText from 'react-show-more-text';
-import ShareIcon from '@iconify/icons-gg/share';
-import LinkIcon from '@iconify/icons-gg/link';
+import ShareIcon from '@iconify/icons-mdi/share';
+import LinkIcon from '@iconify/icons-mdi/link-variant';
 import { useEffect, useState } from "react";
 
 import IconButton from '../components/IconButton';
@@ -50,6 +50,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
+        console.log(event);
     }, [event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);

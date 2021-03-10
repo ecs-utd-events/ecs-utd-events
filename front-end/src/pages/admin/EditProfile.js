@@ -2,23 +2,41 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import React, { useContext, useState, useEffect } from "react";
-import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import React, { useContext, useState } from "react";
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
-import ReactTooltip from 'react-tooltip';
 
-import IconButton from '../../components/IconButton';
+import CustomButton from '../../components/CustomButton';
 import AdminLayout from "../../components/AdminLayout";
+import FullPageLoading from '../../components/FullPageLoading';
 import { UserContext } from "../../providers/UserProvider";
-
-import EditIcon from '@iconify/icons-gg/pen';
-import SaveIcon from '@iconify/icons-gg/check';
+import { AllOrgContext } from '../../providers/AllOrgProvider';
 import '../../styles/AdminPages.css';
 import Circle from '../../assets/circle.png';
-import FullPageLoading from '../../components/FullPageLoading';
-import CancelIcon from '@iconify/icons-gg/close';
-import { AllOrgContext } from '../../providers/AllOrgProvider';
+
+import { InlineIcon } from '@iconify/react';
+import EditIcon from '@iconify/icons-mdi/lead-pencil';
+import SaveIcon from '@iconify/icons-mdi/content-save';
+import CancelIcon from '@iconify/icons-mdi/close';
+import helpIcon from '@iconify/icons-mdi/help-circle-outline';
+
+
+function TitleWithDescription({ children }) {
+    return (
+        <Accordion>
+            <h3 className="item-align-center font-weight-bold" style={{ display: 'inline-block' }}>
+                {children[0]} &nbsp;
+                <Accordion.Toggle eventKey="0" as="div" variant="link" style={{ display: 'inline-block' }}>
+                    <InlineIcon icon={helpIcon} />
+                </Accordion.Toggle>
+            </h3>
+            <Accordion.Collapse eventKey="0">
+                {children[1]}
+            </Accordion.Collapse>
+        </Accordion>
+    )
+}
 
 export default function EditProfile() {
     const { org } = useContext(UserContext);
@@ -26,6 +44,7 @@ export default function EditProfile() {
 
     const { register, handleSubmit, watch, reset, errors, clearErrors } = useForm();
     const [isEditing, setEditing] = useState(false);
+    const watchDescription = watch("description", org != null ? org.description : 'Description');
 
     const socialMediaPlatforms =
         [{ title: 'Facebook', ref: 'facebook' },
@@ -35,30 +54,22 @@ export default function EditProfile() {
         { title: 'Snapchat', ref: 'snapchat' }];
 
     const onSubmit = (newOrgData) => {
-        // If currently not editing, set editing.
-        if (isEditing == false) {
-            setEditing(!isEditing);
-        }
-        // otherwise, we were actually editing the form so do the real submission here.
-        else {
-            setEditing(!isEditing);
-            newOrgData["uId"] = org.uId;
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
-                {
-                    method: 'PUT',
-                    body: JSON.stringify(newOrgData),
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                .then(response => {
-                    console.log(response);
-                    if (response.status != 200) {
-                        console.log('There was an issue sending the updated profile data to the server. Please try again!');
-                        setEditing(!isEditing);
-                    }
-                })
-                .catch(error => handleErrors());
-        }
-        return null;
+        setEditing(false);
+        newOrgData["uId"] = org.uId;
+        newOrgData["name"] = org.name;
+        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
+            {
+                method: 'PUT',
+                body: JSON.stringify(newOrgData),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => {
+                console.log(response);
+                if (response.status !== 200) {
+                    handleErrors();
+                }
+            })
+            .catch(error => handleErrors());
     }
 
     const handleErrors = () => {
@@ -102,7 +113,7 @@ export default function EditProfile() {
     }
 
     const validateMaxDescriptionLength = (value) => {
-        if (value.length > 599)
+        if (value.length > 600)
             return false;
         return true;
     }
@@ -114,78 +125,80 @@ export default function EditProfile() {
         return (
             <AdminLayout pageName="Profile">
                 <div className="edit-profile-page">
-                    <Container>
+                    <Container className="mb-5">
                         <Form onSubmit={handleSubmit(onSubmit)} style={{ display: 'inline-block', width: '100%' }}>
                             <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
-                            <IconButton className="mr-2"
-                                icon={isEditing == false ? EditIcon : SaveIcon}
-                                type="submit"
-                                onClick={handleSubmit(onSubmit)} />
+
+                            <Row style={{ textAlign: "center" }}>
+                                <h2 className="item-align-center font-weight-bold">{org.name}</h2>
+                            </Row>
+                            {!isEditing &&
+                                <div className="sticky-button-wrapper">
+                                    <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(() => setEditing(!isEditing))}>
+                                        <h4 className="font-weight-bold my-0">
+                                            <InlineIcon icon={EditIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> edit
+                                        </h4>
+                                    </CustomButton>
+                                </div>
+                            }
 
                             {/* If editing, give user the option to undo changes. */}
                             {isEditing &&
-                                <IconButton className="mr-2" icon={CancelIcon} onClick={cancelEditing} />
+                                <div className="sticky-button-wrapper">
+                                    <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(onSubmit)}>
+                                        <h4 className="font-weight-bold my-0">
+                                            <InlineIcon icon={SaveIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> save
+                                        </h4>
+                                    </CustomButton>
+                                    <CustomButton secondary className="drop-shadow" type="submit" onClick={cancelEditing}>
+                                        <h4 className="font-weight-bold my-0">
+                                            <InlineIcon icon={CancelIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> cancel
+                                        </h4>
+                                    </CustomButton>
+                                </div>
+
                             }
-
-                            <Row style={{ textAlign: "left" }}>
-                                <h3 className="item-align-center font-weight-bold">Name</h3>
-                                <p>
-                                    This will appear on your organization profile. You can change your org name, but probably shouldn't without letting us
-                                    know and showing the proper SOC documentation...
-                                </p>
-                            </Row>
-                            <Row>
-                                <Form.Control type="text"
-                                    ref={register({ required: true })}
-                                    name="name"
-                                    defaultValue={org != null ? org.name : 'Organization Name'}
-                                    disabled={!isEditing} />
-                            </Row>
-
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
-                                <h3 className="item-align-center font-weight-bold">
-                                    Short Name
-                                </h3>
-                                <p>
-                                    This will appear on <b>all event cards</b> throughout the website. It does NOT need to be unique to your organization! For example, WWC, AIS, DSC, etc.
-                                </p>
-                            </Row>
-                            <Row>
-                                <Form.Control type="text"
-                                    defaultValue={org != null ? org.shortName : 'Organization Short Name'}
-                                    ref={register({ required: true })}
-                                    name="shortName"
-                                    disabled={!isEditing} />
-                                {errors.shortName && <p className="error-edit-profile">⚠ A short name for your organization is required!</p>}
-
-                            </Row>
-
-                            <Row style={{ textAlign: "left", paddingTop: 20 }}>
-                                <h3 className="item-align-center font-weight-bold">Slug
-                                </h3>
-                                <p>
-                                    Your "slug" determines the URL where your org info page will be hosted. E.g. if your slug was "women-who-compute",
-                                then your org profile page would be found at /orgs/women-who-compute. It must be <b> UNIQUE </b> (you cannot share it with other organizations), <b>lowercase</b>, and the <b>only special
-                                character it can contain are dashes: '-'</b>. For example, "women-who-compute", "wwc", "ais", "artificial-intelligence-society" are all valid slugs.
-                                </p>
-                            </Row>
-                            <Row>
-                                <Form.Control type="text"
-                                    defaultValue={org != null ? org.slug : 'Organization Slug'}
-                                    ref={register({
-                                        required: true,
-                                        validate: {
-                                            uniqueSlug: value => validateUniqueSlug(value),
-                                            lowerCase: value => validateLowerCase(value),
-                                            onlyDashes: value => validateSpecialChars(value)
-                                        }
-                                    })}
-                                    name="slug"
-                                    disabled={!isEditing} />
-                                {errors.slug?.type === 'required' && <p className="error-edit-profile">⚠ An organization slug is required!</p>}
-                                {errors.slug?.type === 'uniqueSlug' && <p className="error-edit-profile">⚠ This organization slug is already taken!</p>}
-                                {errors.slug?.type === 'lowerCase' && <p className="error-edit-profile">⚠ The slug must be all lowercase!</p>}
-                                {errors.slug?.type === 'onlyDashes' && <p className="error-edit-profile">⚠ The only special characters the slug can contain are dashes!</p>}
+                                <Col className="pl-0">
+                                    <TitleWithDescription>
+                                        Short Name
+                                        <p>
+                                            This will appear on <b>all event cards</b> throughout the website. It does NOT need to be unique to your organization! For example, WWC, AIS, DSC, etc.
+                                        </p>
+                                    </TitleWithDescription>
+                                    <Form.Control type="text"
+                                        defaultValue={org != null ? org.shortName : 'Organization Short Name'}
+                                        ref={register({ required: true })}
+                                        name="shortName"
+                                        disabled={!isEditing} />
+                                    {errors.shortName && <p className="error-edit-profile">⚠ A short name for your organization is required!</p>}
+                                </Col>
+                                <Col className="pr-0">
+                                    <TitleWithDescription>
+                                        Slug
+                                        <p>
+                                            Your "slug" determines the URL where your org info page will be hosted. E.g. if your slug was "women-who-compute",
+                                            then your org profile page would be found at /orgs/women-who-compute. It must be <b> UNIQUE </b> (you cannot share it with other organizations), <b>lowercase</b>, and the <b>only special
+                                            character it can contain are dashes: '-'</b>. For example, "women-who-compute", "wwc", "ais", "artificial-intelligence-society" are all valid slugs.
+                                        </p>
+                                    </TitleWithDescription>
+                                    <Form.Control type="text"
+                                        defaultValue={org != null ? org.slug : 'Organization Slug'}
+                                        ref={register({
+                                            required: true,
+                                            validate: {
+                                                uniqueSlug: value => validateUniqueSlug(value),
+                                                lowerCase: value => validateLowerCase(value),
+                                                onlyDashes: value => validateSpecialChars(value)
+                                            }
+                                        })}
+                                        name="slug"
+                                        disabled={!isEditing} />
+                                    {errors.slug?.type === 'required' && <p className="error-edit-profile">⚠ An organization slug is required!</p>}
+                                    {errors.slug?.type === 'uniqueSlug' && <p className="error-edit-profile">⚠ This organization slug is already taken!</p>}
+                                    {errors.slug?.type === 'lowerCase' && <p className="error-edit-profile">⚠ The slug must be all lowercase!</p>}
+                                    {errors.slug?.type === 'onlyDashes' && <p className="error-edit-profile">⚠ The only special characters the slug can contain are dashes!</p>}
+                                </Col>
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
@@ -198,15 +211,16 @@ export default function EditProfile() {
                                     name="website"
                                     disabled={!isEditing} />
                                 {errors.website && <p className="error-edit-profile">⚠ A website where students can find out more information about your organization is required!</p>}
-
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
-                                <h3 className="item-align-center font-weight-bold">Logo URL</h3>
-                                <p>
-                                    This should be a <b>direct link</b> to a png or jpeg image of your logo. For example, see <a href="https://raw.githubusercontent.com/acmutd/brand/master/General/Assets/Logos/acm-logo-black-background.png" target="_blank">this URL</a>.
-                                    Transparent backgrounds are preferred. We recommend hosting your image on a platform like imgur or somewhere on your website!
-                                </p>
+                                <TitleWithDescription>
+                                    Logo URL
+                                    <p>
+                                        This should be a <b>direct link</b> to a png or jpeg image of your logo. For example, see <a href="https://raw.githubusercontent.com/acmutd/brand/master/General/Assets/Logos/acm-logo-black-background.png" target="_blank">this URL</a>.
+                                        Transparent backgrounds are preferred. We recommend hosting your image on a platform like imgur or somewhere on your website!
+                                    </p>
+                                </TitleWithDescription>
                             </Row>
                             <Row>
                                 <Form.Control type="text"
@@ -217,10 +231,17 @@ export default function EditProfile() {
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
-                                <h3 className="item-align-center font-weight-bold">Description</h3>
-                                <p>
-                                    A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
-                                </p>
+                                <Col className="p-0">
+                                    <TitleWithDescription>
+                                        Description
+                                    <p>
+                                            A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
+                                    </p>
+                                    </TitleWithDescription>
+                                </Col>
+                                <Col xs={2} className="d-flex justify-content-end align-items-end">
+                                    <h5 style={errors.description?.type === 'maxDescriptionLength' ? { color: 'red' } : null}>{watchDescription.length}/600 chars</h5>
+                                </Col>
                             </Row>
                             <Row>
                                 <Form.Control type="text"
@@ -234,21 +255,23 @@ export default function EditProfile() {
                                         }
                                     })} />
                                 {errors.description?.type === 'required' && <p className="error-edit-profile">⚠ A short description of your organization is required!</p>}
-                                {errors.description?.type === 'maxDescriptionLength' && <p className="error-edit-profile">⚠ Your org description must be under 600 characters!</p>}
+                                {errors.description?.type === 'maxDescriptionLength' && <p className="error-edit-profile">⚠ Your org description must be 600 characters or less!</p>}
 
                             </Row>
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
-                                <h3 className="item-align-center font-weight-bold">Social Media Links</h3>
-                                <p>
-                                    Your social media links. If you leave a field blank, the icon for that platform will not appear on your org profile page!
-                                </p>
+                                <TitleWithDescription>
+                                    Social Media Links
+                                    <p>
+                                        Your social media links. If you leave a field blank, the icon for that platform will not appear on your org profile page!
+                                    </p>
+                                </TitleWithDescription>
                             </Row>
                             {org != null &&
                                 socialMediaPlatforms.map(platform => {
                                     return (
-                                        <Row style={{ padding: 10 }}>
-                                            <Col xs={3}>
-                                                <h4 className="item-align-center">{platform.title}</h4>
+                                        <Row style={{ padding: 10 }} key={platform.title}>
+                                            <Col xs={2} className="d-flex justify-content-start align-items-center px-0">
+                                                <h4 className="m-0">{platform.title}</h4>
                                             </Col>
                                             <Col>
                                                 <Form.Control type="text"

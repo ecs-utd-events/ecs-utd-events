@@ -3,14 +3,14 @@ import React, { useEffect, useState, useContext, createRef } from "react";
 import FullCalendar, { isArraysEqual } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import AddIcon from '@iconify/icons-gg/add';
+import AddIcon from '@iconify/icons-mdi/plus-circle-outline';
 
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard from '../../components/EditableEventCard';
 import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat } from "../../components/FullCalendarUtils";
-import { eventCardFormatToISO } from '../../components/TimeUtils';
+import { eventCardFormatToISO, lastUpdatedToISO } from '../../components/TimeUtils';
 
 
 export default function EditEvents() {
@@ -75,7 +75,7 @@ export default function EditEvents() {
             "id": id,
             "link": event.link,
             "orgs": event.orgs,
-            "lastUpdated": (new Date()).toISOString().split('.')[0] + "Z",
+            "lastUpdated": lastUpdatedToISO(),
             "startTime": eventCardFormatToISO(event.date, event.startTime),
             "title": event.title,
             "location": event.location,
@@ -92,7 +92,7 @@ export default function EditEvents() {
             .then(response => {console.log(response)})
             .then(_ => {
                 var remainingEvents = allEvents.filter(event => event.id !== id);
-                remainingEvents.push(event);
+                remainingEvents.push(body);
                 setAllEvents(remainingEvents);
             })
             .catch(
@@ -107,7 +107,8 @@ export default function EditEvents() {
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(_ => { 
-                    var events = [ ...allEvents, event ];
+                    var events = allEvents;
+                    events.push(event);
                     setAllEvents(events);
                 }
             )
@@ -126,7 +127,7 @@ export default function EditEvents() {
         return (
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
-                { allEvents &&
+                { allEvents != null &&
                     allEvents.map(event => {
                         return (
                             <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>

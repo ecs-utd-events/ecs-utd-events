@@ -6,11 +6,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import IconButton from './IconButton';
 import { getFormattedTime, getEventCardFormattedDate, getEventCardFormattedTime } from './TimeUtils';
-import EditIcon from '@iconify/icons-gg/pen';
-import TrashIcon from '@iconify/icons-gg/trash';
+import EditIcon from '@iconify/icons-mdi/lead-pencil';
+import TrashIcon from '@iconify/icons-mdi/delete';
 import Container from 'react-bootstrap/Container';
-import SaveIcon from '@iconify/icons-gg/check';
-import CancelIcon from '@iconify/icons-gg/close';
+import SaveIcon from '@iconify/icons-mdi/content-save';
+import CancelIcon from '@iconify/icons-mdi/close';
 import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 
@@ -49,7 +49,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
         return (
             <Container>
                 <Col>
-                    <Card className={"drop-shadow mb-4"}>
+                    <Card className={"drop-shadow mb-4 pb-0"}>
                         <Row>
                             <Col style={{ textAlign: 'left' }}>
                                 <h5 className="font-weight-bold">{event.title}</h5>
@@ -69,7 +69,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                             </Col>
                         </Row>
                         <Row>
-                            <Col md={{ span: 10, offset: 10 }}>
+                            <Col className="d-flex justify-content-end m-0">
                                 <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
                                 <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton>
                             </Col>
