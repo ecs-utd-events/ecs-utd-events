@@ -1,7 +1,5 @@
 # ecs-utd-events
 
-hey baby let me git in your code
-
 ## Front-End
 
 Directions on running Front-End in dev environment can be found inside `front-end` folder README
