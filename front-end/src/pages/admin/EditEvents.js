@@ -12,6 +12,29 @@ import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat } from "../../components/FullCalendarUtils";
 import { eventCardFormatToISO, lastUpdatedToISO } from '../../components/TimeUtils';
 
+function sortedEventInsert(sortedEventArr, newEvent) {
+    const apparentIndex = binarySearch(sortedEventArr, newEvent, 0, sortedEventArr.length);
+    sortedEventArr.splice(apparentIndex, 0, newEvent)
+    return sortedEventArr
+}
+
+function binarySearch(sortedArr, x, start, end) {
+    if (start >= sortedArr.length) return sortedArr.length
+    if (end < start) return end + 1;
+    const mid = Math.floor((start + end) / 2);
+    const midDate = new Date(sortedArr[mid].startTime);
+    const xDate = new Date(x.startTime);
+    if (midDate.getTime() === xDate.getTime()) {
+        return mid;
+    }
+    if (midDate < xDate) {
+        return binarySearch(sortedArr, x, mid + 1, end);
+    }
+    if (midDate > xDate) {
+        return binarySearch(sortedArr, x, start, mid - 1);
+    }
+}
+
 
 export default function EditEvents() {
     const { org } = useContext(UserContext);
@@ -61,26 +84,19 @@ export default function EditEvents() {
         ]);
     };
 
-    const deleteEvent = (event, id) => {
-        event.preventDefault();
-        if (event !== null) {
+    const deleteEvent = (id) => {
+        if (id !== '') {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
                 method: 'DELETE',
             })
                 .then(response => { console.log(response) })
-
-
-            var remainingEvents = allEvents.filter(event => event.id !== id);
-            setAllEvents(remainingEvents);
-            setIsAdding(allEvents === null && isAdding)
         }
-
+        var remainingEvents = allEvents.filter(x => x.id !== id);
+        setAllEvents(remainingEvents);
     }
 
     const saveEvent = (event, id, orgId) => {
-        // to ensure that current id is in list
-
-        event.orgs.push(orgId);
+        event.orgs.unshift(orgId);
         var body = {
             "description": event.description,
             "endTime": eventCardFormatToISO(event.date, event.endTime),
@@ -107,8 +123,10 @@ export default function EditEvents() {
                 .then(response => { console.log(response) })
                 .then(_ => {
                     var remainingEvents = allEvents.filter(event => event.id !== id);
-                    remainingEvents.push(body);
-                    setAllEvents(remainingEvents);
+                    return sortedEventInsert(remainingEvents, body);
+                })
+                .then(newEvents => {
+                    setAllEvents(newEvents);
                 })
                 .catch(
                     error => {
@@ -121,16 +139,22 @@ export default function EditEvents() {
                 body: JSON.stringify(body),
                 headers: { 'Content-Type': 'application/json' }
             })
-                .then(_ => {
-                    var events = allEvents;
-                    events.push(body);
-                    setAllEvents(events);
-                }
-                )
+                .then(response => {
+                    return response.text()
+                }).then(newId => {
+                    body.id = newId;
+                    var events = allEvents.filter(event => event.id !== '');
+                    return sortedEventInsert(events, body);
+                })
+                .then(newEvents => {
+                    setAllEvents(newEvents);
+                    setIsAdding(false);
+                })
                 .catch(
                     error => {
                         console.error('There was an error adding a new Event', error)
-                    });
+                    }
+                );
         }
     }
 
@@ -142,10 +166,10 @@ export default function EditEvents() {
         return (
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
-                { allEvents !== null &&
-                    allEvents.map(event => {
+                { allEvents != null &&
+                    allEvents.map((event, index) => {
                         return (
-                            <EditableEventCard event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>
+                            <EditableEventCard key={index} event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent} setIsAdding={setIsAdding}></EditableEventCard>
                         )
                     })
                 }

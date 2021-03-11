@@ -13,8 +13,9 @@ import SaveIcon from '@iconify/icons-mdi/content-save';
 import CancelIcon from '@iconify/icons-mdi/close';
 import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
+import {eventCardFormatToISO} from './TimeUtils'
 
-export default function EditableEventCard({ event, deleteEvent, isEditable, changeCalendarView, saveEvent }) {
+export default function EditableEventCard({ event, deleteEvent, isEditable, changeCalendarView, saveEvent, setIsAdding }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
     const [startTime, setStartTime] = useState('');
@@ -32,13 +33,19 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     }
 
     const validateDate = async (date) => {
-        var today = new Date();
-        return today < new Date(date);
+        const fullDate = eventCardFormatToISO(date, startTime);
+        if (event.id === '') {
+            var today = new Date();
+            return today < new Date(fullDate);
+        }
+        return true;
     }
 
     const cancelEditing = (e) => {
+        e.preventDefault()
         if (event.id === '') {
-            deleteEvent(e, event.id);
+            setIsAdding(false);
+            deleteEvent(event.id);
         }
         setEditing(!isEditing);
     };
@@ -68,7 +75,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                         <Row>
                             <Col className="d-flex justify-content-end m-0">
                                 <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
-                                <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton>
+                                <IconButton icon={TrashIcon} onClick={(e) => { e.preventDefault(); deleteEvent(event.id) }}></IconButton>
                             </Col>
                         </Row>
                     </Card>
@@ -88,7 +95,8 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                             <Form.Row>
                                 <Form.Group as={Col} controlId="date">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true })} defaultValue={getEventCardFormattedDate(event.startTime)} />
+                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} defaultValue={getEventCardFormattedDate(event.startTime)} />
+                                    {errors.date && <p className="error">⚠ Please do not create past events.</p>}
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="startTime">
                                     <Form.Label>Start time</Form.Label>
