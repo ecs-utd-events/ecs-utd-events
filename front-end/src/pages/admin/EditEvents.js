@@ -95,7 +95,8 @@ export default function EditEvents() {
         setAllEvents(remainingEvents);
     }
 
-    const saveEvent = (event, id, orgId) => {
+    const saveEvent = (event, id, orgId, setLoading) => {
+        setLoading(true);
         event.orgs.unshift(orgId);
         var body = {
             "description": event.description,
@@ -127,6 +128,7 @@ export default function EditEvents() {
                 })
                 .then(newEvents => {
                     setAllEvents(newEvents);
+                    setLoading(false);
                 })
                 .catch(
                     error => {
@@ -149,6 +151,7 @@ export default function EditEvents() {
                 .then(newEvents => {
                     setAllEvents(newEvents);
                     setIsAdding(false);
+                    setLoading(false);
                 })
                 .catch(
                     error => {

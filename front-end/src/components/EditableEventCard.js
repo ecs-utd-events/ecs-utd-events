@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { FormProvider, useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
+import Skeleton from '@material-ui/lab/Skeleton';
 import IconButton from './IconButton';
 import { getFormattedTime, getEventCardFormattedDate, getEventCardFormattedTime } from './TimeUtils';
 import EditIcon from '@iconify/icons-mdi/lead-pencil';
@@ -13,19 +14,21 @@ import SaveIcon from '@iconify/icons-mdi/content-save';
 import CancelIcon from '@iconify/icons-mdi/close';
 import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
-import {eventCardFormatToISO} from './TimeUtils'
+import { eventCardFormatToISO } from './TimeUtils';
 
 export default function EditableEventCard({ event, deleteEvent, isEditable, changeCalendarView, saveEvent, setIsAdding }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
     const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
     const onSubmit = (eventInfo) => {
         setEditing(!isEditing);
-        saveEvent(eventInfo, event.id, currOrg.org.uId);
+        saveEvent(eventInfo, event.id, currOrg.org.uId, setIsLoading);
     }
 
     const validateTime = async () => {
@@ -49,6 +52,40 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
         }
         setEditing(!isEditing);
     };
+
+    if (isLoading) {
+        return (
+            <Container>
+                <Col>
+                    <Card className={"drop-shadow mb-4 pb-0"}>
+                        <Row>
+                            <Col style={{ textAlign: 'left' }}>
+                                <h5 className="font-weight-bold"><Skeleton animation="wave" /></h5>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={2} style={{ textAlign: 'left' }}>
+                                <p className="mb-0"><Skeleton animation="wave" /></p>
+                                <p className="mb-0"><Skeleton animation="wave" /></p>
+                                <p className="mb-0"><Skeleton animation="wave" /></p>
+                                <p className="mb-0"><Skeleton animation="wave" /></p>
+                                <a className="mb-0"><Skeleton animation="wave" /></a>
+                            </Col>
+                            <Col style={{ textAlign: 'left' }}>
+                                <Skeleton animation="wave" variant="rect" height="5em" />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="d-flex justify-content-end m-0">
+                                <Skeleton animation="wave" className="mr-2"><IconButton icon={EditIcon} /></Skeleton>
+                                <Skeleton animation="wave"><IconButton icon={TrashIcon} /></Skeleton>
+                            </Col>
+                        </Row>
+                    </Card>
+                </Col>
+            </Container>
+        )
+    }
 
     if (event && !isEditing) {
         return (
