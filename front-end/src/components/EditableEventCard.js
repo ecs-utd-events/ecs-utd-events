@@ -16,6 +16,40 @@ import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import { eventCardFormatToISO } from './TimeUtils';
 
+export function LoadingEventCard() {
+    return (
+        <Container>
+            <Col>
+                <Card className={"drop-shadow mb-4 pb-0"}>
+                    <Row>
+                        <Col style={{ textAlign: 'left' }}>
+                            <h5 className="font-weight-bold"><Skeleton animation="wave" /></h5>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={2} style={{ textAlign: 'left' }}>
+                            <p className="mb-0"><Skeleton animation="wave" /></p>
+                            <p className="mb-0"><Skeleton animation="wave" /></p>
+                            <p className="mb-0"><Skeleton animation="wave" /></p>
+                            <p className="mb-0"><Skeleton animation="wave" /></p>
+                            <a className="mb-0"><Skeleton animation="wave" /></a>
+                        </Col>
+                        <Col style={{ textAlign: 'left' }}>
+                            <Skeleton animation="wave" variant="rect" height="5em" />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="d-flex justify-content-end m-0">
+                            <Skeleton animation="wave" className="mr-2"><IconButton icon={EditIcon} /></Skeleton>
+                            <Skeleton animation="wave"><IconButton icon={TrashIcon} /></Skeleton>
+                        </Col>
+                    </Row>
+                </Card>
+            </Col>
+        </Container>
+    )
+}
+
 export default function EditableEventCard({ event, deleteEvent, isEditable, changeCalendarView, saveEvent, setIsAdding }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [isEditing, setEditing] = useState(isEditable);
@@ -54,37 +88,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     };
 
     if (isLoading) {
-        return (
-            <Container>
-                <Col>
-                    <Card className={"drop-shadow mb-4 pb-0"}>
-                        <Row>
-                            <Col style={{ textAlign: 'left' }}>
-                                <h5 className="font-weight-bold"><Skeleton animation="wave" /></h5>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={2} style={{ textAlign: 'left' }}>
-                                <p className="mb-0"><Skeleton animation="wave" /></p>
-                                <p className="mb-0"><Skeleton animation="wave" /></p>
-                                <p className="mb-0"><Skeleton animation="wave" /></p>
-                                <p className="mb-0"><Skeleton animation="wave" /></p>
-                                <a className="mb-0"><Skeleton animation="wave" /></a>
-                            </Col>
-                            <Col style={{ textAlign: 'left' }}>
-                                <Skeleton animation="wave" variant="rect" height="5em" />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="d-flex justify-content-end m-0">
-                                <Skeleton animation="wave" className="mr-2"><IconButton icon={EditIcon} /></Skeleton>
-                                <Skeleton animation="wave"><IconButton icon={TrashIcon} /></Skeleton>
-                            </Col>
-                        </Row>
-                    </Card>
-                </Col>
-            </Container>
-        )
+        return <LoadingEventCard />
     }
 
     if (event && !isEditing) {

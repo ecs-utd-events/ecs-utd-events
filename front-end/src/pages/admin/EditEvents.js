@@ -6,7 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import AddIcon from '@iconify/icons-mdi/plus-circle-outline';
 
 import AdminLayout from "../../components/AdminLayout";
-import EditableEventCard from '../../components/EditableEventCard';
+import EditableEventCard, { LoadingEventCard } from '../../components/EditableEventCard';
 import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat } from "../../components/FullCalendarUtils";
@@ -169,12 +169,16 @@ export default function EditEvents() {
         return (
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
-                { allEvents != null &&
+                { allEvents != null ?
                     allEvents.map((event, index) => {
                         return (
                             <EditableEventCard key={index} event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent} setIsAdding={setIsAdding}></EditableEventCard>
                         )
-                    })
+                    }) :
+                    <div>
+                        <LoadingEventCard />
+                        <LoadingEventCard />
+                    </div>
                 }
                 {!isAdding && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
                 <div className="fullcalendar-wrapper admin">
@@ -196,6 +200,12 @@ export default function EditEvents() {
         )
     }
     else {
-        return null;
+        return (
+            <AdminLayout pageName="Events">
+                <div style={{ padding: "1rem" }} />
+                <LoadingEventCard />
+                <LoadingEventCard />
+            </AdminLayout>
+        );
     }
 }

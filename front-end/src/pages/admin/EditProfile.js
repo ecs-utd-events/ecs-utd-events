@@ -20,6 +20,7 @@ import EditIcon from '@iconify/icons-mdi/lead-pencil';
 import SaveIcon from '@iconify/icons-mdi/content-save';
 import CancelIcon from '@iconify/icons-mdi/close';
 import helpIcon from '@iconify/icons-mdi/help-circle-outline';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 
 function TitleWithDescription({ children }) {
@@ -266,24 +267,23 @@ export default function EditProfile() {
                                     </p>
                                 </TitleWithDescription>
                             </Row>
-                            {org != null &&
-                                socialMediaPlatforms.map(platform => {
-                                    return (
-                                        <Row style={{ padding: 10 }} key={platform.title}>
-                                            <Col xs={2} className="d-flex justify-content-start align-items-center px-0">
-                                                <h4 className="m-0">{platform.title}</h4>
-                                            </Col>
-                                            <Col>
-                                                <Form.Control type="text"
-                                                    defaultValue={org.socialMedia[platform.ref] != null ? org.socialMedia[platform.ref] : ""}
-                                                    placeholder={`(your ${platform.title} link here)`}
-                                                    name={`socialMedia.${platform.ref}`}
-                                                    ref={register()}
-                                                    disabled={!isEditing} />
-                                            </Col>
-                                        </Row>
-                                    );
-                                })
+                            {socialMediaPlatforms.map(platform => {
+                                return (
+                                    <Row style={{ padding: 10 }} key={platform.title}>
+                                        <Col xs={2} className="d-flex justify-content-start align-items-center px-0">
+                                            <h4 className="m-0">{platform.title}</h4>
+                                        </Col>
+                                        <Col>
+                                            <Form.Control type="text"
+                                                defaultValue={org.socialMedia[platform.ref] != null ? org.socialMedia[platform.ref] : ""}
+                                                placeholder={`(your ${platform.title} link here)`}
+                                                name={`socialMedia.${platform.ref}`}
+                                                ref={register()}
+                                                disabled={!isEditing} />
+                                        </Col>
+                                    </Row>
+                                );
+                            })
                             }
                         </Form>
                     </Container>
@@ -292,5 +292,108 @@ export default function EditProfile() {
         )
     }
     else
-        return null;
+        return (
+            <AdminLayout pageName="Profile">
+                <div className="edit-profile-page">
+                    <Container className="mb-5">
+                        <Container style={{ display: 'inline-block', width: '100%' }}>
+                            <div className="d-flex justify-content-center pt-5 pb-1">
+                                <Skeleton width="25vh" height="25vh" variant="circle" animation="wave" />
+                            </div>
+                            <Row style={{ textAlign: "center", paddingLeft: "20%", paddingRight: "20%" }}>
+                                <h2 className="item-align-center font-weight-bold"><Skeleton animation="wave" /></h2>
+                            </Row>
+                            <Row style={{ textAlign: "left", paddingTop: 20 }}>
+                                <Col className="pl-0">
+                                    <TitleWithDescription>
+                                        Short Name
+                                        <p>
+                                            This will appear on <b>all event cards</b> throughout the website. It does NOT need to be unique to your organization! For example, WWC, AIS, DSC, etc.
+                                        </p>
+                                    </TitleWithDescription>
+                                    <Col className="p-0">
+                                        <h1 className="m-0 d-flex"><Skeleton width="100%" animation="wave" /></h1>
+                                    </Col>
+                                </Col>
+                                <Col className="pr-0">
+                                    <TitleWithDescription>
+                                        Slug
+                                        <p>
+                                            Your "slug" determines the URL where your org info page will be hosted. E.g. if your slug was "women-who-compute",
+                                            then your org profile page would be found at /orgs/women-who-compute. It must be <b> UNIQUE </b> (you cannot share it with other organizations), <b>lowercase</b>, and the <b>only special
+                                            character it can contain are dashes: '-'</b>. For example, "women-who-compute", "wwc", "ais", "artificial-intelligence-society" are all valid slugs.
+                                        </p>
+                                    </TitleWithDescription>
+                                    <Col className="p-0">
+                                        <h1 className="m-0 d-flex"><Skeleton width="100%" animation="wave" /></h1>
+                                    </Col>
+                                </Col>
+                            </Row>
+
+                            <Row style={{ textAlign: "left", paddingTop: 20 }}>
+                                <h3 className="item-align-center font-weight-bold">Website</h3>
+                            </Row>
+                            <Row>
+                                <Col className="p-0">
+                                    <h1 className="m-0 d-flex"><Skeleton width="100%" animation="wave" /></h1>
+                                </Col>
+                            </Row>
+
+                            <Row style={{ textAlign: "left", paddingTop: 20 }}>
+                                <TitleWithDescription>
+                                    Logo URL
+                                    <p>
+                                        This should be a <b>direct link</b> to a png or jpeg image of your logo. For example, see <a href="https://raw.githubusercontent.com/acmutd/brand/master/General/Assets/Logos/acm-logo-black-background.png" target="_blank">this URL</a>.
+                                        Transparent backgrounds are preferred. We recommend hosting your image on a platform like imgur or somewhere on your website!
+                                    </p>
+                                </TitleWithDescription>
+                            </Row>
+                            <Row>
+                                <Col className="p-0">
+                                    <h1 className="m-0 d-flex"><Skeleton width="100%" animation="wave" /></h1>
+                                </Col>
+                            </Row>
+
+                            <Row style={{ textAlign: "left", paddingTop: 20 }}>
+                                <Col className="p-0">
+                                    <TitleWithDescription>
+                                        Description
+                                    <p>
+                                            A short description of your organization. Must be <b>UNDER 600 characters (~90 words)</b>.
+                                    </p>
+                                    </TitleWithDescription>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="p-0">
+                                    <h1 className="m-0 d-flex"><Skeleton width="100%" animation="wave" /></h1>
+                                </Col>
+                            </Row>
+                            <Row style={{ textAlign: "left", paddingTop: 20 }}>
+                                <TitleWithDescription>
+                                    Social Media Links
+                                    <p>
+                                        Your social media links. If you leave a field blank, the icon for that platform will not appear on your org profile page!
+                                    </p>
+                                </TitleWithDescription>
+                            </Row>
+                            {
+                                socialMediaPlatforms.map(platform => {
+                                    return (
+                                        <Row style={{ padding: 10 }} key={platform.title}>
+                                            <Col xs={2} className="d-flex justify-content-start align-items-center px-0">
+                                                <h4 className="m-0">{platform.title}</h4>
+                                            </Col>
+                                            <Col>
+                                                <h2 className="m-0"><Skeleton animation="wave" /></h2>
+                                            </Col>
+                                        </Row>
+                                    );
+                                })
+                            }
+                        </Container>
+                    </Container>
+                </div>
+            </AdminLayout>
+        );
 }
