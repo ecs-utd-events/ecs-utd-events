@@ -178,7 +178,7 @@ export default function Home() {
         <Container fluid style={{ paddingLeft: "5.5vw", paddingRight: "5.5vw" }}>
           <Row>
             {
-              organizations.map(org => {
+              shuffleArray(organizations).map(org => {
                 return (
                   <Col md={4} key={org.slug} className='align-items-stretch'>
                     <Container style={{ paddingTop: 20 }}>
