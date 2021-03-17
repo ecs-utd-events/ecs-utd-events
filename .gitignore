@@ -22,6 +22,7 @@ front-end/.env.production.local
 front-end/npm-debug.log*
 front-end/yarn-debug.log*
 front-end/yarn-error.log*
+front-end/.firebase
 
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/project.nuget.cache
 back-end/UTD_ECS_Events_WebAPI/UTD_ECS_Events_WebAPI/obj/UTD_ECS_Events_WebAPI.csproj.nuget.g.props
