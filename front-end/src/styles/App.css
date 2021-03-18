@@ -1,4 +1,8 @@
 :root {
+  --primaryshade1: #E4B1A8;
+  --primaryshade2: #CB9D95;
+  --primaryshade3: #B18982;
+  --primaryshade4: #987670;
   --primary1: #FEC5BB;
   --primary2: #FCD5CE;
   --primary3: #FAE1DD;
@@ -6,9 +10,15 @@
   --accent1: #FEC89A;
   --accent2: #FFD7BA;
   --accent3: #FFE5D9;
+  --accentshade1: #E4B48A;
+  --accentshade2: #CBA07B;
+  --accentshade3: #B18C6B;
   --secondary1: #D8E2DC;
   --secondary2: #E8E8E4;
   --secondary3: #f7f9f8;
+  --secondaryshade1: #C2CBC6;
+  --seccondaryshade2: #ACB4B0;
+  --secondaryshade3: #979E9A;
   --gray1: #333333;
   --gray2: #4F4F4F;
   --gray3: #828282;
