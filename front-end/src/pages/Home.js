@@ -21,6 +21,7 @@ import OrgInfoCard from '../components/OrgInfoCard'
 import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
+import HomeFilters from './HomeFilters';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 
@@ -43,6 +44,7 @@ export default function Home() {
   const [animateCard, setAnimateCard] = useState('');
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const organizations = useContext(AllOrgContext);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function Home() {
     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
       .then(response => response.json())
       .then(data => parseEventsToFullCalendarFormat(data))
-      .then(data => setEvents(data))
+      .then(data => { setEvents(data); setFilteredEvents(data); })
       .catch(error => {
         console.error('There was an error fetching events!', error);
       });
@@ -72,8 +74,9 @@ export default function Home() {
               </div>
             </Col>
             {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH LARGER THAN 768px (md breakpoint)*/}
-            <Col lg={9} className="d-none d-md-block">
-              <div className="fullcalendar-wrapper">
+            <Col lg={9}>
+              <HomeFilters setFilteredEvents={setFilteredEvents} allEvents={events} />
+              <div className="fullcalendar-wrapper d-none d-md-block">
                 <FullCalendar
                   initialView="dayGridMonth"
                   plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
@@ -99,17 +102,15 @@ export default function Home() {
                       dayCount: 7
                     }
                   }}
-                  events={events}
+                  events={filteredEvents}
                   eventClick={(info) => {
                     setAnimateCard('blob-animation')
                     setSelectedEvent(info.event)
                   }}
                 />
               </div>
-            </Col>
-            {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH SMALLER THAN 768px (md breakpoint)*/}
-            <Col className="d-sm-block d-md-none">
-              <div className="fullcalendar-wrapper fullcalendar-wrapper-mobile">
+              {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH SMALLER THAN 768px (md breakpoint)*/}
+              <div className="fullcalendar-wrapper fullcalendar-wrapper-mobile d-sm-block d-md-none">
                 <FullCalendar
                   initialView="upcomingWeek"
                   plugins={[timeGridPlugin, listPlugin]}
@@ -148,7 +149,7 @@ export default function Home() {
                       displayEventTime: true,
                     }
                   }}
-                  events={events}
+                  events={filteredEvents}
                   eventClick={(info) => {
                     setSelectedEvent(info.event)
                     setMobileModalOpen(true);
