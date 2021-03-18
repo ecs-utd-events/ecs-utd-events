@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Slider, TextField } from '@material-ui/core';
 
 import { AllOrgContext } from '../providers/AllOrgProvider';
+import '../styles/components.css';
 
 function sortTagsAlphabetically(tagsArr) {
     var sortedArr = tagsArr;
@@ -99,38 +100,47 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
     const memoizedFilterEvents = useMemo(filterEventHelper, [committedTimeFilterValue, orgFilterValue, tagsFilterValue, allEvents])
 
     return (
-        <Row style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-            <Col xs={12} sm={4}>
+        <Row className="home-page-filters mx-1">
+            <Col xs={12} sm={4} className="d-flex align-items-end pl-2 pr-0">
                 <Autocomplete
                     loading={organizations.length === 0}
                     options={organizations}
                     renderInput={(params) => <TextField {...params} label="organization" margin="normal" />}
                     getOptionLabel={(org) => org.name}
-                    onChange={(event, value, _) => setOrgFilterValue(value)}
+                    onChange={(e, value, _) => setOrgFilterValue(value)}
                 />
             </Col>
-            <Col>
+            <Col className="d-flex align-items-end">
                 <Autocomplete
                     loading={tags.length === 0}
                     options={tags}
                     renderInput={(params) => <TextField {...params} label="tags" margin="normal" />}
                     getOptionLabel={(tag) => tag.name}
                     multiple
-                    onChange={(event, value, _) => setTagsFilterValue(value)}
+                    onChange={(e, value, _) => setTagsFilterValue(value)}
+                    classes={{
+                        tag: "MuiChip-root custom-tag primary",
+                    }}
                 />
             </Col>
-            <Col className="d-flex align-items-center">
-                <Slider
-                    min={0}
-                    max={1440}
-                    step={5}
-                    value={timeFilterValue}
-                    onChange={(event, newValue) => setTimeFilterValue(newValue)}
-                    onChangeCommitted={(event, newValue) => { setCommittedTimeFilterValue(newValue); setTimeFilterValue(newValue); }}
-                    getAriaValueText={getTimeFromRangeMinutes}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={getTimeFromRangeMinutes}
-                />
+            <Col className="align-items-end pr-0">
+                <Row style={{ width: '100%' }}>
+                    <Slider
+                        min={0}
+                        max={1440}
+                        step={5}
+                        value={timeFilterValue}
+                        onChange={(_, newValue) => setTimeFilterValue(newValue)}
+                        onChangeCommitted={(_, newValue) => { setCommittedTimeFilterValue(newValue); setTimeFilterValue(newValue); }}
+                        getAriaValueText={getTimeFromRangeMinutes}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={getTimeFromRangeMinutes}
+                    />
+                </Row>
+                <Row style={{ width: '100%' }}>
+                    <Col xs={6} className="d-flex justify-content-start px-0">start time</Col>
+                    <Col xs={6} className="d-flex justify-content-end px-0">end time</Col>
+                </Row>
             </Col>
         </Row>
     )

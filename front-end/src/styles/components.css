@@ -76,6 +76,7 @@ div.form-group {
     width: 30px;
     height: 30px;
 }
+
 .icon-btn.lg {
     width: 50px;
     height: 50px;
@@ -255,4 +256,59 @@ div.form-group {
     position: fixed;
     top: 0;
     background-color: var(--primary1);
+}
+
+.home-page-filters .MuiAutocomplete-root {
+    background-color: var(--primary4);
+    border-radius: 20px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-page-filters .MuiFormControl-root {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: 5px;
+}
+
+.home-page-filters .MuiFormControl-fullWidth {
+    width: 90%;
+}
+
+.home-page-filters .MuiFormControl-marginNormal {
+    margin-top: 14px;
+}
+
+.home-page-filters .MuiInputBase-root {
+    margin-top: 0;
+}
+
+.home-page-filters .MuiAutocomplete-root label {
+    top: -10px;
+    color: var(--gray3);
+}
+
+.home-page-filters .MuiAutocomplete-root.Mui-focused label {
+    color: var(--primaryshade3);
+}
+
+.home-page-filters .MuiChip-root {
+    height: 30px;
+    margin-top: 6px;
+    margin-bottom: 3px;
+}
+
+.home-page-filters .MuiInput-underline::after{
+    border-bottom: 2px solid var(--primaryshade3);
+}
+
+.home-page-filters .MuiSlider-root {
+    color: var(--primary1)
+}
+
+.home-page-filters .MuiSlider-active.MuiSlider-thumb {
+    color: var(--primaryshade2);
+    box-shadow: 0px 0px 0px 8px rgba(152, 118, 112, 0.2)
 }
