@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Skeleton from '@material-ui/lab/Skeleton';
 import IconButton from './IconButton';
-import { getFormattedTime, getEventCardFormattedDate, getEventCardFormattedTime } from './TimeUtils';
+import { getFormattedTime, getCSTFormattedDate, getCSTFormattedTime } from './TimeUtils';
 import EditIcon from '@iconify/icons-mdi/lead-pencil';
 import TrashIcon from '@iconify/icons-mdi/delete';
 import Container from 'react-bootstrap/Container';
@@ -56,6 +56,11 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setStartTime(getCSTFormattedTime(event.startTime));
+        setEndTime(getCSTFormattedTime(event.endTime));
+    }, [event.startTime, event.endTime]);
 
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
@@ -136,16 +141,16 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                             <Form.Row>
                                 <Form.Group as={Col} controlId="date">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} defaultValue={getEventCardFormattedDate(event.startTime)} />
+                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} defaultValue={getCSTFormattedDate(event.startTime)} />
                                     {errors.date && <p className="error">⚠ Please do not create past events.</p>}
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="startTime">
                                     <Form.Label>Start time</Form.Label>
-                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.startTime)} />
+                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={getCSTFormattedTime(event.startTime)} />
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="endTime">
                                     <Form.Label>End time</Form.Label>
-                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getEventCardFormattedTime(event.endTime)} />
+                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getCSTFormattedTime(event.endTime)} />
                                     {errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
                                 </Form.Group>
                             </Form.Row>

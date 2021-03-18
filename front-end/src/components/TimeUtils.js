@@ -12,15 +12,43 @@ export function getEventCardFormattedDate(date) {
 export function getEventCardFormattedTime(date) {
     return new Date(date).toLocaleTimeString('en-US', { hour12: false }).replace(/(.*)\D\d+/, '$1');
 }
-//form control date format: yyyy-mm-dd
+
+export function getCSTFormattedDate(date) {
+    var CSTDateString = new Date(date).toLocaleDateString('en-US', { timeZone: 'America/Chicago', day: '2-digit', month: '2-digit', year: 'numeric' });
+    const regex = /(\d{2})\/(\d{2})\/(\d{4})/gm;
+    const match = regex.exec(CSTDateString);
+    return `${match[3]}-${match[1]}-${match[2]}`
+}
+
+export function getCSTFormattedTime(date) {
+    return new Date(date).toLocaleTimeString('en-US', { hour12: false, timeZone: 'America/Chicago' }).replace(/(.*)\D\d+/, '$1');
+}
 
 export function lastUpdatedToISO() {
     return (new Date()).toISOString().split('.')[0] + "Z"
 }
 
 export function eventCardFormatToISO(date, time) {
-    var dbFormat = date + 'T' + time;
-    return (new Date(dbFormat)).toISOString().split('.')[0] + "Z"
+    var CSTDateTime = date + 'T' + time;
+    var CSTDate = new Date(CSTDateTime)
+    if(CSTDate.isDstObserved()) {
+        CSTDateTime = CSTDateTime.concat('-05:00');
+    } else {
+        CSTDateTime = CSTDateTime.concat('-06:00');
+    }
+    console.log(CSTDateTime);
+    console.log((new Date(CSTDateTime)).toISOString().split('.')[0] + "Z")
+    return (new Date(CSTDateTime)).toISOString().split('.')[0] + "Z"
+}
+
+Date.prototype.stdTimezoneOffset = function () {
+    var jan = new Date(this.getFullYear(), 0, 1);
+    var jul = new Date(this.getFullYear(), 6, 1);
+    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+}
+
+Date.prototype.isDstObserved = function () {
+    return this.getTimezoneOffset() < this.stdTimezoneOffset();
 }
 
 export function lastUpdatedToString(time) {
