@@ -1,7 +1,7 @@
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
 import Image from 'react-bootstrap/Image';
-import Container from 'react-bootstrap/Container';
+import Circle from '../assets/placeholder_org_image.svg';
 
 export default function NavbarComponent({ page, org }) {
     // We display different navbar stuff depending on whether the org is logged in or not
@@ -14,7 +14,7 @@ export default function NavbarComponent({ page, org }) {
     const backgroundCSSName = page === 'OrgProfilePage' ? 'App' : 'background';
     if (org != null) {
         // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
-        var imageSource = org.imageUrl != null && org.imageUrl !== "" ? org.imageUrl : null;
+        var imageSource = org.imageUrl != null && org.imageUrl !== "" ? org.imageUrl : Circle;
 
         orgProfile =
             <NavDropdown title={org.shortName} id="basic-nav-dropdown">
