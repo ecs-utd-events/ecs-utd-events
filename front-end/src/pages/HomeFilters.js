@@ -99,7 +99,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
     const memoizedFilterEvents = useMemo(filterEventHelper, [committedTimeFilterValue, orgFilterValue, tagsFilterValue, allEvents])
 
     return (
-        <Row className="home-page-filters mx-1">
+        <Row className="home-page-filters mx-1 mt-2">
             <Col xs={12} sm={4} className="d-flex align-items-end pl-2 pr-0">
                 <Autocomplete
                     loading={organizations.length === 0}
