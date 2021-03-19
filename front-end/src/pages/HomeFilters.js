@@ -3,7 +3,7 @@ import { useState, useEffect, useContext, useMemo } from 'react';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Slider, TextField } from '@material-ui/core';
+import { Slider, TextField, ValueLabel } from '@material-ui/core';
 
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import '../styles/components.css';
@@ -15,25 +15,30 @@ function sortTagsAlphabetically(tagsArr) {
 }
 
 function getTimeFromRangeMinutes(value, index) {
+    if(value === 0 || value === 1440) {
+        return "12:00 AM"
+    }
     var minutes = value % 60
     var hours = Math.floor(value / 60)
     var minuteString = "";
     var hoursString = "";
     switch (minutes) {
         case 0: minuteString = "00"; break;
-        case 5: minuteString = "05"; break;
         default: minuteString = minutes.toString();
     }
-    if (hours < 10) {
-        hoursString = "0";
-    }
+
+    if (hours > 13) {
+        hours = hours % 12;
+    } 
     hoursString = hoursString.concat(hours.toString());
-    return hoursString + ":" + minuteString;
+    return hoursString + ":" + minuteString + " " + (value >= 720 ? 'PM' : 'AM');
 }
 
 function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvents, setFilteredEvents) {
+    if (allEvents == null || allEvents.length === 0) {
+        return;
+    }
     var filteredEvents = allEvents
-    console.log(orgFilterValue)
     if (orgFilterValue != null) {
         filteredEvents = filteredEvents.filter(event => event.extendedProps.org.includes(orgFilterValue.uId))
     }
@@ -41,14 +46,8 @@ function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvent
         filteredEvents = filteredEvents.filter(event => {
             if (event.extendedProps.tags == null)
                 return false
-            else if (event.extendedProps.tags.length < tagsFilterValue.length) {
-                console.log(event.extendedProps.tags);
-                return false
-            }
-            else {
-                console.log(event);
-                return tagsFilterValue.every(tag => event.extendedProps.tags.includes(tag.name))
-            }
+            else
+                return tagsFilterValue.some(tag => event.extendedProps.tags.includes(tag.name))
         })
     }
     if (timeFilterValue[0] > 0) {
@@ -56,7 +55,7 @@ function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvent
             if (event.allDay != null && event.allDay) {
                 return true;
             }
-            const startTime = new Date(new Date(event.start).toLocaleString({ timeZone: "America/Chicago" }))
+            const startTime = new Date(new Date(event.start).toLocaleString())
             const startTimeMinutes = startTime.getHours() * 60 + startTime.getMinutes()
             return timeFilterValue[0] <= startTimeMinutes;
         })
@@ -66,7 +65,7 @@ function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvent
             if (event.allDay != null && event.allDay) {
                 return true;
             }
-            const endTime = new Date(new Date(event.end).toLocaleString({ timeZone: "America/Chicago" }))
+            const endTime = new Date(new Date(event.end).toLocaleString())
             const endTimeMinutes = endTime.getHours() * 60 + endTime.getMinutes()
             return timeFilterValue[1] >= endTimeMinutes;
         })
@@ -105,9 +104,10 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                 <Autocomplete
                     loading={organizations.length === 0}
                     options={organizations}
-                    renderInput={(params) => <TextField {...params} label="organization" margin="normal" />}
+                    renderInput={(params) => <TextField style={{}} {...params} label="organization" margin="normal" />}
                     getOptionLabel={(org) => org.name}
                     onChange={(e, value, _) => setOrgFilterValue(value)}
+                    clearOnEscape
                 />
             </Col>
             <Col className="d-flex align-items-end">
@@ -119,7 +119,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                     multiple
                     onChange={(e, value, _) => setTagsFilterValue(value)}
                     classes={{
-                        tag: "MuiChip-root custom-tag primary",
+                        tag: "MuiChip-root custom-tag filter-tag",
                     }}
                 />
             </Col>
@@ -128,7 +128,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                     <Slider
                         min={0}
                         max={1440}
-                        step={5}
+                        step={15}
                         value={timeFilterValue}
                         onChange={(_, newValue) => setTimeFilterValue(newValue)}
                         onChangeCommitted={(_, newValue) => { setCommittedTimeFilterValue(newValue); setTimeFilterValue(newValue); }}
