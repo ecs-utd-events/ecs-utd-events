@@ -18,6 +18,8 @@ import { ToggleButton } from "../components/ToggleButton";
 import './../styles/App.css';
 
 import { AllOrgContext } from '../providers/AllOrgProvider';
+import { UserContext } from "../providers/UserProvider";
+
 import Circle from '../assets/placeholder_org_image.svg';
 
 function findThisOrg(allOrgs, orgSlug) {
@@ -40,6 +42,7 @@ export default function OrgProfile() {
     const [selected, setSelected] = useState(false);
     const maxEventsDisplayed = 3;
     const organizations = useContext(AllOrgContext);
+    const { org } = useContext(UserContext);
 
     useEffect(() => {
         setThisOrg(findThisOrg(organizations, orgSlug));
@@ -123,7 +126,7 @@ export default function OrgProfile() {
 
         return (
             <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
-                <NavbarComponent page='OrgProfilePage' />
+                <NavbarComponent page='OrgProfilePage' org={org} />
                 <Container>
                     <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
                     <Row className="my-4">

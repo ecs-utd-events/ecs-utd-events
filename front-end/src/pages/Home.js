@@ -23,6 +23,8 @@ import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
 import HomeFilters from './HomeFilters';
 import { AllOrgContext } from '../providers/AllOrgProvider';
+import { UserContext } from "../providers/UserProvider";
+
 import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
@@ -46,6 +48,8 @@ export default function Home() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const organizations = useContext(AllOrgContext);
+  const { org } = useContext(UserContext);
+
 
   useEffect(() => {
     // GET request for all events using fetch inside useEffect React hook
@@ -60,7 +64,7 @@ export default function Home() {
 
   return (
     <div className="App">
-      <NavbarComponent page='Home' />
+      <NavbarComponent page='Home' org={org}/>
       <div className="background">
         <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} orgs={organizations} />
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
@@ -156,16 +160,6 @@ export default function Home() {
                   }}
                 />
               </div>
-            </Col>
-          </Row>
-          <Row className="justify-content-md-center">
-            <Col md={{ size: 2, offset: 3 }}>
-              <Link to="/login">
-                <CustomButton className="drop-shadow button-org-login-main-page">Organization Login</CustomButton>
-              </Link>
-              <a href="https://github.com/siddharthnaik99/utdecsevents_backend" target="_blank">
-                <CustomButton className="drop-shadow button-api-docs-main-page">API Documentation</CustomButton>
-              </a>
             </Col>
           </Row>
         </Container>
