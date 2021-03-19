@@ -18,8 +18,9 @@ import './../styles/fullcalendar-custom.css';
 
 import EventInfoCard from '../components/EventInfoCard'
 import OrgInfoCard from '../components/OrgInfoCard'
-import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
+import FooterComponent from '../components/FooterComponent';
+
 import EventInfoModal from '../components/EventInfoModal';
 import HomeFilters from './HomeFilters';
 import { AllOrgContext } from '../providers/AllOrgProvider';
@@ -184,8 +185,8 @@ export default function Home() {
             }
           </Row>
         </Container>
-        <div style={{ padding: "3rem" }} />
       </div>
+      <FooterComponent page='Home' />
     </div >
   );
 }

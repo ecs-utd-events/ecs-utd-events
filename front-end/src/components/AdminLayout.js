@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap/esm";
 import AdminTab from "./AdminTab";
+import FooterComponent from '../components/FooterComponent';
 
 export default function AdminLayout({ children, pageName }) {
     return (
@@ -14,6 +15,7 @@ export default function AdminLayout({ children, pageName }) {
                     </Col>
                 </Row>
             </Container>
+            <FooterComponent page='Home' /> 
         </div >
     )
 }
