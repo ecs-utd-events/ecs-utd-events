@@ -21,6 +21,7 @@ import { AllOrgContext } from '../providers/AllOrgProvider';
 import { UserContext } from "../providers/UserProvider";
 
 import Circle from '../assets/placeholder_org_image.svg';
+import FooterComponent from '../components/FooterComponent';
 
 function findThisOrg(allOrgs, orgSlug) {
     if (allOrgs != null && orgSlug != null) {
@@ -125,7 +126,7 @@ export default function OrgProfile() {
         var imageSource = thisOrg != null ? (thisOrg.imageUrl != null && thisOrg.imageUrl !== "" ? thisOrg.imageUrl : Circle) : Circle;
 
         return (
-            <div className="App" style={{ minHeight: '100vh', paddingBottom: '15vh' }}>
+            <div className="App" style={{ minHeight: '100vh' }}>
                 <NavbarComponent page='OrgProfilePage' org={org} />
                 <Container>
                     <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
@@ -134,7 +135,7 @@ export default function OrgProfile() {
                     </Row>
                     <Row className="mb-3">
                         <Col xs={2} style={{ textAlign: 'right', marginTop: '-4px' }}>
-                            <Icon icon={linkIcon} style={{fontSize: '2rem', color: 'var(--gray3)'}}/>
+                            <Icon icon={linkIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
                         </Col>
                         <Col style={{ textAlign: 'left' }}>
                             <a href={thisOrg.website} target="_blank" rel="noreferrer">{thisOrg.website}</a>
@@ -142,7 +143,7 @@ export default function OrgProfile() {
                     </Row>
                     <Row className="mb-5">
                         <Col xs={2} style={{ textAlign: 'right', marginTop: '3px', marginBottom: 'auto' }}>
-                            <Icon icon={descriptionIcon} style={{fontSize: '2rem', color: 'var(--gray3)'}}/>
+                            <Icon icon={descriptionIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
                         </Col>
                         <Col xs={8} style={{ textAlign: 'left' }}>
                             {thisOrg.description}
@@ -182,8 +183,8 @@ export default function OrgProfile() {
                         </Container>
                     }
                 </Container>
+                <FooterComponent page='OrgProfilePage' />
             </div >
-
         )
     }
     else

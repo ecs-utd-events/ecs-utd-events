@@ -18,8 +18,9 @@ import './../styles/fullcalendar-custom.css';
 
 import EventInfoCard from '../components/EventInfoCard'
 import OrgInfoCard from '../components/OrgInfoCard'
-import CustomButton from '../components/CustomButton';
 import NavbarComponent from '../components/NavbarComponent';
+import FooterComponent from '../components/FooterComponent';
+
 import EventInfoModal from '../components/EventInfoModal';
 import HomeFilters from './HomeFilters';
 import { AllOrgContext } from '../providers/AllOrgProvider';
@@ -64,7 +65,7 @@ export default function Home() {
 
   return (
     <div className="App">
-      <NavbarComponent page='Home' org={org}/>
+      <NavbarComponent page='Home' org={org} />
       <div className="background">
         <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} orgs={organizations} />
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
@@ -187,8 +188,8 @@ export default function Home() {
             }
           </Row>
         </Container>
-        <div style={{ padding: "3rem" }} />
       </div>
+      <FooterComponent page='Home' />
     </div >
   );
 }
