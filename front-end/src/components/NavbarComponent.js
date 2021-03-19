@@ -1,52 +1,66 @@
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Row } from 'react-bootstrap'
+import { useContext, useState, useEffect } from 'react';
+
+import { UserContext } from '../providers/UserProvider';
+
 import { ReactComponent as ECSLogo } from '../assets/utd-ecs-logo-clipped.svg';
 import Image from 'react-bootstrap/Image';
 import Circle from '../assets/placeholder_org_image.svg';
+import { auth } from '../firebase';
 
-export default function NavbarComponent({ page, org }) {
-    // We display different navbar stuff depending on whether the org is logged in or not
-    var orgProfile = null;
-    var orgProfileLogo = null;
+export default function NavbarComponent({ page }) {
+    const { org } = useContext(UserContext);
+    const [dummyOrgState, setDummyOrgState] = useState(org);
 
-    // Some weird bug where on click, the text stays highlighted. Therefore, we manually keep track of the on click State for 
-    // the API Documentation link on the navbar
-    var clickState = false;
+    const logoutHandler = (e) => {
+        e.preventDefault();
+        auth.signOut().then(() => {
+            console.log('Adios! 👋')
+            setDummyOrgState(null);
+        }).catch((error) => {
+            console.log(error.message);
+            alert('Sorry there was an issue signing you out 😔. Why not wait for a second then try again 😊');
+        })
+    }
+
+    useEffect(() => {
+        setDummyOrgState(org);
+    }, [org])
+
     const backgroundCSSName = page === 'OrgProfilePage' ? 'App' : 'background';
-    if (org != null) {
-        // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
-        var imageSource = org.imageUrl != null && org.imageUrl !== "" ? org.imageUrl : Circle;
-
-        orgProfile =
-            <NavDropdown title={org.shortName} id="basic-nav-dropdown">
-                <NavDropdown.Item href="/admin/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="/admin/events">Events</NavDropdown.Item>
-                <NavDropdown.Item href="/admin/help">Help</NavDropdown.Item>
-                <NavDropdown.Divider />
-                {/* TODO: @Mustafa, could you implement log out here? */}
-                <NavDropdown.Item href="/login">Log Out</NavDropdown.Item>
-            </NavDropdown>
-        orgProfileLogo =
-            <Navbar.Brand>
-                <Image src={imageSource} style={{ width: '5vh', height: '5vh' }} roundedCircle />
-            </Navbar.Brand>
-    }
-    else {
-        orgProfile =
-            <Nav.Link href="/login">Org Login</Nav.Link>
-    }
+    var imageSource = org != null ? (org.imageUrl != null && org.imageUrl !== "" ? org.imageUrl : Circle) : null;
 
     return (
-        <Navbar className={'mb-0 ' + backgroundCSSName} style={{ paddingRight: 100 }}>
+        <Navbar className={'mb-0 ' + backgroundCSSName} style={{ paddingRight: 25 }}>
             <Navbar.Brand href="/">
                 <ECSLogo height='8vh' width='8vh' />
             </Navbar.Brand>
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="ml-auto">
-                    <Nav.Link href="https://github.com/siddharthnaik99/utdecsevents_backend" target="_blank" active={clickState} onClick={clickState = false}>API Documentation</Nav.Link>
-                    {orgProfile}
+                <Nav className="ml-auto d-flex align-items-center">
+                    <Nav.Link href="https://github.com/siddharthnaik99/utdecsevents_backend" target="_blank" >API Documentation</Nav.Link>
+                    {dummyOrgState != null ?
+                        (
+                            <NavDropdown
+                                title={
+                                    <span>
+                                        <Image src={imageSource} style={{ width: '50px', height: '50px', border: '2px solid var(--accent1)' }} roundedCircle />
+                                    </span>
+                                }
+                                id="basic-nav-dropdown"
+                                menuAlign="right"
+                            >
+                                <NavDropdown.Item href="/admin/profile">Profile</NavDropdown.Item>
+                                <NavDropdown.Item href="/admin/events">Events</NavDropdown.Item>
+                                <NavDropdown.Item href="/admin/help">Help</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={logoutHandler}>Log Out</NavDropdown.Item>
+                            </NavDropdown>
+                        ) :
+                        (
+                            <Nav.Link href="/login">Org Login</Nav.Link>
+                        )
+                    }
                 </Nav>
-                {orgProfileLogo}
-
             </Navbar.Collapse>
         </Navbar>
     );

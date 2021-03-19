@@ -344,3 +344,9 @@ div.form-group {
     left: -200%;
     top: -30px;
 }
+
+.navbar .dropdown-menu {
+    right: 0;
+    left: auto;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}

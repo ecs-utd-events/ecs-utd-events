@@ -23,7 +23,6 @@ import NavbarComponent from '../components/NavbarComponent';
 import EventInfoModal from '../components/EventInfoModal';
 import HomeFilters from './HomeFilters';
 import { AllOrgContext } from '../providers/AllOrgProvider';
-import { UserContext } from "../providers/UserProvider";
 
 import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 
@@ -48,8 +47,6 @@ export default function Home() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const organizations = useContext(AllOrgContext);
-  const { org } = useContext(UserContext);
-
 
   useEffect(() => {
     // GET request for all events using fetch inside useEffect React hook
@@ -64,7 +61,7 @@ export default function Home() {
 
   return (
     <div className="App">
-      <NavbarComponent page='Home' org={org}/>
+      <NavbarComponent page='Home' />
       <div className="background">
         <EventInfoModal mobileModalOpen={mobileModalOpen} setMobileModalOpen={setMobileModalOpen} event={selectedEvent} orgs={organizations} />
         <Container style={{ minHeight: '100vh', paddingBottom: '10vh' }} fluid>
