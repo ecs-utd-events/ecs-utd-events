@@ -16,6 +16,7 @@ import UserProvider from "./providers/UserProvider";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
 import AllOrgProvider from "./providers/AllOrgProvider";
+import NotFound from "./pages/NotFound";
 
 
 export function ScrollToTop() {
@@ -36,10 +37,11 @@ function App() {
           <ScrollToTop />
           <Switch>
             <Route path="/org" component={OrgProfileRouter} />
-            <Route path="/login" component={Login} />
-            <Route path="/reset-password" component={ResetPassword} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/reset-password" exact component={ResetPassword} />
             <Route path="/admin" component={AdminRouter} />
-            <Route path="/" component={Home} />
+            <Route path="/" exact component={Home} />
+            <Route component={NotFound} />
           </Switch>
         </Router>
       </AllOrgProvider>

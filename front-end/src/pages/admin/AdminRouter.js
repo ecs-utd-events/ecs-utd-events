@@ -6,6 +6,7 @@ import CreateEvent from './CreateEvent';
 import EditProfile from "./EditProfile";
 import EditEvents from "./EditEvents";
 import HelpPage from "./HelpPage";
+import NotFound from "../NotFound";
 
 export default function AdminRouter() {
     let match = useRouteMatch();
@@ -17,10 +18,12 @@ export default function AdminRouter() {
     }
     return (
         <Switch>
-            <Route path={`${match.path}/profile`} component={EditProfile} />
-            <Route path={`${match.path}/events`} component={EditEvents} />
-            <Route path={`${match.path}/help`} component={HelpPage} />
-            <Route path={`${match.path}/create`} component={CreateEvent} />
+            <Route path={`${match.path}`} exact component={EditProfile} />
+            <Route path={`${match.path}/profile`} exact component={EditProfile} />
+            <Route path={`${match.path}/events`} exact component={EditEvents} />
+            <Route path={`${match.path}/help`} exact component={HelpPage} />
+            <Route path={`${match.path}/create`} exact component={CreateEvent} />
+            <Route component={NotFound} />
         </Switch>
     )
 }
