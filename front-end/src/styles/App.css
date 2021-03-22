@@ -75,10 +75,6 @@
   align-items: center;
 }
 
-.login-wrapper a {
-  color: var(--primary1);
-}
-
 .login-spinner-wrapper {
   z-index: 2;
   position: absolute;
