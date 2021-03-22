@@ -183,7 +183,7 @@ export default function OrgProfile() {
                         </Container>
                     }
                 </Container>
-                <FooterComponent page='OrgProfilePage' />
+                <FooterComponent page='OrgProfilePage' style={{ position: 'absolute', bottom: 0, right: 0 }} />
             </div >
         )
     }
