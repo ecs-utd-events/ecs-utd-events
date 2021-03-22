@@ -75,7 +75,7 @@
   align-items: center;
 }
 
-.login-spinner-wrapper {
+.loading-spinner-wrapper {
   z-index: 2;
   position: absolute;
   height: 100%;
@@ -85,7 +85,7 @@
   align-items: center;
 }
 
-.login-spinner-wrapper .login-spinner {
+.loading-spinner-wrapper .loading-spinner {
   width: 20em;
   height: 20em;
   border: 1.25em solid var(--primary1);

@@ -126,65 +126,68 @@ export default function OrgProfile() {
         var imageSource = thisOrg != null ? (thisOrg.imageUrl != null && thisOrg.imageUrl !== "" ? thisOrg.imageUrl : Circle) : Circle;
 
         return (
-            <div className="App" style={{ minHeight: '100vh' }}>
-                <NavbarComponent page='OrgProfilePage' org={org} />
-                <Container>
-                    <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
-                    <Row className="my-4">
-                        <h1 className="item-align-center font-weight-bold">{thisOrg.name}</h1>
-                    </Row>
-                    <Row className="mb-3">
-                        <Col xs={2} style={{ textAlign: 'right', marginTop: '-4px' }}>
-                            <Icon icon={linkIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
-                        </Col>
-                        <Col style={{ textAlign: 'left' }}>
-                            <a href={thisOrg.website} target="_blank" rel="noreferrer">{thisOrg.website}</a>
-                        </Col>
-                    </Row>
-                    <Row className="mb-5">
-                        <Col xs={2} style={{ textAlign: 'right', marginTop: '3px', marginBottom: 'auto' }}>
-                            <Icon icon={descriptionIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
-                        </Col>
-                        <Col xs={8} style={{ textAlign: 'left' }}>
-                            {thisOrg.description}
-                        </Col>
-                    </Row>
-                    <ToggleButton
-                        selected={selected}
-                        toggleSelected={() => {
-                            setSelected(!selected);
-                        }}
-                    />
-                    {!selected && <Container style={{ paddingBottom: "40px" }}>
-                        <Row className="mb-3" style={{ textAlign: 'center' }}>
-                            <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
+            <div className="App">
+                {/* minHeight of the separate wrapping div is set to push the footer to the bottom of the page */}
+                <div style={{ minHeight: 'calc(100vh - 5rem)' }}>
+                    <NavbarComponent page='OrgProfilePage' org={org} />
+                    <Container>
+                        <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
+                        <Row className="my-4">
+                            <h1 className="item-align-center font-weight-bold">{thisOrg.name}</h1>
                         </Row>
-                        {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
-                        {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
-                            return (
-                                <OrgPageEventCard key={event.id} event={event} pastEvent={false} orgs={organizations}></OrgPageEventCard>
-                            );
-                        })}
-                        {additionalUpcomingEvents}
-                    </Container>
-                    }
-                    {selected &&
-                        <Container>
-                            {/* DISPLAY PAST EVENTS */}
+                        <Row className="mb-3">
+                            <Col xs={2} style={{ textAlign: 'right', marginTop: '-4px' }}>
+                                <Icon icon={linkIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
+                            </Col>
+                            <Col style={{ textAlign: 'left' }}>
+                                <a href={thisOrg.website} target="_blank" rel="noreferrer">{thisOrg.website}</a>
+                            </Col>
+                        </Row>
+                        <Row className="mb-5">
+                            <Col xs={2} style={{ textAlign: 'right', marginTop: '3px', marginBottom: 'auto' }}>
+                                <Icon icon={descriptionIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
+                            </Col>
+                            <Col xs={8} style={{ textAlign: 'left' }}>
+                                {thisOrg.description}
+                            </Col>
+                        </Row>
+                        <ToggleButton
+                            selected={selected}
+                            toggleSelected={() => {
+                                setSelected(!selected);
+                            }}
+                        />
+                        {!selected && <Container style={{ paddingBottom: "40px" }}>
                             <Row className="mb-3" style={{ textAlign: 'center' }}>
-                                <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
+                                <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
                             </Row>
-                            {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
+                            {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
+                            {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
                                 return (
-                                    <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
+                                    <OrgPageEventCard key={event.id} event={event} pastEvent={false} orgs={organizations}></OrgPageEventCard>
                                 );
                             })}
-                            {additionalPastEvents}
+                            {additionalUpcomingEvents}
                         </Container>
-                    }
-                </Container>
-                <FooterComponent page='OrgProfilePage' style={{ position: 'absolute', bottom: 0, right: 0 }} />
-            </div >
+                        }
+                        {selected &&
+                            <Container>
+                                {/* DISPLAY PAST EVENTS */}
+                                <Row className="mb-3" style={{ textAlign: 'center' }}>
+                                    <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
+                                </Row>
+                                {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
+                                    return (
+                                        <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
+                                    );
+                                })}
+                                {additionalPastEvents}
+                            </Container>
+                        }
+                    </Container>
+                </div>
+                <FooterComponent page='OrgProfilePage' />
+            </div>
         )
     }
     else
