@@ -8,18 +8,21 @@ button.primary-btn, a.primary-btn {
     transition: all ease-in .15s;
     background-color: var(--primary1)!important;
     color: var(--gray2);
+    border: var(--primary1);
 }
 
 button.primary-btn:not(:disabled):hover, a.primary-btn:not(:disabled):hover {
     transition: all ease-in .2s;
     background-color: transparent!important;
     box-shadow: 0 0 0 2pt var(--primary1);
+    color: var(--gray2);
     filter: none!important;
 }
 
 button.secondary-btn, a.secondary-btn {
     background-color: var(--secondary2);
     color: var(--gray3);
+    border: var(--secondary2);
 }
 
 button.secondary-btn:not(:disabled):hover, a.secondary-btn:not(:disabled):hover {

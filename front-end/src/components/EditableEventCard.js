@@ -15,6 +15,7 @@ import CancelIcon from '@iconify/icons-mdi/close';
 import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import { eventCardFormatToISO } from './TimeUtils';
+import DeleteEventModal from "../components/DeleteEventModal";
 
 export function LoadingEventCard() {
     return (
@@ -56,6 +57,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         setStartTime(getCSTFormattedTime(event.startTime));
@@ -121,11 +123,12 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                         <Row>
                             <Col className="d-flex justify-content-end m-0">
                                 <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
-                                <IconButton icon={TrashIcon} onClick={(e) => { e.preventDefault(); deleteEvent(event.id) }}></IconButton>
+                                <IconButton icon={TrashIcon} onClick={(e) => {e.preventDefault(); setShow(true);}}></IconButton>
                             </Col>
                         </Row>
                     </Card>
                 </Col>
+                <DeleteEventModal show={show} onHide={() => setShow(false)} delete={() => deleteEvent(event.id)} title={event.title}/>
             </Container>
         );
     } else if (event && isEditing) {
