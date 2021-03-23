@@ -14,6 +14,7 @@ export function getEventCardFormattedTime(date) {
 }
 
 export function getCSTFormattedDate(date) {
+    if(date == null || date === '') return null
     var CSTDateString = new Date(date).toLocaleDateString('en-US', { timeZone: 'America/Chicago', day: '2-digit', month: '2-digit', year: 'numeric' });
     const regex = /(\d{2})\/(\d{2})\/(\d{4})/gm;
     const match = regex.exec(CSTDateString);
@@ -21,6 +22,7 @@ export function getCSTFormattedDate(date) {
 }
 
 export function getFormattedDate(date) {
+    if(date == null || date === '') return null
     var dateString = new Date(date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })
     const regex = /(\d{2})\/(\d{2})\/(\d{4})/gm;
     const match = regex.exec(dateString);
@@ -28,6 +30,7 @@ export function getFormattedDate(date) {
 }
 
 export function getCSTFormattedTime(date) {
+    if(date == null || date === '') return null
     return new Date(date).toLocaleTimeString('en-US', { hour12: false, timeZone: 'America/Chicago' }).replace(/(.*)\D\d+/, '$1');
 }
 
