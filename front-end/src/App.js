@@ -17,6 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
 import AllOrgProvider from "./providers/AllOrgProvider";
 import NotFound from "./pages/NotFound";
+import JerryEmail from "./pages/JerryEmail";
 
 
 export function ScrollToTop() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/reset-password" exact component={ResetPassword} />
             <Route path="/admin" component={AdminRouter} />
+            <Route path="/email" component={JerryEmail} />
             <Route path="/" exact component={Home} />
             <Route component={NotFound} />
           </Switch>

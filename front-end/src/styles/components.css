@@ -10,7 +10,7 @@ button.primary-btn, a.primary-btn {
     color: var(--gray2);
 }
 
-button.primary-btn:hover, a.primary-btn:hover {
+button.primary-btn:not(:disabled):hover, a.primary-btn:not(:disabled):hover {
     transition: all ease-in .2s;
     background-color: transparent!important;
     box-shadow: 0 0 0 2pt var(--primary1);
@@ -22,7 +22,7 @@ button.secondary-btn, a.secondary-btn {
     color: var(--gray3);
 }
 
-button.secondary-btn:hover, a.secondary-btn:hover {
+button.secondary-btn:not(:disabled):hover, a.secondary-btn:not(:disabled):hover {
     background-color: var(--secondary1);
     color: var(--gray2);
 }
