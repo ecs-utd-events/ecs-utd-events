@@ -12,6 +12,14 @@ jobs:
   deploy_live_website:
     env:
       CI: false
+      REACT_APP_SERVER_URL: "https://ecsutdevents.azurewebsites.net"
+      REACT_APP_FIREBASE_CONFIG_APIKEY: ${{ secrets.REACT_APP_FIREBASE_CONFIG_APIKEY }}
+      REACT_APP_FIREBASE_CONFIG_AUTHDOMAIN: "utdecsevents-9bed0.firebaseapp.com"
+      REACT_APP_FIREBASE_CONFIG_PROJECTID: "utdecsevents-9bed0"
+      REACT_APP_FIREBASE_CONFIG_STORAGEBUCKET: "utdecsevents-9bed0.appspot.com"
+      REACT_APP_FIREBASE_CONFIG_MESSAGINGSENDERID: ${{ secrets.REACT_APP_FIREBASE_CONFIG_MESSAGINGSENDERID }}
+      REACT_APP_FIREBASE_CONFIG_APPID: ${{ secrets.REACT_APP_FIREBASE_CONFIG_APPID }}
+      REACT_APP_FIREBASE_CONFIG_MEASUREMENTID: ${{ secrets.REACT_APP_FIREBASE_CONFIG_MEASUREMENTID }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

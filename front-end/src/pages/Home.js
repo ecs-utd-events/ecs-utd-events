@@ -59,6 +59,7 @@ export default function Home() {
         console.error('There was an error fetching events!', error);
       });
   }, []);
+  console.log('HELLO! CI/CD ready!');
 
   return (
     <div className="App">
