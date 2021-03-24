@@ -5,8 +5,13 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 
 import { Icon } from '@iconify/react';
-import linkIcon from '@iconify/icons-mdi/link-variant'
-import descriptionIcon from '@iconify/icons-mdi/format-align-left'
+import linkIcon from '@iconify/icons-mdi/link-variant';
+import descriptionIcon from '@iconify/icons-mdi/format-align-left';
+import facebookIcon from '@iconify/icons-mdi/facebook';
+import instagramIcon from '@iconify/icons-mdi/instagram';
+import snapchatIcon from '@iconify/icons-mdi/snapchat';
+import linkedinIcon from '@iconify/icons-mdi/linkedin';
+import discordIcon from '@iconify/icons-mdi/discord';
 
 import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
@@ -44,6 +49,13 @@ export default function OrgProfile() {
     const maxEventsDisplayed = 3;
     const organizations = useContext(AllOrgContext);
     const { org } = useContext(UserContext);
+
+    const socialMediaPlatforms =
+    [{ title: 'Facebook', ref: 'facebook', icon: facebookIcon },
+    { title: 'LinkedIn', ref: 'linkedIn', icon: linkedinIcon },
+    { title: 'Discord', ref: 'discord', icon: discordIcon },
+    { title: 'Instagram', ref: 'instagram', icon: instagramIcon },
+    { title: 'Snapchat', ref: 'snapchat', icon: snapchatIcon }];
 
     useEffect(() => {
         setThisOrg(findThisOrg(organizations, orgSlug));
@@ -151,6 +163,20 @@ export default function OrgProfile() {
                                 {thisOrg.description}
                             </Col>
                         </Row>
+                        <h4>Social Media Platforms</h4>
+                        { socialMediaPlatforms.map(platform => { 
+                            return ( thisOrg.socialMedia[platform.ref] &&
+                                    <Row className="mb-2">
+                                        <Col xs={2} style={{ textAlign: 'right', marginTop: '3px', marginBottom: 'auto' }}>
+                                            <Icon icon={platform.icon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
+                                        </Col>
+                                        <Col xs={8} style={{ textAlign: 'left', marginTop: '.5rem' }}>
+                                            <a href={thisOrg.socialMedia[platform.ref]}>{thisOrg.socialMedia[platform.ref]}</a>
+                                        </Col>
+                                    </Row>
+                                )
+                            })
+                        } 
                         <ToggleButton
                             selected={selected}
                             toggleSelected={() => {
