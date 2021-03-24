@@ -33,7 +33,7 @@ export default function NavbarComponent({ page }) {
     }, [org, user])
 
     const backgroundCSSName = page === 'OrgProfilePage' ? 'App' : 'background';
-    var imageSource = org != null ? (org.imageUrl != null && org.imageUrl !== "" ? org.imageUrl : Circle) : null;
+    var imageSource = dummyOrgState != null ? (dummyOrgState.imageUrl != null && dummyOrgState.imageUrl !== "" ? dummyOrgState.imageUrl : Circle) : null;
 
     return (
         <Navbar className={'mb-0 ' + backgroundCSSName} style={{ paddingRight: 25 }}>
