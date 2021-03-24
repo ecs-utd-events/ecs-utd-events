@@ -163,7 +163,7 @@ export default function OrgProfile() {
                                 {thisOrg.description}
                             </Col>
                         </Row>
-                        <h4>Social Media Platforms</h4>
+                        { thisOrg.socialMedia && <h4>Social Media Platforms</h4>}
                         { socialMediaPlatforms.map(platform => { 
                             return ( thisOrg.socialMedia[platform.ref] &&
                                     <Row className="mb-2">
