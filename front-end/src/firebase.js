@@ -12,5 +12,10 @@ const FIREBASE_CONFIG = {
     measurementId: process.env.REACT_APP_FIREBASE_CONFIG_MEASUREMENTID
 };
 
+console.log(process.env.REACT_APP_FIREBASE_CONFIG_APIKEY)
+console.log(process.env.REACT_APP_FIREBASE_CONFIG_MESSAGINGSENDERID)
+console.log(process.env.REACT_APP_FIREBASE_CONFIG_APPID)
+console.log(process.env.REACT_APP_FIREBASE_CONFIG_MEASUREMENTID)
+
 firebase.initializeApp(FIREBASE_CONFIG);
 export const auth = firebase.auth();

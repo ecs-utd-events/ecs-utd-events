@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: echo $REACT_APP_FIREBASE_CONFIG_APIKEY
       # Add any build steps here. For example:
       # - run: npm ci && npm run build
       - run: yarn install && yarn build
