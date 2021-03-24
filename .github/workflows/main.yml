@@ -10,11 +10,11 @@ on:
 
 jobs:
   deploy_live_website:
+    env:
+      CI: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - env:
-          CI: false
       # Add any build steps here. For example:
       # - run: npm ci && npm run build
       - run: yarn install && yarn build
