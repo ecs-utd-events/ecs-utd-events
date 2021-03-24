@@ -51,6 +51,7 @@ export default function Login() {
                 }, 1000);
             }).catch((error) => {
                 setErrorCode(error.code);
+                console.error(error);
             })
         }).catch((error) => {
             setErrorCode(error.code);
