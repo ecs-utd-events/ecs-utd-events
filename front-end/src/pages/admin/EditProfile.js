@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import CustomButton from '../../components/CustomButton';
 import AdminLayout from "../../components/AdminLayout";
 import FullPageLoading from '../../components/FullPageLoading';
+import { socialMediaPlatforms } from '../../constants/SocialMediaPlatforms';
 import { UserContext } from "../../providers/UserProvider";
 import { AllOrgContext } from '../../providers/AllOrgProvider';
 import '../../styles/AdminPages.css';
@@ -46,13 +47,6 @@ export default function EditProfile() {
     const { register, handleSubmit, watch, reset, errors, clearErrors } = useForm();
     const [isEditing, setEditing] = useState(false);
     const watchDescription = watch("description", org != null ? org.description : 'Description');
-
-    const socialMediaPlatforms =
-        [{ title: 'Facebook', ref: 'facebook' },
-        { title: 'LinkedIn', ref: 'linkedIn' },
-        { title: 'Discord', ref: 'discord' },
-        { title: 'Instagram', ref: 'instagram' },
-        { title: 'Snapchat', ref: 'snapchat' }];
 
     const onSubmit = (newOrgData) => {
         setEditing(false);

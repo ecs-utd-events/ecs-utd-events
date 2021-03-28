@@ -43,6 +43,12 @@ button.wide-btn, a.wide-btn {
     margin: 0;
 }
 
+.center-row {
+    display: unset!important;
+    margin-left: 0px;
+    margin-right: auto;
+}
+
 .form-group label, .form-group select {
     margin-bottom: 0;
     font-size: .75rem;
@@ -359,4 +365,11 @@ div.form-group {
     right: 0;
     left: auto;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.social-media-icon-button {
+    font-size: '2rem';
+    color: var(--gray3);
+    position: relative;
+    top: '-5px';
 }

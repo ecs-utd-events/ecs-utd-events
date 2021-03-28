@@ -3,15 +3,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 import { Icon } from '@iconify/react';
 import linkIcon from '@iconify/icons-mdi/link-variant';
 import descriptionIcon from '@iconify/icons-mdi/format-align-left';
-import facebookIcon from '@iconify/icons-mdi/facebook';
-import instagramIcon from '@iconify/icons-mdi/instagram';
-import snapchatIcon from '@iconify/icons-mdi/snapchat';
-import linkedinIcon from '@iconify/icons-mdi/linkedin';
-import discordIcon from '@iconify/icons-mdi/discord';
 
 import OrgPageEventCard from "../components/OrgPageEventCard";
 import NavbarComponent from '../components/NavbarComponent';
@@ -27,6 +23,8 @@ import { UserContext } from "../providers/UserProvider";
 
 import Circle from '../assets/placeholder_org_image.svg';
 import FooterComponent from '../components/FooterComponent';
+import IconButton from "../components/IconButton";
+import { socialMediaPlatforms } from '../constants/SocialMediaPlatforms';
 
 function findThisOrg(allOrgs, orgSlug) {
     if (allOrgs != null && orgSlug != null) {
@@ -49,13 +47,6 @@ export default function OrgProfile() {
     const maxEventsDisplayed = 3;
     const organizations = useContext(AllOrgContext);
     const { org } = useContext(UserContext);
-
-    const socialMediaPlatforms =
-    [{ title: 'Facebook', ref: 'facebook', icon: facebookIcon },
-    { title: 'LinkedIn', ref: 'linkedIn', icon: linkedinIcon },
-    { title: 'Discord', ref: 'discord', icon: discordIcon },
-    { title: 'Instagram', ref: 'instagram', icon: instagramIcon },
-    { title: 'Snapchat', ref: 'snapchat', icon: snapchatIcon }];
 
     useEffect(() => {
         setThisOrg(findThisOrg(organizations, orgSlug));
@@ -147,6 +138,16 @@ export default function OrgProfile() {
                         <Row className="my-4">
                             <h1 className="item-align-center font-weight-bold">{thisOrg.name}</h1>
                         </Row>
+                        <Row className="center-row">
+                            <ButtonGroup>
+                        { socialMediaPlatforms.map(platform => { 
+                            return ( thisOrg.socialMedia[platform.ref] &&
+                                <IconButton icon={platform.icon} className="mr-2 social-media-icon-button"><a href={thisOrg.socialMedia[platform.ref]}></a></IconButton>
+                            )
+                            })
+                        }
+                        </ButtonGroup>
+                        </Row>
                         <Row className="mb-3">
                             <Col xs={2} style={{ textAlign: 'right', marginTop: '-4px' }}>
                                 <Icon icon={linkIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
@@ -163,20 +164,6 @@ export default function OrgProfile() {
                                 {thisOrg.description}
                             </Col>
                         </Row>
-                        { thisOrg.socialMedia && <h4>Social Media Platforms</h4>}
-                        { socialMediaPlatforms.map(platform => { 
-                            return ( thisOrg.socialMedia[platform.ref] &&
-                                    <Row className="mb-2">
-                                        <Col xs={2} style={{ textAlign: 'right', marginTop: '3px', marginBottom: 'auto' }}>
-                                            <Icon icon={platform.icon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
-                                        </Col>
-                                        <Col xs={8} style={{ textAlign: 'left', marginTop: '.5rem' }}>
-                                            <a href={thisOrg.socialMedia[platform.ref]}>{thisOrg.socialMedia[platform.ref]}</a>
-                                        </Col>
-                                    </Row>
-                                )
-                            })
-                        } 
                         <ToggleButton
                             selected={selected}
                             toggleSelected={() => {

@@ -1,8 +1,4 @@
 import Card from "react-bootstrap/esm/Card";
-import {
-    Link
-} from "react-router-dom";
-
 import EventInfoContent from './EventInfoContent.js';
 
 
@@ -34,7 +30,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard, orgs
                 <Card.Body>
                     <p>Welcome to ECS UTD Events!</p>
                     <p>You can check out all the upcoming events planned by ECS Student Orgs in one place!</p>
-                    <p>If you are an organization and are not already partnered with us, sign up <Link to="/login">here</Link></p>
+                    <p>If you are an organization and are not already partnered with us, sign up <a target="_blank"href="https://forms.gle/jjV72W34txZLvZuw7">here</a></p>
                 </Card.Body>
             </Card>
         )
