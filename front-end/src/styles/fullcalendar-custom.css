@@ -12,6 +12,14 @@
     /* margin-bottom: 10vh; */
 }
 
+.fullcalendar-wrapper.admin .fc-daygrid-event-dot {
+    border: none;
+}
+
+.fullcalendar-wrapper.admin .fc-daygrid-day-events .fc-event-time {
+    overflow: visible;
+}
+
 .fullcalendar-wrapper .fc .fc-button-primary:disabled {
     background-color: var(--secondary2);
     color: var(--gray3);

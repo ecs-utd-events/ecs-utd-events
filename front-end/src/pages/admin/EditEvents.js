@@ -59,17 +59,28 @@ export default function EditEvents() {
 
     useEffect(() => {
         // GET request for all events using fetch inside useEffect React hook
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
-            .then(response => response.json())
-            .then(data => parseEventsToFullCalendarFormat(data))
-            .then(data => setDbEvents(data))
-            .catch(error => {
-                console.error('There was an error fetching events!', error);
-            });
-    }, []);
+        if (org != null) {
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
+                .then(response => response.json())
+                .then(data => parseEventsToFullCalendarFormat(data))
+                .then(parsedEvents =>
+                    parsedEvents.map((event) => {
+                        if (org != null && event.extendedProps.org.find(eventOrg => eventOrg === org.uId) != null) {
+                            event.display = "block"
+                            event.color = "var(--primaryshade1)"
+                        }
+                        return event;
+                    })
+                )
+                .then(data => setDbEvents(data))
+                .catch(error => {
+                    console.error('There was an error fetching events!', error);
+                });
+        }
+    }, [org]);
 
     const setIsAddingHelper = newValue => {
-        if(selectedEvent != null && selectedEvent.id === '') {
+        if (selectedEvent != null && selectedEvent.id === '') {
             setSelectedEvent(null);
             setIsAdding(newValue);
         } else {
