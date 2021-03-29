@@ -4,13 +4,15 @@ import FullCalendar, { isArraysEqual } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import AddIcon from '@iconify/icons-mdi/plus-circle-outline';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard, { LoadingEventCard } from '../../components/EditableEventCard';
 import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
-import { parseEventsToFullCalendarFormat } from "../../components/FullCalendarUtils";
+import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../components/FullCalendarUtils";
 import { eventCardFormatToISO, lastUpdatedToISO } from '../../components/TimeUtils';
+import NonEditableEventCard from "../../components/NonEditableEventCard";
 
 function sortedEventInsert(sortedEventArr, newEvent) {
     const apparentIndex = binarySearch(sortedEventArr, newEvent, 0, sortedEventArr.length);
@@ -41,6 +43,7 @@ export default function EditEvents() {
     const [isAdding, setIsAdding] = useState(false);
     const [dbEvents, setDbEvents] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
+    const [selectedEvent, setSelectedEvent] = useState(null);
     let calendarRef = createRef();
 
     useEffect(() => {
@@ -65,11 +68,19 @@ export default function EditEvents() {
             });
     }, []);
 
+    const setIsAddingHelper = newValue => {
+        if(selectedEvent != null && selectedEvent.id === '') {
+            setSelectedEvent(null);
+            setIsAdding(newValue);
+        } else {
+            setIsAdding(newValue);
+        }
+    }
+
     const addEvent = event => {
         event.preventDefault();
         setIsAdding(!isAdding);
-        setAllEvents([
-            ...allEvents,
+        setSelectedEvent(
             {
                 id: '',
                 title: '',
@@ -77,11 +88,11 @@ export default function EditEvents() {
                 startTime: '',
                 endTime: '',
                 description: '',
-                org: '',
+                org: [],
                 location: '',
                 link: ''
             }
-        ]);
+        );
     };
 
     const deleteEvent = (id) => {
@@ -165,26 +176,23 @@ export default function EditEvents() {
         calendarRef.current.getApi().changeView(calendarRef.current.getApi().view.type, dateStr);
     }
 
+    const EventCard = () => {
+        if (isAdding || (selectedEvent != null && selectedEvent.orgs.find(collaborator => collaborator === org.uId) != null)) {
+            return <EditableEventCard event={selectedEvent} isEditable={selectedEvent != null && selectedEvent.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent} setIsAdding={setIsAddingHelper}></EditableEventCard>
+        }
+        else {
+            return <NonEditableEventCard event={selectedEvent} />
+        }
+    }
+
     if (org != null) {
         return (
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
-                { allEvents != null ?
-                    allEvents.map((event, index) => {
-                        return (
-                            <EditableEventCard key={index} event={event} isEditable={event.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent} setIsAdding={setIsAdding}></EditableEventCard>
-                        )
-                    }) :
-                    <div>
-                        <LoadingEventCard />
-                        <LoadingEventCard />
-                    </div>
-                }
-                {!isAdding && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
                 <div className="fullcalendar-wrapper admin">
                     <FullCalendar
                         ref={calendarRef}
-                        initialView="timeGridWeek"
+                        initialView="dayGridMonth"
                         plugins={[dayGridPlugin, timeGridPlugin]}
                         headerToolbar={{
                             left: 'prev,next today',
@@ -194,9 +202,28 @@ export default function EditEvents() {
                         height="100%"
                         scrollTime='08:00:00'
                         events={dbEvents}
+                        eventClick={(info) => {
+                            var event = formatFCEventToDB(info.event)
+                            setSelectedEvent(event)
+                        }}
                     />
                 </div>
-            </AdminLayout>
+                <Row>
+                    <Col className="d-flex align-items-center justify-content-center p-0">
+                        {!isAdding && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
+                    </Col>
+                    <Col xs={11} className="p-0">
+                        {dbEvents != null ?
+                            <EventCard />
+                            :
+                            <div>
+                                <LoadingEventCard />
+                            </div>
+                        }
+                    </Col>
+                </Row>
+
+            </AdminLayout >
         )
     }
     else {

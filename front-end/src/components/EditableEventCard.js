@@ -100,11 +100,11 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
         return <LoadingEventCard />
     }
 
-    if (event && !isEditing) {
+    if (event != null && !isEditing) {
         return (
             <Container>
                 <Col>
-                    <Card className={"drop-shadow mb-4 pb-0"}>
+                    <Card className={"drop-shadow pb-0"}>
                         <Row>
                             <Col style={{ textAlign: 'left' }}>
                                 <h5 className="font-weight-bold">{event.title}</h5>
@@ -133,11 +133,11 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                 <DeleteEventModal show={show} onHide={() => setShow(false)} delete={() => deleteEvent(event.id)} title={event.title} />
             </Container>
         );
-    } else if (event && isEditing) {
+    } else if (event != null && isEditing) {
         return (
             <Container>
                 <Col>
-                    <Card className={"drop-shadow mb-4"}>
+                    <Card className={"drop-shadow"}>
                         <Form onSubmit={handleSubmit(onSubmit)} style={{ display: 'inline-block' }}>
                             <Form.Group controlId="eventTitle">
                                 <Form.Label>Event Title</Form.Label>
@@ -182,7 +182,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                             <Col>
                                                 <Form.Label>Description</Form.Label>
                                             </Col>
-                                            <Col style={{textAlign: 'end'}}>
+                                            <Col style={{ textAlign: 'end' }}>
                                                 <Form.Label style={watchDescription.length > 500 ? { color: "red" } : null}>{watchDescription.length}/500 chars</Form.Label>
                                             </Col>
                                         </Row>

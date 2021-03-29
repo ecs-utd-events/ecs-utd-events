@@ -21,3 +21,18 @@ export function parseEventsToFullCalendarFormat(eventData) {
     }
   })
 }
+
+export function formatFCEventToDB(event) {
+  return {
+    id: event.id,
+    title: event.title,
+    startTime: event.start,
+    endTime: event.end,
+    description: event.extendedProps.description,
+    orgs: event.extendedProps.org,
+    location: event.extendedProps.location,
+    link: event.extendedProps.link,
+    tags: event.extendedProps.tags,
+    lastUpdated: event.extendedProps.lastUpdated
+  }
+}
