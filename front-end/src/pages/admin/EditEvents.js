@@ -14,48 +14,12 @@ import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../compon
 import { eventCardFormatToISO, lastUpdatedToISO } from '../../components/TimeUtils';
 import NonEditableEventCard from "../../components/NonEditableEventCard";
 
-function sortedEventInsert(sortedEventArr, newEvent) {
-    const apparentIndex = binarySearch(sortedEventArr, newEvent, 0, sortedEventArr.length);
-    sortedEventArr.splice(apparentIndex, 0, newEvent)
-    return sortedEventArr
-}
-
-function binarySearch(sortedArr, x, start, end) {
-    if (start >= sortedArr.length) return sortedArr.length
-    if (end < start) return end + 1;
-    const mid = Math.floor((start + end) / 2);
-    const midDate = new Date(sortedArr[mid].startTime);
-    const xDate = new Date(x.startTime);
-    if (midDate.getTime() === xDate.getTime()) {
-        return mid;
-    }
-    if (midDate < xDate) {
-        return binarySearch(sortedArr, x, mid + 1, end);
-    }
-    if (midDate > xDate) {
-        return binarySearch(sortedArr, x, start, mid - 1);
-    }
-}
-
-
 export default function EditEvents() {
     const { org } = useContext(UserContext);
     const [isAdding, setIsAdding] = useState(false);
     const [dbEvents, setDbEvents] = useState(null);
-    const [allEvents, setAllEvents] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
     let calendarRef = createRef();
-
-    useEffect(() => {
-        if (org != null) {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + org.uId)
-                .then(response => response.json())
-                .then(data => setAllEvents(data))
-                .catch(error => {
-                    console.error('There was an error fetching events for this org: ' + org.name, error);
-                });
-        }
-    }, [org])
 
     useEffect(() => {
         // GET request for all events using fetch inside useEffect React hook
@@ -111,10 +75,15 @@ export default function EditEvents() {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
                 method: 'DELETE',
             })
-                .then(response => { console.log(response) })
+                .then(response => {
+                    console.log(response)
+                    return dbEvents.filter(event => event.id !== id);
+                })
+                .then(updatedEvents => {
+                    setDbEvents(updatedEvents);
+                    setSelectedEvent(null);
+                })
         }
-        var remainingEvents = allEvents.filter(x => x.id !== id);
-        setAllEvents(remainingEvents);
     }
 
     const saveEvent = (event, id, orgId, setLoading) => {
@@ -143,13 +112,20 @@ export default function EditEvents() {
                 body: JSON.stringify(body),
                 headers: { 'Content-Type': 'application/json' }
             })
-                .then(response => { console.log(response) })
-                .then(_ => {
-                    var remainingEvents = allEvents.filter(event => event.id !== id);
-                    return sortedEventInsert(remainingEvents, body);
+                .then(response => {
+                    return dbEvents.filter(event => event.id !== id)
                 })
-                .then(newEvents => {
-                    setAllEvents(newEvents);
+                .then(filteredEvents => {
+                    let eventToUpdate = parseEventsToFullCalendarFormat([body])[0]
+                    eventToUpdate.display = "block"
+                    eventToUpdate.color = "var(--primaryshade1)"
+
+                    filteredEvents.push(eventToUpdate)
+                    return filteredEvents
+                })
+                .then(updatedEvents => {
+                    setDbEvents(updatedEvents)
+                    setSelectedEvent(body)
                     setLoading(false);
                 })
                 .catch(
@@ -167,11 +143,8 @@ export default function EditEvents() {
                     return response.text()
                 }).then(newId => {
                     body.id = newId;
-                    var events = allEvents.filter(event => event.id !== '');
-                    return sortedEventInsert(events, body);
-                })
-                .then(newEvents => {
-                    setAllEvents(newEvents);
+                    setSelectedEvent(body);
+                    setDbEvents([...dbEvents, ...parseEventsToFullCalendarFormat([body])])
                     setIsAdding(false);
                     setLoading(false);
                 })
