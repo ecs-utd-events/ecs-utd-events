@@ -67,6 +67,8 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
     const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
+    const watchDescription = watch("description", event != null ? event.description : false);
+
     const onSubmit = (eventInfo) => {
         setEditing(!isEditing);
         saveEvent(eventInfo, event.id, currOrg.org.uId, setIsLoading);
@@ -123,12 +125,12 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                         <Row>
                             <Col className="d-flex justify-content-end m-0">
                                 <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
-                                <IconButton icon={TrashIcon} onClick={(e) => {e.preventDefault(); setShow(true);}}></IconButton>
+                                <IconButton icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
                             </Col>
                         </Row>
                     </Card>
                 </Col>
-                <DeleteEventModal show={show} onHide={() => setShow(false)} delete={() => deleteEvent(event.id)} title={event.title}/>
+                <DeleteEventModal show={show} onHide={() => setShow(false)} delete={() => deleteEvent(event.id)} title={event.title} />
             </Container>
         );
     } else if (event && isEditing) {
@@ -144,12 +146,12 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                             <Form.Row>
                                 <Form.Group as={Col} controlId="date">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} defaultValue={getCSTFormattedDate(event.startTime)} />
+                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={getCSTFormattedDate(event.startTime)} />
                                     {errors.date && <p className="error">⚠ Please do not create past events.</p>}
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="startTime">
                                     <Form.Label>Start time</Form.Label>
-                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => setStartTime(e.target.value)} defaultValue={getCSTFormattedTime(event.startTime)} />
+                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => { setStartTime(e.target.value); changeCalendarView(e.target.value) }} defaultValue={getCSTFormattedTime(event.startTime)} />
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="endTime">
                                     <Form.Label>End time</Form.Label>
@@ -176,8 +178,15 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                         <Form.Control type="url" placeholder="Link" name="link" ref={register()} defaultValue={event.link || ''} />
                                     </Form.Group>
                                     <Form.Group>
-                                        <Form.Label>Description</Form.Label>
-                                        <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true })} defaultValue={event.description} />
+                                        <Row>
+                                            <Col>
+                                                <Form.Label>Description</Form.Label>
+                                            </Col>
+                                            <Col style={{textAlign: 'end'}}>
+                                                <Form.Label style={watchDescription.length > 500 ? { color: "red" } : null}>{watchDescription.length}/500 chars</Form.Label>
+                                            </Col>
+                                        </Row>
+                                        <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true, maxLength: 500 })} defaultValue={event.description} />
                                     </Form.Group>
                                 </Col>
                             </Form.Row>
