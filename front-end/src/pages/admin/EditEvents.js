@@ -205,6 +205,7 @@ export default function EditEvents() {
                         eventClick={(info) => {
                             var event = formatFCEventToDB(info.event)
                             setSelectedEvent(event)
+                            setIsAdding(false)
                         }}
                     />
                 </div>

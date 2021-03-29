@@ -90,9 +90,9 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const cancelEditing = (e) => {
         e.preventDefault()
         if (event.id === '') {
-            setIsAdding(false);
             deleteEvent(event.id);
         }
+        setIsAdding(false);
         setEditing(!isEditing);
     };
 
@@ -110,7 +110,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                 <h5 className="font-weight-bold">{event.title}</h5>
                             </Col>
                         </Row>
-                        <Row>
+                        <Row className="pb-3">
                             <Col xs={2} style={{ textAlign: 'left' }}>
                                 <p className="mb-0">{(new Date(event.startTime)).toLocaleDateString()}</p>
                                 <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
@@ -118,14 +118,16 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                 <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>
                                 {event.link != null && event.link !== '' && <a className="mb-0" href={event.link} target="_blank">Link</a>}
                             </Col>
-                            <Col style={{ textAlign: 'left' }}>
-                                <p>{event.description}</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="d-flex justify-content-end m-0">
-                                <IconButton className="mr-2" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
-                                <IconButton icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
+                            <Col style={{ textAlign: 'left' }} className="d-flex" >
+                                <Row>
+                                    <p>{event.description}</p>
+                                </Row>
+                                <Row className="d-flex flex-grow-1">
+                                    <Col className="d-flex justify-content-end align-items-end m-0">
+                                        <IconButton className="mr-2 my-0" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
+                                        <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                     </Card>
