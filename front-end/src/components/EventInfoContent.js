@@ -45,6 +45,10 @@ function getRelevantOrgs(allOrgs, event) {
     return filteredArr
 }
 
+function exportICal(event) {
+    console.log("testing on click");
+}
+
 export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
     useEffect(() => {
@@ -106,7 +110,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                         {event.extendedProps.link != null &&
                             <IconButton className="mr-1 color-black mb-0" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
                         }
-                        <IconButton className="mr-1" SVGComponent={CalendarIcon}></IconButton>
+                        <IconButton className="mr-1" SVGComponent={CalendarIcon} onClick={exportICal(event)}></IconButton>
                         {/* <IconButton className="mr-1" icon={ShareIcon}></IconButton> */}
                     </ButtonGroup>
                 </Col>

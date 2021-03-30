@@ -14,13 +14,23 @@ export function getEventCardFormattedTime(date) {
 }
 
 export function getCSTFormattedDate(date) {
+    if(date == null || date === '') return null
     var CSTDateString = new Date(date).toLocaleDateString('en-US', { timeZone: 'America/Chicago', day: '2-digit', month: '2-digit', year: 'numeric' });
     const regex = /(\d{2})\/(\d{2})\/(\d{4})/gm;
     const match = regex.exec(CSTDateString);
     return `${match[3]}-${match[1]}-${match[2]}`
 }
 
+export function getFormattedDate(date) {
+    if(date == null || date === '') return null
+    var dateString = new Date(date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    const regex = /(\d{2})\/(\d{2})\/(\d{4})/gm;
+    const match = regex.exec(dateString);
+    return `${match[3]}-${match[1]}-${match[2]}`
+}
+
 export function getCSTFormattedTime(date) {
+    if(date == null || date === '') return null
     return new Date(date).toLocaleTimeString('en-US', { hour12: false, timeZone: 'America/Chicago' }).replace(/(.*)\D\d+/, '$1');
 }
 
@@ -28,10 +38,14 @@ export function lastUpdatedToISO() {
     return (new Date()).toISOString().split('.')[0] + "Z"
 }
 
+export function getAPIFormattedISOString(date) {
+    return date.toISOString().split('.')[0] + "Z"
+}
+
 export function eventCardFormatToISO(date, time) {
     var CSTDateTime = date + 'T' + time;
     var CSTDate = new Date(CSTDateTime)
-    if(CSTDate.isDstObserved()) {
+    if (CSTDate.isDstObserved()) {
         CSTDateTime = CSTDateTime.concat('-05:00');
     } else {
         CSTDateTime = CSTDateTime.concat('-06:00');
