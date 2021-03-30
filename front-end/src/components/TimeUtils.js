@@ -50,8 +50,6 @@ export function eventCardFormatToISO(date, time) {
     } else {
         CSTDateTime = CSTDateTime.concat('-06:00');
     }
-    console.log(CSTDateTime);
-    console.log((new Date(CSTDateTime)).toISOString().split('.')[0] + "Z")
     return (new Date(CSTDateTime)).toISOString().split('.')[0] + "Z"
 }
 

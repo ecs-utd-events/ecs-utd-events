@@ -9,7 +9,7 @@ import Circle from '../assets/placeholder_org_image.svg';
 import { auth } from '../firebase';
 
 export default function NavbarComponent({ page }) {
-    const { org } = useContext(UserContext);
+    const { org, user } = useContext(UserContext);
     const [dummyOrgState, setDummyOrgState] = useState(org);
 
     const logoutHandler = (e) => {
@@ -24,11 +24,16 @@ export default function NavbarComponent({ page }) {
     }
 
     useEffect(() => {
-        setDummyOrgState(org);
-    }, [org])
+        if(user == null)
+            setDummyOrgState(null)
+        else if(org == null)
+            setDummyOrgState(null)
+        else
+            setDummyOrgState(org);
+    }, [org, user])
 
     const backgroundCSSName = page === 'OrgProfilePage' ? 'App' : 'background';
-    var imageSource = org != null ? (org.imageUrl != null && org.imageUrl !== "" ? org.imageUrl : Circle) : null;
+    var imageSource = dummyOrgState != null ? (dummyOrgState.imageUrl != null && dummyOrgState.imageUrl !== "" ? dummyOrgState.imageUrl : Circle) : null;
 
     return (
         <Navbar className={'mb-0 ' + backgroundCSSName} style={{ paddingRight: 25 }}>
