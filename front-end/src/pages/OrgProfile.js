@@ -25,6 +25,7 @@ import Circle from '../assets/placeholder_org_image.svg';
 import FooterComponent from '../components/FooterComponent';
 import IconButton from "../components/IconButton";
 import { socialMediaPlatforms } from '../constants/SocialMediaPlatforms';
+import groupmeIcon from '../assets/groupme.svg';
 
 function findThisOrg(allOrgs, orgSlug) {
     if (allOrgs != null && orgSlug != null) {
@@ -141,9 +142,12 @@ export default function OrgProfile() {
                         <Row className="center-row">
                             <ButtonGroup>
                         { socialMediaPlatforms.map(platform => { 
-                            return ( thisOrg.socialMedia[platform.ref] &&
-                                <IconButton icon={platform.icon} className="mr-2 social-media-icon-button"><a href={thisOrg.socialMedia[platform.ref]}></a></IconButton>
-                            )
+                                if (thisOrg.socialMedia[platform.ref] && platform.type === 'iconify') {
+                                    return (<a href={thisOrg.socialMedia[platform.ref]}><IconButton icon={platform.icon} className="mr-2 social-media-icon-button"></IconButton></a>);
+                                }
+                                else if (thisOrg.socialMedia[platform.ref] && platform.type === 'svg') {
+                                    return (<a href={thisOrg.socialMedia[platform.ref]}><IconButton SVGIcon={platform.icon} className="mr-2 social-media-icon-button"></IconButton></a>);
+                                }     
                             })
                         }
                         </ButtonGroup>
