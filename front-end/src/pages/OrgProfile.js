@@ -135,7 +135,7 @@ export default function OrgProfile() {
                     <NavbarComponent page='OrgProfilePage' org={org} />
                     <Container>
                         <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
-                        <Row className="my-4">
+                        <Row className="mt-4 mb-0">
                             <h1 className="item-align-center font-weight-bold">{thisOrg.name}</h1>
                         </Row>
                         <Row className="center-row">
