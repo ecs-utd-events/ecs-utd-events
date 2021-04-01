@@ -8,10 +8,11 @@ import ShowMoreText from 'react-show-more-text';
 import ShareIcon from '@iconify/icons-mdi/share';
 import LinkIcon from '@iconify/icons-mdi/link-variant';
 import { useEffect, useState } from "react";
+import ICalendarLink from "react-icalendar-link";
 
 import IconButton from '../components/IconButton';
 import Tag from "./Tag";
-import { getFormattedTime, lastUpdatedToString } from './TimeUtils';
+import { getFormattedTime, lastUpdatedToString, eventCardFormatToISO } from './TimeUtils';
 
 import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
@@ -45,19 +46,23 @@ function getRelevantOrgs(allOrgs, event) {
     return filteredArr
 }
 
-function exportICal(event) {
-    console.log("testing on click");
-}
-
 export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
-        console.log(event);
+        // console.log(event);
     }, [event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
+
+    const formattedICalEvent = {
+        title: event.title,
+        description: event.extendedProps.description + " " + event.extendedProps.link,
+        startTime: event.start,
+        endTime: event.end,
+        location: event.extendedProps.location
+    }
 
     return (
         <>
@@ -110,7 +115,10 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                         {event.extendedProps.link != null &&
                             <IconButton className="mr-1 color-black mb-0" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
                         }
-                        <IconButton className="mr-1" SVGComponent={CalendarIcon} onClick={exportICal(event)}></IconButton>
+                        <ICalendarLink event={formattedICalEvent}>
+                            <IconButton className="mr-1" SVGComponent={CalendarIcon} />
+                        </ICalendarLink>
+
                         {/* <IconButton className="mr-1" icon={ShareIcon}></IconButton> */}
                     </ButtonGroup>
                 </Col>
