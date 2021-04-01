@@ -196,7 +196,6 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                 <Col className="d-flex justify-content-end m-0">
                                     <IconButton className="mr-2" icon={SaveIcon} type="submit" disabled={orgs.some(org => org.uId === currOrg.org)} onClick={handleSubmit(onSubmit)}></IconButton>
                                     <IconButton className="mr-2" icon={CancelIcon} onClick={cancelEditing}></IconButton>
-                                    {/* <IconButton icon={TrashIcon} onClick={(e) => deleteEvent(e, event.id)}></IconButton> */}
                                 </Col>
                             </Form.Row>
                         </Form>

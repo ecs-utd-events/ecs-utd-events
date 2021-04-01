@@ -15,7 +15,7 @@ function sortTagsAlphabetically(tagsArr) {
 }
 
 function getTimeFromRangeMinutes(value, index) {
-    if(value === 0 || value === 1440) {
+    if (value === 0 || value === 1440) {
         return "12:00 AM"
     }
     var minutes = value % 60
@@ -29,7 +29,7 @@ function getTimeFromRangeMinutes(value, index) {
 
     if (hours > 13) {
         hours = hours % 12;
-    } 
+    }
     hoursString = hoursString.concat(hours.toString());
     return hoursString + ":" + minuteString + " " + (value >= 720 ? 'PM' : 'AM');
 }
@@ -80,7 +80,8 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
     const [committedTimeFilterValue, setCommittedTimeFilterValue] = useState([0, 1440])
     const [orgFilterValue, setOrgFilterValue] = useState(null)
     const [tagsFilterValue, setTagsFilterValue] = useState([])
-    const organizations = useContext(AllOrgContext);
+    const [organizations, setOrganizations] = useState([])
+    const orgs = useContext(AllOrgContext);
 
     useEffect(() => {
         fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/tags/all')
@@ -91,6 +92,14 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                 console.error('There was an error fetching tags!', error);
             });
     }, [])
+
+    useEffect(() => {
+        if (orgs != null) {
+            const orderedOrgs = orgs;
+            orderedOrgs.sort((a, b) => a.name.localeCompare(b.name));
+            setOrganizations(orderedOrgs);
+        }
+    }, [orgs])
 
     function filterEventHelper() {
         filterEvents(orgFilterValue, tagsFilterValue, committedTimeFilterValue, allEvents, setFilteredEvents);
