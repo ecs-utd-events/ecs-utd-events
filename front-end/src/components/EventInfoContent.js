@@ -55,10 +55,11 @@ export default function EventInfoContent({ event, mobile, orgs }) {
     }, [event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
+    var includedLink = event.extendedProps.link != null ? event.extendedProps.link : "";
 
     const formattedICalEvent = {
         title: event.title,
-        description: event.extendedProps.description + " " + event.extendedProps.link,
+        description: event.extendedProps.description + " " + includedLink,
         startTime: event.start,
         endTime: event.end,
         location: event.extendedProps.location
