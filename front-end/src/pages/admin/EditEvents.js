@@ -4,19 +4,20 @@ import FullCalendar, { isArraysEqual } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import AddIcon from '@iconify/icons-mdi/plus-circle-outline';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard, { LoadingEventCard } from '../../components/EditableEventCard';
 import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../components/FullCalendarUtils";
-import { eventCardFormatToISO, lastUpdatedToISO } from '../../components/TimeUtils';
+import { eventCardFormatToISO, getFormattedTime, lastUpdatedToISO } from '../../components/TimeUtils';
 import NonEditableEventCard from "../../components/NonEditableEventCard";
 
 export default function EditEvents() {
     const { org } = useContext(UserContext);
     const [dbEvents, setDbEvents] = useState(null);
+    const [myEvents, setMyEvents] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     let calendarRef = createRef();
@@ -42,6 +43,13 @@ export default function EditEvents() {
                 });
         }
     }, [org]);
+
+    useEffect(() => {
+        if (dbEvents != null && org != null) {
+            let myEventsTemp = dbEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
+            setMyEvents(myEventsTemp);
+        }
+    }, [dbEvents, org])
 
     const setIsEditingHelper = newValue => {
         if (selectedEvent != null && selectedEvent.id === '' && !newValue) {
@@ -173,26 +181,62 @@ export default function EditEvents() {
         return (
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
-                <div className="fullcalendar-wrapper admin">
-                    <FullCalendar
-                        ref={calendarRef}
-                        initialView="dayGridMonth"
-                        plugins={[dayGridPlugin, timeGridPlugin]}
-                        headerToolbar={{
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'dayGridMonth,timeGridWeek'
-                        }}
-                        height="100%"
-                        scrollTime='08:00:00'
-                        events={dbEvents}
-                        eventClick={(info) => {
-                            var event = formatFCEventToDB(info.event)
-                            setSelectedEvent(event)
-                            setIsEditing(false)
-                        }}
-                    />
-                </div>
+                <Row>
+                    <Col className="p-0" xs={3} sm={4} style={{ minWidth: '200px' }}>
+                        <h3>My Events</h3>
+                        {myEvents != null &&
+                            <Table striped hover responsive>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {myEvents.map((event) => {
+                                        return (
+                                            <tr key={event.id} onClick={(e) => {
+                                                var dbEvent = formatFCEventToDB(event)
+                                                changeCalendarView(event.start)
+                                                setSelectedEvent(dbEvent)
+                                                setIsEditing(false)
+                                            }}>
+                                                <td>{new Date(event.start).toLocaleDateString()}</td>
+                                                <td>{getFormattedTime(event.start)} - {getFormattedTime(event.end)}</td>
+                                                <td>{event.title}</td>
+                                                <td>edit</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>
+                        }
+                    </Col>
+                    <Col className="p-0">
+                        <div className="fullcalendar-wrapper admin">
+                            <FullCalendar
+                                ref={calendarRef}
+                                initialView="dayGridMonth"
+                                plugins={[dayGridPlugin, timeGridPlugin]}
+                                headerToolbar={{
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'dayGridMonth,timeGridWeek'
+                                }}
+                                height="100%"
+                                scrollTime='08:00:00'
+                                events={dbEvents}
+                                eventClick={(info) => {
+                                    var event = formatFCEventToDB(info.event)
+                                    setSelectedEvent(event)
+                                    setIsEditing(false)
+                                }}
+                            />
+                        </div>
+                    </Col>
+                </Row>
                 <Row>
                     <Col className="d-flex align-items-center justify-content-center p-0">
                         {!isEditing && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
