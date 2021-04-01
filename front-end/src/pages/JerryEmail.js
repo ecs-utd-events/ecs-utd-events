@@ -21,8 +21,9 @@ const getEventString = (curEvent, orgs) => {
         }
     }
     const curDate = new Date(curEvent.startTime);
+    const eventLink = curEvent.link != null ? addProtocol(curEvent.link) : ""
     return (curEvent.title + ' -- ' + orgString + '\n' + curDate.toLocaleTimeString() + '\t|\t'
-        + curEvent.location + '\n' + curEvent.description + '\n' + addProtocol(curEvent.link) + '\n\n');
+        + curEvent.location + '\n' + curEvent.description + '\n' + eventLink + '\n\n');
 }
 
 function addProtocol(str) {
