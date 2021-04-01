@@ -16,9 +16,9 @@ import NonEditableEventCard from "../../components/NonEditableEventCard";
 
 export default function EditEvents() {
     const { org } = useContext(UserContext);
-    const [isAdding, setIsAdding] = useState(false);
     const [dbEvents, setDbEvents] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
     let calendarRef = createRef();
 
     useEffect(() => {
@@ -43,18 +43,18 @@ export default function EditEvents() {
         }
     }, [org]);
 
-    const setIsAddingHelper = newValue => {
-        if (selectedEvent != null && selectedEvent.id === '') {
+    const setIsEditingHelper = newValue => {
+        if (selectedEvent != null && selectedEvent.id === '' && !newValue) {
             setSelectedEvent(null);
-            setIsAdding(newValue);
+            setIsEditing(newValue);
         } else {
-            setIsAdding(newValue);
+            setIsEditing(newValue);
         }
     }
 
     const addEvent = event => {
         event.preventDefault();
-        setIsAdding(!isAdding);
+        setIsEditing(true);
         setSelectedEvent(
             {
                 id: '',
@@ -145,7 +145,7 @@ export default function EditEvents() {
                     body.id = newId;
                     setSelectedEvent(body);
                     setDbEvents([...dbEvents, ...parseEventsToFullCalendarFormat([body])])
-                    setIsAdding(false);
+                    setIsEditing(false);
                     setLoading(false);
                 })
                 .catch(
@@ -161,8 +161,8 @@ export default function EditEvents() {
     }
 
     const EventCard = () => {
-        if (isAdding || (selectedEvent != null && selectedEvent.orgs.find(collaborator => collaborator === org.uId) != null)) {
-            return <EditableEventCard event={selectedEvent} isEditable={selectedEvent != null && selectedEvent.title === ''} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent} setIsAdding={setIsAddingHelper}></EditableEventCard>
+        if (isEditing || (selectedEvent != null && selectedEvent.orgs.find(collaborator => collaborator === org.uId) != null)) {
+            return <EditableEventCard event={selectedEvent} isEditing={isEditing} setIsEditing={setIsEditingHelper} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>
         }
         else {
             return <NonEditableEventCard event={selectedEvent} />
@@ -189,13 +189,13 @@ export default function EditEvents() {
                         eventClick={(info) => {
                             var event = formatFCEventToDB(info.event)
                             setSelectedEvent(event)
-                            setIsAdding(false)
+                            setIsEditing(false)
                         }}
                     />
                 </div>
                 <Row>
                     <Col className="d-flex align-items-center justify-content-center p-0">
-                        {!isAdding && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
+                        {!isEditing && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
                     </Col>
                     <Col xs={11} className="p-0">
                         {dbEvents != null ?

@@ -51,9 +51,8 @@ export function LoadingEventCard() {
     )
 }
 
-export default function EditableEventCard({ event, deleteEvent, isEditable, changeCalendarView, saveEvent, setIsAdding }) {
+export default function EditableEventCard({ event, deleteEvent, setIsEditing, isEditing, changeCalendarView, saveEvent }) {
     const { register, handleSubmit, watch, errors } = useForm();
-    const [isEditing, setEditing] = useState(isEditable);
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -70,7 +69,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
     const watchDescription = watch("description", event != null ? event.description : false);
 
     const onSubmit = (eventInfo) => {
-        setEditing(!isEditing);
+        setIsEditing(!isEditing);
         saveEvent(eventInfo, event.id, currOrg.org.uId, setIsLoading);
     }
 
@@ -92,9 +91,13 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
         if (event.id === '') {
             deleteEvent(event.id);
         }
-        setIsAdding(false);
-        setEditing(!isEditing);
+        setIsEditing(false);
     };
+
+    const startEditing = (e) => {
+        setIsEditing(true);
+        changeCalendarView(event.startTime);
+    }
 
     if (isLoading) {
         return <LoadingEventCard />
@@ -124,7 +127,7 @@ export default function EditableEventCard({ event, deleteEvent, isEditable, chan
                                 </Row>
                                 <Row className="d-flex flex-grow-1">
                                     <Col className="d-flex justify-content-end align-items-end m-0">
-                                        <IconButton className="mr-2 my-0" icon={EditIcon} onClick={() => { setEditing(!isEditing); changeCalendarView(event.startTime); }}></IconButton>
+                                        <IconButton className="mr-2 my-0" icon={EditIcon} onClick={startEditing}></IconButton>
                                         <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
                                     </Col>
                                 </Row>
