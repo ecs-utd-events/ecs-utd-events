@@ -14,9 +14,32 @@ import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../compon
 import { eventCardFormatToISO, getFormattedTime, lastUpdatedToISO } from '../../components/TimeUtils';
 import NonEditableEventCard from "../../components/NonEditableEventCard";
 
+async function sortedEventInsert(sortedEventArr, newEvent) {
+    const apparentIndex = binarySearch(sortedEventArr, newEvent, 0, sortedEventArr.length);
+    sortedEventArr.splice(apparentIndex, 0, newEvent)
+    return sortedEventArr
+}
+
+function binarySearch(sortedArr, x, start, end) {
+    if (start >= sortedArr.length) return sortedArr.length
+    if (end < start) return end + 1;
+    const mid = Math.floor((start + end) / 2);
+    const midDate = new Date(sortedArr[mid].start);
+    const xDate = new Date(x.start);
+    if (midDate.getTime() === xDate.getTime()) {
+        return mid;
+    }
+    if (midDate < xDate) {
+        return binarySearch(sortedArr, x, mid + 1, end);
+    }
+    if (midDate > xDate) {
+        return binarySearch(sortedArr, x, start, mid - 1);
+    }
+}
+
 export default function EditEvents() {
     const { org } = useContext(UserContext);
-    const [dbEvents, setDbEvents] = useState(null);
+    const [allEvents, setAllEvents] = useState(null);
     const [myEvents, setMyEvents] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +60,7 @@ export default function EditEvents() {
                         return event;
                     })
                 )
-                .then(data => setDbEvents(data))
+                .then(data => setAllEvents(data))
                 .catch(error => {
                     console.error('There was an error fetching events!', error);
                 });
@@ -45,11 +68,11 @@ export default function EditEvents() {
     }, [org]);
 
     useEffect(() => {
-        if (dbEvents != null && org != null) {
-            let myEventsTemp = dbEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
+        if (allEvents != null && org != null) {
+            let myEventsTemp = allEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
             setMyEvents(myEventsTemp);
         }
-    }, [dbEvents, org])
+    }, [allEvents, org])
 
     const setIsEditingHelper = newValue => {
         if (selectedEvent != null && selectedEvent.id === '' && !newValue) {
@@ -71,7 +94,7 @@ export default function EditEvents() {
                 startTime: '',
                 endTime: '',
                 description: '',
-                org: [],
+                orgs: [],
                 location: '',
                 link: ''
             }
@@ -85,13 +108,33 @@ export default function EditEvents() {
             })
                 .then(response => {
                     console.log(response)
-                    return dbEvents.filter(event => event.id !== id);
+                    return allEvents.filter(event => event.id !== id);
                 })
                 .then(updatedEvents => {
-                    setDbEvents(updatedEvents);
+                    setAllEvents(updatedEvents);
                     setSelectedEvent(null);
                 })
         }
+    }
+
+    async function saveEventHelper(currEvents, eventToAddBody) {
+
+        setSelectedEvent(eventToAddBody);
+
+        let newEvent = parseEventsToFullCalendarFormat([eventToAddBody])[0]
+        newEvent.display = "block"
+        newEvent.color = "var(--primaryshade1)"
+
+        let updatedEvents = await sortedEventInsert(currEvents, newEvent);
+        setAllEvents(updatedEvents);
+
+        if (updatedEvents != null && org != null) {
+            let myEventsTemp = updatedEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
+            setMyEvents(myEventsTemp);
+        }
+
+        setIsEditing(false);
+        return updatedEvents
     }
 
     const saveEvent = (event, id, orgId, setLoading) => {
@@ -121,19 +164,12 @@ export default function EditEvents() {
                 headers: { 'Content-Type': 'application/json' }
             })
                 .then(response => {
-                    return dbEvents.filter(event => event.id !== id)
+                    return allEvents.filter(event => event.id !== id)
                 })
                 .then(filteredEvents => {
-                    let eventToUpdate = parseEventsToFullCalendarFormat([body])[0]
-                    eventToUpdate.display = "block"
-                    eventToUpdate.color = "var(--primaryshade1)"
-
-                    filteredEvents.push(eventToUpdate)
-                    return filteredEvents
+                    return saveEventHelper(filteredEvents, body)
                 })
-                .then(updatedEvents => {
-                    setDbEvents(updatedEvents)
-                    setSelectedEvent(body)
+                .then(_ => {
                     setLoading(false);
                 })
                 .catch(
@@ -151,9 +187,9 @@ export default function EditEvents() {
                     return response.text()
                 }).then(newId => {
                     body.id = newId;
-                    setSelectedEvent(body);
-                    setDbEvents([...dbEvents, ...parseEventsToFullCalendarFormat([body])])
-                    setIsEditing(false);
+                    return saveEventHelper(allEvents, body)
+                })
+                .then(_ => {
                     setLoading(false);
                 })
                 .catch(
@@ -191,7 +227,6 @@ export default function EditEvents() {
                                         <th>Date</th>
                                         <th>Time</th>
                                         <th>Name</th>
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -206,7 +241,6 @@ export default function EditEvents() {
                                                 <td>{new Date(event.start).toLocaleDateString()}</td>
                                                 <td>{getFormattedTime(event.start)} - {getFormattedTime(event.end)}</td>
                                                 <td>{event.title}</td>
-                                                <td>edit</td>
                                             </tr>
                                         )
                                     })}
@@ -227,7 +261,7 @@ export default function EditEvents() {
                                 }}
                                 height="100%"
                                 scrollTime='08:00:00'
-                                events={dbEvents}
+                                events={allEvents}
                                 eventClick={(info) => {
                                     var event = formatFCEventToDB(info.event)
                                     setSelectedEvent(event)
@@ -242,7 +276,7 @@ export default function EditEvents() {
                         {!isEditing && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
                     </Col>
                     <Col xs={11} className="p-0">
-                        {dbEvents != null ?
+                        {allEvents != null ?
                             <EventCard />
                             :
                             <div>

@@ -59,17 +59,19 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        setStartTime(getCSTFormattedTime(event.startTime));
-        setEndTime(getCSTFormattedTime(event.endTime));
-    }, [event.startTime, event.endTime]);
+        if (event != null) {
+            setStartTime(getCSTFormattedTime(event.startTime));
+            setEndTime(getCSTFormattedTime(event.endTime));
+        }
+    }, []);
 
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
-    const relevantOrgs = event.orgs != null ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
+    const relevantOrgs = (event != null && event.orgs != null) ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
     const watchDescription = watch("description", event != null ? event.description : false);
 
     const onSubmit = (eventInfo) => {
-        setIsEditing(!isEditing);
+        // setIsEditing(false);
         saveEvent(eventInfo, event.id, currOrg.org.uId, setIsLoading);
     }
 
@@ -151,7 +153,7 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
                             <Form.Row>
                                 <Form.Group as={Col} controlId="date">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={getCSTFormattedDate(event.startTime)} />
+                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={event.startTime == '' ? getCSTFormattedDate(new Date()) : getCSTFormattedDate(event.startTime)} />
                                     {errors.date && <p className="error">⚠ Please do not create past events.</p>}
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="startTime">

@@ -43,6 +43,7 @@ export function getAPIFormattedISOString(date) {
 }
 
 export function eventCardFormatToISO(date, time) {
+    if(date == null || date === '' || time == null || time === '') return null
     var CSTDateTime = date + 'T' + time;
     var CSTDate = new Date(CSTDateTime)
     if (CSTDate.isDstObserved()) {
