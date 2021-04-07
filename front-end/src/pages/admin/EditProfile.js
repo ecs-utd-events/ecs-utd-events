@@ -127,9 +127,9 @@ export default function EditProfile() {
                             <Image src={imageSource} style={{ width: '25vh', height: '25vh', marginBottom: '1rem' }} roundedCircle></Image>
                             <Row style={{ textAlign: "center" }}>
                                 <div className="d-flex flex-grow-1 justify-content-center align-items-center">
-                                    <h2 className="font-weight-bold pr-2">{org.name}</h2>
+                                    <h2 className="font-weight-bold m-0 pr-2" style={{paddingTop: '1px'}}>{org.name}</h2>
                                     <Link target="_blank" to={"/org/" + org.slug}>
-                                        <IconButton icon={ViewIcon} />
+                                        <IconButton className="m-0" icon={ViewIcon} />
                                     </Link>
                                 </div>
                             </Row>
