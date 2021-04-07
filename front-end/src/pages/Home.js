@@ -26,6 +26,7 @@ import HomeFilters from './HomeFilters';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 
 import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
+import { usePrevious } from '../components/CustomHooks';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
 to randomize the order of presented organizations. 
@@ -47,7 +48,9 @@ export default function Home() {
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+
   const organizations = useContext(AllOrgContext);
+  const prevSelectedEvent = usePrevious(selectedEvent);
 
   useEffect(() => {
     // GET request for all events using fetch inside useEffect React hook
@@ -59,6 +62,24 @@ export default function Home() {
         console.error('There was an error fetching events!', error);
       });
   }, []);
+
+  useEffect(() => {
+    if (filteredEvents.length > 0) {
+      var tempFilteredEvents = filteredEvents;
+      if (prevSelectedEvent != null) {
+        if (prevSelectedEvent.id === selectedEvent.id) {
+          return;
+        }
+        var prevSelectedEventRef = tempFilteredEvents.find(event => event.id === prevSelectedEvent.id);
+        prevSelectedEventRef.color = "none";
+        prevSelectedEventRef.display = "list-item";
+      }
+      var selectedEventRef = tempFilteredEvents.find(event => event.id === selectedEvent.id);
+      selectedEventRef.color = "var(--primary2)";
+      selectedEventRef.display = "block";
+      setFilteredEvents([...tempFilteredEvents]);
+    }
+  }, [selectedEvent])
 
   return (
     <div className="App">

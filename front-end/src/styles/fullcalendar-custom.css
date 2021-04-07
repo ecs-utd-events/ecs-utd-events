@@ -12,11 +12,11 @@
     /* margin-bottom: 10vh; */
 }
 
-.fullcalendar-wrapper.admin .fc-daygrid-event-dot {
+.fullcalendar-wrapper.admin .fc-daygrid-event-dot, .fullcalendar-wrapper .fc-daygrid-event-dot {
     border: none;
 }
 
-.fullcalendar-wrapper.admin .fc-daygrid-day-events .fc-event-time {
+.fullcalendar-wrapper.admin .fc-daygrid-day-events .fc-event-time, .fullcalendar-wrapper .fc-daygrid-day-events .fc-event-time {
     overflow: visible;
 }
 
@@ -102,9 +102,9 @@
     font-weight: 600;
 }
 
-.fullcalendar-wrapper .fc-daygrid-event-dot {
+/* .fullcalendar-wrapper .fc-daygrid-event-dot {
     border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--accent1);
-}
+} */
 
 .fullcalendar-wrapper .fc .fc-daygrid-day-number {
     font-family: 'Source Sans Pro', sans-serif;
