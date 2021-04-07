@@ -41,9 +41,7 @@
     font-weight: 500;
 }
 
-.edit-profile-page .sticky-button-wrapper {
-    display: flex;
-    justify-content: flex-end;
+.sticky-button-wrapper {
     position: sticky;
     position: -webkit-sticky;
     top: 0.5rem;

@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 import CustomButton from '../../components/CustomButton';
 import AdminLayout from "../../components/AdminLayout";
-import FullPageLoading from '../../components/FullPageLoading';
 import { socialMediaPlatforms } from '../../constants/SocialMediaPlatforms';
 import { UserContext } from "../../providers/UserProvider";
 import { AllOrgContext } from '../../providers/AllOrgProvider';
@@ -126,7 +125,6 @@ export default function EditProfile() {
                     <Container className="my-5">
                         <Form onSubmit={handleSubmit(onSubmit)} style={{ display: 'inline-block', width: '100%' }}>
                             <Image src={imageSource} style={{ width: '25vh', height: '25vh', marginBottom: '1rem' }} roundedCircle></Image>
-
                             <Row style={{ textAlign: "center" }}>
                                 <div className="d-flex flex-grow-1 justify-content-center align-items-center">
                                     <h2 className="font-weight-bold pr-2">{org.name}</h2>

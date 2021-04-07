@@ -146,61 +146,69 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
                 <Col>
                     <Card className={"drop-shadow"}>
                         <Form onSubmit={handleSubmit(onSubmit)} style={{ display: 'inline-block' }}>
-                            <Form.Group controlId="eventTitle">
-                                <Form.Label>Event Title</Form.Label>
-                                <Form.Control type="text" placeholder="Title" name="title" ref={register({ required: true })} defaultValue={event.title} />
-                            </Form.Group>
                             <Form.Row>
-                                <Form.Group as={Col} controlId="date">
-                                    <Form.Label>Date</Form.Label>
-                                    <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={event.startTime == '' ? getCSTFormattedDate(new Date()) : getCSTFormattedDate(event.startTime)} />
-                                    {errors.date && <p className="error">⚠ Please do not create past events.</p>}
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="startTime">
-                                    <Form.Label>Start time</Form.Label>
-                                    <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => { setStartTime(e.target.value); changeCalendarView(e.target.value) }} defaultValue={getCSTFormattedTime(event.startTime)} />
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="endTime">
-                                    <Form.Label>End time</Form.Label>
-                                    <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getCSTFormattedTime(event.endTime)} />
-                                    {errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
-                                </Form.Group>
-                            </Form.Row>
-                            <Form.Row>
-                                <Col xs={3} style={{ textAlign: 'left' }}>
-                                    <Form.Group controlId="location">
-                                        <Form.Label>Location</Form.Label>
-                                        <Form.Control type="text" placeholder="Location" name="location" ref={register({ required: true })} defaultValue={event.location} />
+                                <Col>
+                                    <Form.Group controlId="eventTitle">
+                                        <Form.Label>Event Title</Form.Label>
+                                        <Form.Control type="text" placeholder="Title" name="title" ref={register({ required: true })} defaultValue={event.title} />
                                     </Form.Group>
-                                    <Form.Group controlId="orgs">
-                                        <Form.Label>Collaborator(s)</Form.Label>
-                                        <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple ref={register({ required: false })} defaultValue={event.orgs}>
-                                            {orgs.map(org => { if (currOrg.org.uId !== org.uId) { return <option key={org.uId} value={org.uId}>{org.shortName}</option> } })}
-                                        </Form.Control>
-                                    </Form.Group>
+                                    <Form.Row>
+                                        <Form.Group as={Col} controlId="date">
+                                            <Form.Label>Date</Form.Label>
+                                            <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={event.startTime == '' ? getCSTFormattedDate(new Date()) : getCSTFormattedDate(event.startTime)} />
+                                            {errors.date && <p className="error">⚠ Please do not create past events.</p>}
+                                        </Form.Group>
+                                        <Form.Group as={Col} controlId="startTime">
+                                            <Form.Label>Start time</Form.Label>
+                                            <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => { setStartTime(e.target.value); changeCalendarView(e.target.value) }} defaultValue={getCSTFormattedTime(event.startTime)} />
+                                        </Form.Group>
+                                        <Form.Group as={Col} controlId="endTime">
+                                            <Form.Label>End time</Form.Label>
+                                            <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getCSTFormattedTime(event.endTime)} />
+                                            {errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
+                                        </Form.Group>
+                                    </Form.Row>
+                                    <Form.Row>
+                                        <Col xs={3} style={{ textAlign: 'left' }}>
+                                            <Form.Group controlId="location">
+                                                <Form.Label>Location</Form.Label>
+                                                <Form.Control type="text" placeholder="Location" name="location" ref={register({ required: true })} defaultValue={event.location} />
+                                            </Form.Group>
+                                            <Form.Group controlId="orgs">
+                                                <Form.Label>Collaborator(s)</Form.Label>
+                                                <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple ref={register({ required: false })} defaultValue={event.orgs}>
+                                                    {orgs.map(org => { if (currOrg.org.uId !== org.uId) { return <option key={org.uId} value={org.uId}>{org.shortName}</option> } })}
+                                                </Form.Control>
+                                            </Form.Group>
+                                        </Col>
+                                        <Col style={{ textAlign: 'left' }}>
+                                            <Form.Group controlId="link">
+                                                <Form.Label>Link</Form.Label>
+                                                <Form.Control type="url" placeholder="Link" name="link" ref={register()} defaultValue={event.link || ''} />
+                                            </Form.Group>
+                                            <Form.Group>
+                                                <Row>
+                                                    <Col>
+                                                        <Form.Label>Description</Form.Label>
+                                                    </Col>
+                                                    <Col style={{ textAlign: 'end' }}>
+                                                        <Form.Label style={watchDescription.length > 500 ? { color: "red" } : null}>{watchDescription.length}/500 chars</Form.Label>
+                                                    </Col>
+                                                </Row>
+                                                <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true, maxLength: 500 })} defaultValue={event.description} />
+                                            </Form.Group>
+                                        </Col>
+                                    </Form.Row>
                                 </Col>
-                                <Col style={{ textAlign: 'left' }}>
-                                    <Form.Group controlId="link">
-                                        <Form.Label>Link</Form.Label>
-                                        <Form.Control type="url" placeholder="Link" name="link" ref={register()} defaultValue={event.link || ''} />
-                                    </Form.Group>
-                                    <Form.Group>
+                                <Col xs={1}>
+                                    <div className="sticky-button-wrapper">
                                         <Row>
-                                            <Col>
-                                                <Form.Label>Description</Form.Label>
-                                            </Col>
-                                            <Col style={{ textAlign: 'end' }}>
-                                                <Form.Label style={watchDescription.length > 500 ? { color: "red" } : null}>{watchDescription.length}/500 chars</Form.Label>
-                                            </Col>
+                                            <IconButton className="ml-4 my-0" icon={SaveIcon} type="submit" disabled={orgs.some(org => org.uId === currOrg.org)} onClick={handleSubmit(onSubmit)}></IconButton>
                                         </Row>
-                                        <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true, maxLength: 500 })} defaultValue={event.description} />
-                                    </Form.Group>
-                                </Col>
-                            </Form.Row>
-                            <Form.Row>
-                                <Col className="d-flex justify-content-end m-0">
-                                    <IconButton className="mr-2" icon={SaveIcon} type="submit" disabled={orgs.some(org => org.uId === currOrg.org)} onClick={handleSubmit(onSubmit)}></IconButton>
-                                    <IconButton className="mr-2" icon={CancelIcon} onClick={cancelEditing}></IconButton>
+                                        <Row>
+                                            <IconButton className="ml-4 mt-2" icon={CancelIcon} onClick={cancelEditing}></IconButton>
+                                        </Row>
+                                    </div>
                                 </Col>
                             </Form.Row>
                         </Form>
