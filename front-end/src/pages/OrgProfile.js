@@ -141,16 +141,16 @@ export default function OrgProfile() {
                         </Row>
                         <Row className="center-row">
                             <ButtonGroup>
-                        { socialMediaPlatforms.map(platform => { 
-                                if (thisOrg.socialMedia[platform.ref] && platform.type === 'iconify') {
-                                    return (<a href={thisOrg.socialMedia[platform.ref]}><IconButton icon={platform.icon} className="mr-2 social-media-icon-button"></IconButton></a>);
+                                {socialMediaPlatforms.map(platform => {
+                                    if (thisOrg.socialMedia[platform.ref] && platform.type === 'iconify') {
+                                        return (<a href={thisOrg.socialMedia[platform.ref]} target="_blank"><IconButton icon={platform.icon} className="mr-2 social-media-icon-button" /></a>);
+                                    }
+                                    else if (thisOrg.socialMedia[platform.ref] && platform.type === 'svg') {
+                                        return (<a href={thisOrg.socialMedia[platform.ref]} target="_blank"><IconButton SVGIcon={platform.icon} className="mr-2 social-media-icon-button" /></a>);
+                                    }
+                                })
                                 }
-                                else if (thisOrg.socialMedia[platform.ref] && platform.type === 'svg') {
-                                    return (<a href={thisOrg.socialMedia[platform.ref]}><IconButton SVGIcon={platform.icon} className="mr-2 social-media-icon-button"></IconButton></a>);
-                                }     
-                            })
-                        }
-                        </ButtonGroup>
+                            </ButtonGroup>
                         </Row>
                         <Row className="mb-3">
                             <Col xs={2} style={{ textAlign: 'right', marginTop: '-4px' }}>
