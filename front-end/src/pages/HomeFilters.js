@@ -70,7 +70,7 @@ function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvent
             return timeFilterValue[1] >= endTimeMinutes;
         })
     }
-    setFilteredEvents(filteredEvents);
+    return filteredEvents;
 }
 
 
@@ -95,24 +95,21 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
 
     useEffect(() => {
         if (orgs != null) {
-            const orderedOrgs = orgs;
-            orderedOrgs.sort((a, b) => a.name.localeCompare(b.name));
-            setOrganizations(orderedOrgs);
+            setOrganizations(orgs);
         }
     }, [orgs])
 
-    function filterEventHelper() {
-        filterEvents(orgFilterValue, tagsFilterValue, committedTimeFilterValue, allEvents, setFilteredEvents);
-    }
-
-    const memoizedFilterEvents = useMemo(filterEventHelper, [committedTimeFilterValue, orgFilterValue, tagsFilterValue, allEvents])
+    useEffect(() => {
+        const filteredEvents = filterEvents(orgFilterValue, tagsFilterValue, committedTimeFilterValue, allEvents, setFilteredEvents);
+        setFilteredEvents(filteredEvents);
+    }, [committedTimeFilterValue, orgFilterValue, tagsFilterValue, allEvents])
 
     return (
         <Row className="home-page-filters mx-1 mt-2">
             <Col xs={12} sm={4} className="d-flex align-items-end pl-2 pr-0">
                 <Autocomplete
                     loading={organizations.length === 0}
-                    options={organizations}
+                    options={organizations.sort((a, b) => a.name.localeCompare(b.name))}
                     renderInput={(params) => <TextField style={{}} {...params} label="organization" margin="normal" />}
                     getOptionLabel={(org) => org.name}
                     onChange={(e, value, _) => setOrgFilterValue(value)}
