@@ -3,13 +3,11 @@ import React, { useEffect, useState, useContext, createRef } from "react";
 import FullCalendar, { isArraysEqual } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import AddIcon from '@iconify/icons-mdi/plus-circle-outline';
-import { Container, Row, Col, Card, Table } from 'react-bootstrap';
+import { Row, Col, Table } from 'react-bootstrap';
 
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard, { LoadingEventCard } from '../../components/EditableEventCard';
 import CustomButton from '../../components/CustomButton';
-import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../components/FullCalendarUtils";
 import { eventCardFormatToISO, getFormattedTime, lastUpdatedToISO } from '../../components/TimeUtils';
@@ -127,17 +125,17 @@ export default function EditEvents() {
         newEvent.display = "block"
         newEvent.color = "var(--primaryshade1)"
 
-        let updatedEvents = await sortedEventInsert(currEvents, newEvent);
-        setAllEvents(updatedEvents);
+        sortedEventInsert(currEvents, newEvent).then(updatedEvents => {
+            setAllEvents([...updatedEvents])
 
-        if (updatedEvents != null && org != null) {
-            let myEventsTemp = updatedEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
-            myEventsTemp = myEventsTemp.reverse()
-            setMyEvents(myEventsTemp);
-        }
-
-        setIsEditing(false);
-        return updatedEvents
+            if (updatedEvents != null && org != null) {
+                let myEventsTemp = updatedEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
+                myEventsTemp = myEventsTemp.reverse()
+                setMyEvents(myEventsTemp);
+            }
+            setIsEditing(false);
+            return updatedEvents
+        });
     }
 
     const saveEvent = (event, id, orgId, setLoading) => {
@@ -234,7 +232,7 @@ export default function EditEvents() {
                         </div>
                         {myEvents != null &&
                             <div className="my-events-table-wrapper">
-                                <Table striped hover responsive>
+                                <Table striped hover={myEvents != null && myEvents.length > 0} responsive>
                                     <thead>
                                         <tr>
                                             <th className="date-cell">Date</th>
@@ -257,6 +255,13 @@ export default function EditEvents() {
                                                 </tr>
                                             )
                                         })}
+                                        {myEvents.length === 0 &&
+                                            <tr style={{ height: '100%' }}>
+                                                <div className="d-flex align-items-center justify-content-center" style={{ height: '100%' }}>
+                                                    <h4 style={{ color: "var(--gray3)" }}>No Events To Display</h4>
+                                                </div>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </Table>
                             </div>
