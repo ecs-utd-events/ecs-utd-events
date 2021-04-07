@@ -59,3 +59,56 @@
     background-color: var(--accent1);
     color: var(--gray1)
 }
+
+.my-events-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.my-events-header h3 {
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.my-events-table-wrapper thead, .my-events-table-wrapper tbody tr {
+    display: table;
+    table-layout: fixed;
+}
+
+.my-events-table-wrapper thead {
+    width: 100%;
+    border: 2px solid var(--secondary1);
+}
+
+.my-events-table-wrapper thead th {
+    color: var(--gray2);
+    padding: 2px 4px;
+    text-align: center;
+    background-color: var(--primary2);
+}
+
+.my-events-table-wrapper tbody tr {
+    width: 100%;
+}
+
+.my-events-table-wrapper tbody {
+    display: block;
+    height: 49vh;
+    overflow-y: scroll;
+}
+
+.my-events-table-wrapper tbody td {
+    padding: 0.5em;
+}
+
+.my-events-table-wrapper tbody td.date-cell, .my-events-table-wrapper thead th.date-cell, .my-events-table-wrapper tbody td.time-cell, .my-events-table-wrapper thead th.time-cell {
+    text-align: center;
+    width: 30%;
+}
+
+.my-events-table-wrapper tbody td.name-cell, .my-events-table-wrapper thead th.name-cell {
+    width: 40%;
+}

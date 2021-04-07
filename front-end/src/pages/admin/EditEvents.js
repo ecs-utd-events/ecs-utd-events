@@ -8,6 +8,7 @@ import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard, { LoadingEventCard } from '../../components/EditableEventCard';
+import CustomButton from '../../components/CustomButton';
 import IconButton from '../../components/IconButton';
 import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../components/FullCalendarUtils";
@@ -70,6 +71,7 @@ export default function EditEvents() {
     useEffect(() => {
         if (allEvents != null && org != null) {
             let myEventsTemp = allEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
+            myEventsTemp = myEventsTemp.reverse()
             setMyEvents(myEventsTemp);
         }
     }, [allEvents, org])
@@ -130,6 +132,7 @@ export default function EditEvents() {
 
         if (updatedEvents != null && org != null) {
             let myEventsTemp = updatedEvents.filter((event) => event.extendedProps.org.some((orgId) => orgId === org.uId))
+            myEventsTemp = myEventsTemp.reverse()
             setMyEvents(myEventsTemp);
         }
 
@@ -218,34 +221,45 @@ export default function EditEvents() {
             <AdminLayout pageName="Events">
                 <div style={{ padding: "1rem" }} />
                 <Row>
-                    <Col className="p-0" xs={3} sm={4} style={{ minWidth: '200px' }}>
-                        <h3>My Events</h3>
+                    <Col className="p-0" xs={3} sm={4}>
+                        <div className="my-events-header">
+                            <div>
+                                <h3>My Events</h3>
+                            </div>
+                            <div className="d-flex justify-content-end flex-grow-1">
+                                <CustomButton primary onClick={addEvent} disabled={isEditing}>
+                                    <h5 className="m-0">Add Event</h5>
+                                </CustomButton>
+                            </div>
+                        </div>
                         {myEvents != null &&
-                            <Table striped hover responsive>
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {myEvents.map((event) => {
-                                        return (
-                                            <tr key={event.id} onClick={(e) => {
-                                                var dbEvent = formatFCEventToDB(event)
-                                                changeCalendarView(event.start)
-                                                setSelectedEvent(dbEvent)
-                                                setIsEditing(false)
-                                            }}>
-                                                <td>{new Date(event.start).toLocaleDateString()}</td>
-                                                <td>{getFormattedTime(event.start)} - {getFormattedTime(event.end)}</td>
-                                                <td>{event.title}</td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </Table>
+                            <div className="my-events-table-wrapper">
+                                <Table striped hover responsive>
+                                    <thead>
+                                        <tr>
+                                            <th className="date-cell">Date</th>
+                                            <th className="time-cell">Time</th>
+                                            <th className="name-cell">Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {myEvents.map((event) => {
+                                            return (
+                                                <tr key={event.id} onClick={(e) => {
+                                                    var dbEvent = formatFCEventToDB(event)
+                                                    changeCalendarView(event.start)
+                                                    setSelectedEvent(dbEvent)
+                                                    setIsEditing(false)
+                                                }}>
+                                                    <td className="date-cell">{new Date(event.start).toLocaleDateString()}</td>
+                                                    <td className="time-cell">{getFormattedTime(event.start)} - {getFormattedTime(event.end)}</td>
+                                                    <td className="name-cell">{event.title}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </Table>
+                            </div>
                         }
                     </Col>
                     <Col className="p-0">
@@ -272,10 +286,7 @@ export default function EditEvents() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="d-flex align-items-center justify-content-center p-0">
-                        {!isEditing && <IconButton icon={AddIcon} onClick={addEvent}></IconButton>}
-                    </Col>
-                    <Col xs={11} className="p-0">
+                    <Col className="px-5 mx-5">
                         {allEvents != null ?
                             <EventCard />
                             :

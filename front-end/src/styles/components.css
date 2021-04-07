@@ -30,6 +30,17 @@ button.secondary-btn:not(:disabled):hover, a.secondary-btn:not(:disabled):hover 
     color: var(--gray2);
 }
 
+button.accent-btn, a.accent-btn {
+    background-color: var(--accent2);
+    color: var(--gray2);
+    border: var(--accent2);
+}
+
+button.accent-btn:not(:disabled):hover, a.accent-btn:not(:disabled):hover {
+    background-color: var(--accent1);
+    color: var(--gray1);
+}
+
 button.rounded-btn, a.rounded-btn {
     border-radius: 50px;
 }
