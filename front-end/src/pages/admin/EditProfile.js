@@ -6,6 +6,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import React, { useContext, useState } from "react";
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
 
 import CustomButton from '../../components/CustomButton';
 import AdminLayout from "../../components/AdminLayout";
@@ -20,8 +21,10 @@ import { InlineIcon } from '@iconify/react';
 import EditIcon from '@iconify/icons-mdi/lead-pencil';
 import SaveIcon from '@iconify/icons-mdi/content-save';
 import CancelIcon from '@iconify/icons-mdi/close';
+import ViewIcon from '@iconify/icons-mdi/open-in-new';
 import helpIcon from '@iconify/icons-mdi/help-circle-outline';
 import Skeleton from '@material-ui/lab/Skeleton';
+import IconButton from '../../components/IconButton';
 
 
 function TitleWithDescription({ children }) {
@@ -120,39 +123,44 @@ export default function EditProfile() {
         return (
             <AdminLayout pageName="Profile">
                 <div className="edit-profile-page">
-                    <Container className="mb-5">
+                    <Container className="my-5">
                         <Form onSubmit={handleSubmit(onSubmit)} style={{ display: 'inline-block', width: '100%' }}>
-                            <Image src={imageSource} style={{ width: '25vh', height: '25vh' }} roundedCircle></Image>
+                            <Image src={imageSource} style={{ width: '25vh', height: '25vh', marginBottom: '1rem' }} roundedCircle></Image>
 
                             <Row style={{ textAlign: "center" }}>
-                                <h2 className="item-align-center font-weight-bold">{org.name}</h2>
+                                <div className="d-flex flex-grow-1 justify-content-center align-items-center">
+                                    <h2 className="font-weight-bold pr-2">{org.name}</h2>
+                                    <Link target="_blank" to={"/org/" + org.slug}>
+                                        <IconButton icon={ViewIcon} />
+                                    </Link>
+                                </div>
                             </Row>
-                            {!isEditing &&
-                                <div className="sticky-button-wrapper">
-                                    <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(() => setEditing(!isEditing))}>
-                                        <h4 className="font-weight-bold my-0">
-                                            <InlineIcon icon={EditIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> edit
-                                        </h4>
-                                    </CustomButton>
-                                </div>
-                            }
-
-                            {/* If editing, give user the option to undo changes. */}
-                            {isEditing &&
-                                <div className="sticky-button-wrapper">
-                                    <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(onSubmit)}>
-                                        <h4 className="font-weight-bold my-0">
-                                            <InlineIcon icon={SaveIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> save
-                                        </h4>
-                                    </CustomButton>
-                                    <CustomButton secondary className="drop-shadow" type="submit" onClick={cancelEditing}>
-                                        <h4 className="font-weight-bold my-0">
-                                            <InlineIcon icon={CancelIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> cancel
-                                        </h4>
-                                    </CustomButton>
-                                </div>
-
-                            }
+                            <div className="d-flex justify-content-end sticky-button-wrapper">
+                                {!isEditing ?
+                                    (
+                                        <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(() => setEditing(!isEditing))}>
+                                            <h4 className="font-weight-bold my-0">
+                                                <InlineIcon icon={EditIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> edit
+                                            </h4>
+                                        </CustomButton>
+                                    )
+                                    :
+                                    (
+                                        <div>
+                                            <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(onSubmit)}>
+                                                <h4 className="font-weight-bold my-0">
+                                                    <InlineIcon icon={SaveIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> save
+                                                </h4>
+                                            </CustomButton>
+                                            <CustomButton secondary className="drop-shadow" type="submit" onClick={cancelEditing}>
+                                                <h4 className="font-weight-bold my-0">
+                                                    <InlineIcon icon={CancelIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> cancel
+                                                </h4>
+                                            </CustomButton>
+                                        </div>
+                                    )
+                                }
+                            </div>
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
                                 <Col className="pl-0">
                                     <TitleWithDescription>
@@ -235,7 +243,7 @@ export default function EditProfile() {
                                     </TitleWithDescription>
                                 </Col>
                                 <Col xs={2} className="d-flex justify-content-end align-items-end">
-                                    <h5 style={errors.description?.type === 'maxDescriptionLength' ? { color: 'red' } : null}>{watchDescription.length}/600 chars</h5>
+                                    <h5 style={errors.description?.type === 'maxDescriptionLength' ? { color: 'red' } : null}>{watchDescription != null && watchDescription.length}/600 chars</h5>
                                 </Col>
                             </Row>
                             <Row>
