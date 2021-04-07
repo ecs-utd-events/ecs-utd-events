@@ -75,7 +75,7 @@ export default function Home() {
         prevSelectedEventRef.display = "list-item";
       }
       var selectedEventRef = tempFilteredEvents.find(event => event.id === selectedEvent.id);
-      selectedEventRef.color = "var(--primary2)";
+      selectedEventRef.color = "var(--primaryshade1)";
       selectedEventRef.display = "block";
       setFilteredEvents([...tempFilteredEvents]);
     }
