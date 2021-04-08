@@ -140,7 +140,6 @@ export default function EditEvents() {
 
     const saveEvent = (event, id, orgId, setLoading) => {
         setLoading(true);
-        console.log(event);
         event.orgs.unshift(orgId);
         var body = {
             "description": event.description,
