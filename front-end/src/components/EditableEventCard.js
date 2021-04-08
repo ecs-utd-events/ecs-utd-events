@@ -207,32 +207,23 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                                 <Form.Label>Location</Form.Label>
                                                 <Form.Control type="text" placeholder="Location" name="location" ref={register({ required: true })} defaultValue={event.location} />
                                             </Form.Group>
-                                            <Autocomplete
-                                                name="orgs"
-                                                defaultValue={defaultCollaborators}
-                                                options={orgs.filter(org => org.uId != currOrg.org.uId)}
-                                                defaultValue={relevantOrgs.filter(org => org.uId !== currOrg.org.uId)}
-                                                onChange={(e, value, _) => setOrgFilterValue(getOrgIds(value))}
-                                                loading={orgs.length === 0}
-                                                renderInput={(params) => <TextField {...params} label="Collaborators" margin="normal" />}
-                                                getOptionLabel={(org) => org.shortName}
-                                                getOptionSelected={(option, value) => option.uId === value.uId}
-                                                // clearOnEscape
-                                                multiple
-                                            // value={event.orgs.filter(org => org.uId != currOrg.org.uId)}
-                                            />
-                                            <Autocomplete
-                                                defaultValue={defaultTags}
-                                                loading={tags.length === 0}
-                                                options={tags}
-                                                renderInput={(params) => <TextField {...params} label="Tags (max 5)" margin="normal" />}
-                                                multiple
-                                                classes={{
-                                                    tag: "MuiChip-root custom-tag filter-tag",
-                                                }}
-                                                onChange={(e, value, _) => setTagsFilterValue(value)}
-                                                getOptionDisabled={(_) => tagsFilterValue.length >= 5 ? true : false}
-                                                disableCloseOnSelect />
+                                            <Form.Group>
+                                                <Form.Label>Collaborators</Form.Label>
+                                                <Autocomplete
+                                                    name="orgs"
+                                                    defaultValue={defaultCollaborators}
+                                                    options={orgs.filter(org => org.uId != currOrg.org.uId)}
+                                                    defaultValue={relevantOrgs.filter(org => org.uId !== currOrg.org.uId)}
+                                                    onChange={(e, value, _) => setOrgFilterValue(getOrgIds(value))}
+                                                    loading={orgs.length === 0}
+                                                    renderInput={(params) => <TextField {...params} margin="small" />}
+                                                    getOptionLabel={(org) => org.shortName}
+                                                    getOptionSelected={(option, value) => option.uId === value.uId}
+                                                    limitTags={1}
+                                                    // clearOnEscape
+                                                    multiple
+                                                />
+                                            </Form.Group>
                                         </Col>
                                         <Col style={{ textAlign: 'left' }}>
                                             {/* <Col className="d-flex align-items-end"> */}
@@ -250,6 +241,22 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                                     </Col>
                                                 </Row>
                                                 <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true, maxLength: 500 })} defaultValue={event.description} />
+                                            </Form.Group>
+                                        </Col>
+                                    </Form.Row>
+                                    <Form.Row>
+                                        <Col>
+                                            <Form.Group>
+                                                <Form.Label>Tags (max 5)</Form.Label>
+                                                <Autocomplete
+                                                    defaultValue={defaultTags}
+                                                    loading={tags.length === 0}
+                                                    options={tags}
+                                                    renderInput={(params) => <TextField {...params} margin="small" />}
+                                                    multiple
+                                                    onChange={(e, value, _) => setTagsFilterValue(value)}
+                                                    getOptionDisabled={(_) => tagsFilterValue.length >= 5 ? true : false}
+                                                    disableCloseOnSelect />
                                             </Form.Group>
                                         </Col>
                                     </Form.Row>
