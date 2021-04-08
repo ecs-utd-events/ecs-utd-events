@@ -245,7 +245,7 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
                                                 onChange={(e, value, _) => setOrgFilterValue(getOrgIds(value))}
                                                 // clearOnEscape
                                                 multiple
-                                                value={event.orgs.filter(org => org.uId != currOrg.org.uId)}
+                                                // value={event.orgs.filter(org => org.uId != currOrg.org.uId)}
                                             />
                                             <Autocomplete
                                                 name="tags"
