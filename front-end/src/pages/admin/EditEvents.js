@@ -140,6 +140,7 @@ export default function EditEvents() {
 
     const saveEvent = (event, id, orgId, setLoading) => {
         setLoading(true);
+        console.log(event);
         event.orgs.unshift(orgId);
         var body = {
             "description": event.description,
@@ -150,7 +151,7 @@ export default function EditEvents() {
             "startTime": eventCardFormatToISO(event.date, event.startTime),
             "title": event.title,
             "location": event.location,
-            "tags": null
+            "tags": event.tags
         };
 
         if (event.link != null && event.link !== '') {

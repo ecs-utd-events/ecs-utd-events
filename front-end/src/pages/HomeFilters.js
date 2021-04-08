@@ -8,7 +8,7 @@ import { Slider, TextField, ValueLabel } from '@material-ui/core';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import '../styles/components.css';
 
-function sortTagsAlphabetically(tagsArr) {
+export function sortTagsAlphabetically(tagsArr) {
     var sortedArr = tagsArr;
     sortedArr.sort((a, b) => a.name.localeCompare(b.name))
     return sortedArr;

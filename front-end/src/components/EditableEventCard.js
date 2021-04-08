@@ -16,6 +16,12 @@ import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import { eventCardFormatToISO } from './TimeUtils';
 import DeleteEventModal from "../components/DeleteEventModal";
+import Tag from "./Tag";
+
+import { sortTagsAlphabetically } from "../pages/HomeFilters"
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Slider, TextField, ValueLabel } from '@material-ui/core';
+
 
 export function LoadingEventCard() {
     return (
@@ -51,12 +57,31 @@ export function LoadingEventCard() {
     )
 }
 
+function removeTagIds(allTags) {
+    var tagNamesOnly = [];
+    for (var i = 0; i < allTags.length; i++) {
+        tagNamesOnly.push(allTags[i].name);
+    }
+    return tagNamesOnly;
+}
+
+function getOrgIds(allOrgs) {
+    var orgIdsOnly = [];
+    for (var i = 0; i < allOrgs.length; i++) {
+        orgIdsOnly.push(allOrgs[i].uId);
+    }
+    return orgIdsOnly;
+}
+
 export default function EditableEventCard({ event, deleteEvent, setIsEditing, isEditing, changeCalendarView, saveEvent }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [show, setShow] = useState(false);
+    const [tags, setTags] = useState([]);
+    const [tagsFilterValue, setTagsFilterValue] = useState([])
+    const [orgFilterValue, setOrgFilterValue] = useState([])
 
     useEffect(() => {
         if (event != null) {
@@ -65,13 +90,36 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
         }
     }, []);
 
+    useEffect(() => {
+        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/tags/all')
+            .then(response => response.json())
+            .then(data => sortTagsAlphabetically(data))
+            .then(sortedTags => removeTagIds(sortedTags))
+            .then(tagNames => setTags(tagNames))
+            .catch(error => {
+                console.error('There was an error fetching tags!', error);
+            });
+    }, [])
+
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
     const relevantOrgs = (event != null && event.orgs != null) ? orgs.filter(org => event.orgs.includes(org.uId)) : [];
     const watchDescription = watch("description", event != null ? event.description : false);
 
+    const defaultOrgs = [];
+    for (var i = 0; i < event.orgs.length; i++) {
+        if (event.orgs[i].uId != currOrg.uId)
+            defaultOrgs.push(event.orgs[i].shortName);
+    }
+    // const defaultTags = [];
+    // for (var i = 0; i < event.tags.length; i+=) {
+    //     defaultTags.push(event.tags[i]);
+    // }
+
     const onSubmit = (eventInfo) => {
         // setIsEditing(false);
+        eventInfo["tags"] = tagsFilterValue;
+        eventInfo["orgs"] = orgFilterValue;
         saveEvent(eventInfo, event.id, currOrg.org.uId, setIsLoading);
     }
 
@@ -135,6 +183,13 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
                                 </Row>
                             </Col>
                         </Row>
+                        {event.tags != null &&
+                            <Row>
+                                <Col>
+                                    {event.tags.map((label, index) => <Tag key={index} type="accent">{label}</Tag>)}
+                                </Col>
+                            </Row>
+                        }
                     </Card>
                 </Col>
                 <DeleteEventModal show={show} onHide={() => setShow(false)} delete={() => deleteEvent(event.id)} title={event.title} />
@@ -174,14 +229,41 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
                                                 <Form.Label>Location</Form.Label>
                                                 <Form.Control type="text" placeholder="Location" name="location" ref={register({ required: true })} defaultValue={event.location} />
                                             </Form.Group>
-                                            <Form.Group controlId="orgs">
+                                            {/* <Form.Group controlId="orgs">
                                                 <Form.Label>Collaborator(s)</Form.Label>
                                                 <Form.Control type="text" placeholder="Collaborator(s)" name="orgs" as="select" multiple ref={register({ required: false })} defaultValue={event.orgs}>
                                                     {orgs.map(org => { if (currOrg.org.uId !== org.uId) { return <option key={org.uId} value={org.uId}>{org.shortName}</option> } })}
                                                 </Form.Control>
-                                            </Form.Group>
+                                            </Form.Group> */}
+
+                                            <Autocomplete
+                                                name="orgs"
+                                                loading={orgs.length === 0}
+                                                options={orgs.filter(org => org.uId != currOrg.org.uId)}
+                                                renderInput={(params) => <TextField style={{}} {...params} label="Collaborators" margin="normal" />}
+                                                getOptionLabel={(org) => org.shortName}
+                                                onChange={(e, value, _) => setOrgFilterValue(getOrgIds(value))}
+                                                // clearOnEscape
+                                                multiple
+                                                value={event.orgs.filter(org => org.uId != currOrg.org.uId)}
+                                            />
+                                            <Autocomplete
+                                                name="tags"
+                                                loading={tags.length === 0}
+                                                options={tags}
+                                                renderInput={(params) => <TextField {...params} label="Tags (max 5)" margin="normal" />}
+                                                // getOptionLabel={(tag) => tag.name}
+                                                multiple
+                                                onChange={(e, value, _) => setTagsFilterValue(value)}
+                                                classes={{
+                                                    tag: "MuiChip-root custom-tag filter-tag",
+                                                }}
+                                                // ref={register({ required: false })}
+                                                getOptionDisabled={(_) => tagsFilterValue.length >= 5 ? true : false}
+                                            />
                                         </Col>
                                         <Col style={{ textAlign: 'left' }}>
+                                            {/* <Col className="d-flex align-items-end"> */}
                                             <Form.Group controlId="link">
                                                 <Form.Label>Link</Form.Label>
                                                 <Form.Control type="url" placeholder="Link" name="link" ref={register()} defaultValue={event.link || ''} />
