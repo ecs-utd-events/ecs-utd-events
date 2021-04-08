@@ -5,22 +5,21 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Skeleton from '@material-ui/lab/Skeleton';
-import IconButton from './IconButton';
-import { getFormattedTime, getCSTFormattedDate, getCSTFormattedTime } from './TimeUtils';
+
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { TextField } from '@material-ui/core';
 import EditIcon from '@iconify/icons-mdi/lead-pencil';
 import TrashIcon from '@iconify/icons-mdi/delete';
 import Container from 'react-bootstrap/Container';
 import SaveIcon from '@iconify/icons-mdi/content-save';
 import CancelIcon from '@iconify/icons-mdi/close';
+
+import IconButton from './IconButton';
+import { getFormattedTime, getCSTFormattedDate, getCSTFormattedTime, eventCardFormatToISO } from './TimeUtils';
 import { UserContext } from '../providers/UserProvider';
 import { AllOrgContext } from '../providers/AllOrgProvider';
-import { eventCardFormatToISO } from './TimeUtils';
 import DeleteEventModal from "../components/DeleteEventModal";
 import Tag from "./Tag";
-
-import { sortTagsAlphabetically } from "../pages/HomeFilters"
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Slider, TextField, ValueLabel } from '@material-ui/core';
 
 
 export function LoadingEventCard() {
@@ -57,14 +56,6 @@ export function LoadingEventCard() {
     )
 }
 
-function removeTagIds(allTags) {
-    var tagNamesOnly = [];
-    for (var i = 0; i < allTags.length; i++) {
-        tagNamesOnly.push(allTags[i].name);
-    }
-    return tagNamesOnly;
-}
-
 function getOrgIds(allOrgs) {
     var orgIdsOnly = [];
     for (var i = 0; i < allOrgs.length; i++) {
@@ -73,7 +64,7 @@ function getOrgIds(allOrgs) {
     return orgIdsOnly;
 }
 
-export default function EditableEventCard({ event, deleteEvent, setIsEditing, isEditing, changeCalendarView, saveEvent }) {
+export default function EditableEventCard({ tags, event, deleteEvent, setIsEditing, isEditing, changeCalendarView, saveEvent }) {
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
 
@@ -86,7 +77,6 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
     const [endTime, setEndTime] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [show, setShow] = useState(false);
-    const [tags, setTags] = useState([]);
     const [tagsFilterValue, setTagsFilterValue] = useState(defaultTags)
     const [orgFilterValue, setOrgFilterValue] = useState(defaultCollaborators)
 
@@ -98,24 +88,6 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
             setEndTime(getCSTFormattedTime(event.endTime));
         }
     }, []);
-
-    useEffect(() => {
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/tags/all')
-            .then(response => response.json())
-            .then(data => sortTagsAlphabetically(data))
-            .then(sortedTags => removeTagIds(sortedTags))
-            .then(tagNames => setTags(tagNames))
-            .catch(error => {
-                console.error('There was an error fetching tags!', error);
-            });
-    }, [])
-
-
-    const defaultOrgs = [];
-    for (var i = 0; i < event.orgs.length; i++) {
-        if (event.orgs[i].uId != currOrg.uId)
-            defaultOrgs.push(event.orgs[i].shortName);
-    }
 
     const onSubmit = (eventInfo) => {
         eventInfo["tags"] = tagsFilterValue;
@@ -171,22 +143,28 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
                                 <p className="mb-0">{relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}</p>
                                 {event.link != null && event.link !== '' && <a className="mb-0" href={event.link} target="_blank">Link</a>}
                             </Col>
-                            <Col style={{ textAlign: 'left' }} className="d-flex" >
+                            <Col style={{ textAlign: 'left' }} className="d-flex">
                                 <Row>
-                                    <p>{event.description}</p>
+                                    <p className="pr-3">{event.description}</p>
                                 </Row>
-                                <Row className="d-flex flex-grow-1">
-                                    <Col className="d-flex justify-content-end align-items-end m-0">
-                                        <IconButton className="mr-2 my-0" icon={EditIcon} onClick={startEditing}></IconButton>
-                                        <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
-                                    </Col>
-                                </Row>
+                                {event.tags == null &&
+                                    <Row className="d-flex flex-grow-1">
+                                        <Col className="d-flex justify-content-end align-items-end m-0">
+                                            <IconButton className="mr-2 my-0" icon={EditIcon} onClick={startEditing}></IconButton>
+                                            <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
+                                        </Col>
+                                    </Row>
+                                }
                             </Col>
                         </Row>
                         {event.tags != null &&
                             <Row>
                                 <Col>
                                     {event.tags.map((label, index) => <Tag key={index} type="accent">{label}</Tag>)}
+                                </Col>
+                                <Col className="d-flex justify-content-end align-items-end m-0 mb-3">
+                                    <IconButton className="mr-2 my-0" icon={EditIcon} onClick={startEditing}></IconButton>
+                                    <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
                                 </Col>
                             </Row>
                         }
@@ -253,7 +231,8 @@ export default function EditableEventCard({ event, deleteEvent, setIsEditing, is
                                                     tag: "MuiChip-root custom-tag filter-tag",
                                                 }}
                                                 onChange={(e, value, _) => setTagsFilterValue(value)}
-                                                getOptionDisabled={(_) => tagsFilterValue.length >= 5 ? true : false} />
+                                                getOptionDisabled={(_) => tagsFilterValue.length >= 5 ? true : false}
+                                                disableCloseOnSelect />
                                         </Col>
                                         <Col style={{ textAlign: 'left' }}>
                                             {/* <Col className="d-flex align-items-end"> */}

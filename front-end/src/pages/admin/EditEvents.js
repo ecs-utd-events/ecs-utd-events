@@ -12,6 +12,7 @@ import { UserContext } from "../../providers/UserProvider";
 import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../components/FullCalendarUtils";
 import { eventCardFormatToISO, getFormattedTime, lastUpdatedToISO } from '../../components/TimeUtils';
 import NonEditableEventCard from "../../components/NonEditableEventCard";
+import { sortTagsAlphabetically } from "../HomeFilters"
 
 async function sortedEventInsert(sortedEventArr, newEvent) {
     const apparentIndex = binarySearch(sortedEventArr, newEvent, 0, sortedEventArr.length);
@@ -36,12 +37,21 @@ function binarySearch(sortedArr, x, start, end) {
     }
 }
 
+function removeTagIds(allTags) {
+    var tagNamesOnly = [];
+    for (var i = 0; i < allTags.length; i++) {
+        tagNamesOnly.push(allTags[i].name);
+    }
+    return tagNamesOnly;
+}
+
 export default function EditEvents() {
     const { org } = useContext(UserContext);
     const [allEvents, setAllEvents] = useState(null);
     const [myEvents, setMyEvents] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
+    const [allTags, setAllTags] = useState([]);
     let calendarRef = createRef();
 
     useEffect(() => {
@@ -73,6 +83,17 @@ export default function EditEvents() {
             setMyEvents(myEventsTemp);
         }
     }, [allEvents, org])
+
+    useEffect(() => {
+        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/tags/all')
+            .then(response => response.json())
+            .then(data => sortTagsAlphabetically(data))
+            .then(sortedTags => removeTagIds(sortedTags))
+            .then(tagNames => setAllTags(tagNames))
+            .catch(error => {
+                console.error('There was an error fetching tags!', error);
+            });
+    }, [])
 
     const setIsEditingHelper = newValue => {
         if (selectedEvent != null && selectedEvent.id === '' && !newValue) {
@@ -207,7 +228,7 @@ export default function EditEvents() {
 
     const EventCard = () => {
         if (isEditing || (selectedEvent != null && selectedEvent.orgs.find(collaborator => collaborator === org.uId) != null)) {
-            return <EditableEventCard event={selectedEvent} isEditing={isEditing} setIsEditing={setIsEditingHelper} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>
+            return <EditableEventCard event={selectedEvent} tags={allTags} isEditing={isEditing} setIsEditing={setIsEditingHelper} deleteEvent={deleteEvent} changeCalendarView={changeCalendarView} saveEvent={saveEvent}></EditableEventCard>
         }
         else {
             return <NonEditableEventCard event={selectedEvent} />
