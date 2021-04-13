@@ -13,6 +13,7 @@ import { parseEventsToFullCalendarFormat, formatFCEventToDB } from "../../compon
 import { eventCardFormatToISO, getFormattedTime, lastUpdatedToISO } from '../../components/TimeUtils';
 import NonEditableEventCard from "../../components/NonEditableEventCard";
 import { sortTagsAlphabetically } from "../HomeFilters"
+import { auth } from "../../firebase";
 
 async function sortedEventInsert(sortedEventArr, newEvent) {
     const apparentIndex = binarySearch(sortedEventArr, newEvent, 0, sortedEventArr.length);
@@ -124,16 +125,24 @@ export default function EditEvents() {
 
     const deleteEvent = (id) => {
         if (id !== '') {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
-                method: 'DELETE',
-            })
-                .then(response => {
-                    console.log(response)
-                    return allEvents.filter(event => event.id !== id);
+            auth.currentUser.getIdToken().then(idToken => {
+                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/' + id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': idToken
+                    }
                 })
-                .then(updatedEvents => {
-                    setAllEvents(updatedEvents);
-                    setSelectedEvent(null);
+                    .then(response => {
+                        console.log(response)
+                        return allEvents.filter(event => event.id !== id);
+                    })
+                    .then(updatedEvents => {
+                        setAllEvents(updatedEvents);
+                        setSelectedEvent(null);
+                    })
+            })
+                .catch(error => {
+                    console.error('Error in retrieving ID Token!');
                 })
         }
     }
@@ -180,45 +189,60 @@ export default function EditEvents() {
 
 
         if (id !== '') {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
-                method: 'PUT',
-                body: JSON.stringify(body),
-                headers: { 'Content-Type': 'application/json' }
+            auth.currentUser.getIdToken().then(idToken => {
+                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                    method: 'PUT',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': idToken
+                    }
+                })
+                    .then(response => {
+                        return allEvents.filter(event => event.id !== id)
+                    })
+                    .then(filteredEvents => {
+                        return saveEventHelper(filteredEvents, body)
+                    })
+                    .then(_ => {
+                        setLoading(false);
+                    })
+                    .catch(
+                        error => {
+                            console.error('There was an error editing the event.', error)
+                        });
+            }).catch(error => {
+                console.error('Error in retrieving ID Token!');
             })
-                .then(response => {
-                    return allEvents.filter(event => event.id !== id)
-                })
-                .then(filteredEvents => {
-                    return saveEventHelper(filteredEvents, body)
-                })
-                .then(_ => {
-                    setLoading(false);
-                })
-                .catch(
-                    error => {
-                        console.error('There was an error editing the event.', error)
-                    });
         }
         else {
-            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: { 'Content-Type': 'application/json' }
-            })
-                .then(response => {
-                    return response.text()
-                }).then(newId => {
-                    body.id = newId;
-                    return saveEventHelper(allEvents, body)
-                })
-                .then(_ => {
-                    setLoading(false);
-                })
-                .catch(
-                    error => {
-                        console.error('There was an error adding a new Event', error)
+            auth.currentUser.getIdToken().then(idToken => {
+                fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events', {
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': idToken
                     }
-                );
+                })
+                    .then(response => {
+                        return response.text()
+                    }).then(newId => {
+                        body.id = newId;
+                        return saveEventHelper(allEvents, body)
+                    })
+                    .then(_ => {
+                        setLoading(false);
+                    })
+                    .catch(
+                        error => {
+                            console.error('There was an error adding a new Event', error)
+                        }
+                    );
+            })
+                .catch(error => {
+                    console.error('Error in retrieving ID Token!');
+                })
         }
     }
 

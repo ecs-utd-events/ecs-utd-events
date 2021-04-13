@@ -24,6 +24,7 @@ import ViewIcon from '@iconify/icons-mdi/open-in-new';
 import helpIcon from '@iconify/icons-mdi/help-circle-outline';
 import Skeleton from '@material-ui/lab/Skeleton';
 import IconButton from '../../components/IconButton';
+import { auth } from '../../firebase';
 
 
 function TitleWithDescription({ children }) {
@@ -47,36 +48,44 @@ export default function EditProfile() {
     const allOrgs = useContext(AllOrgContext);
 
     const { register, handleSubmit, watch, reset, errors, clearErrors } = useForm();
-    const [isEditing, setEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const watchDescription = watch("description", org != null ? org.description : 'Description');
 
     const onSubmit = (newOrgData) => {
-        setEditing(false);
-        newOrgData["uId"] = org.uId;
-        newOrgData["name"] = org.name;
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
-            {
-                method: 'PUT',
-                body: JSON.stringify(newOrgData),
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => {
-                console.log(response);
-                if (response.status !== 200) {
-                    handleErrors();
-                }
-            })
-            .catch(error => handleErrors());
+        auth.currentUser.getIdToken().then(idToken => {
+            newOrgData["uId"] = org.uId;
+            newOrgData["name"] = org.name;
+            fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs',
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(newOrgData),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': idToken
+                    }
+                })
+                .then(response => {
+                    console.log(response);
+                    if (response.status !== 200) {
+                        handleErrors();
+                    } else {
+                        setIsEditing(false);
+                    }
+                })
+                .catch(error => handleErrors());
+        }).catch(error => {
+            console.error('Error in retrieving ID Token!');
+        })
+
     }
 
     const handleErrors = () => {
-        console.log('There was an issue sending the updated profile data to the server. Please try again!');
-        setEditing(!isEditing);
+        console.error('There was an issue sending the updated profile data to the server. Please try again!');
     }
 
     const cancelEditing = () => {
         reset();
-        setEditing(!isEditing);
+        setIsEditing(false);
     };
 
     const validateUniqueSlug = (value) => {
@@ -125,9 +134,9 @@ export default function EditProfile() {
                     <Container className="my-5">
                         <Form onSubmit={handleSubmit(onSubmit)} style={{ display: 'inline-block', width: '100%' }}>
                             <Image src={imageSource} style={{ width: '25vh', height: '25vh', marginBottom: '1rem' }} roundedCircle></Image>
-                            <Row style={{ textAlign: "center" }}>
+                            <Row style={{ textAlign: "center", marginBottom: '10px' }}>
                                 <div className="d-flex flex-grow-1 justify-content-center align-items-center">
-                                    <h2 className="font-weight-bold m-0 pr-2" style={{paddingTop: '1px'}}>{org.name}</h2>
+                                    <h2 className="font-weight-bold m-0 pr-2" style={{ paddingTop: '1px' }}>{org.name}</h2>
                                     <Link target="_blank" to={"/org/" + org.slug}>
                                         <IconButton className="m-0" icon={ViewIcon} />
                                     </Link>
@@ -136,7 +145,7 @@ export default function EditProfile() {
                             <div className="d-flex justify-content-end sticky-button-wrapper">
                                 {!isEditing ?
                                     (
-                                        <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(() => setEditing(!isEditing))}>
+                                        <CustomButton secondary className="drop-shadow primary" type="submit" onClick={handleSubmit(() => setIsEditing(!isEditing))}>
                                             <h4 className="font-weight-bold my-0">
                                                 <InlineIcon icon={EditIcon} style={{ fontSize: '1.5rem', marginBottom: '2px' }} /> edit
                                             </h4>
