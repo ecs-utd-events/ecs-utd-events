@@ -66,8 +66,8 @@ export default function OrgProfile() {
 
     if (thisOrg != null && allEvents != null) {
         // Sort events into past and future based on endTime.
-        const UPCOMING_EVENTS = [];
-        const PAST_EVENTS = [];
+        var UPCOMING_EVENTS = [];
+        var PAST_EVENTS = [];
         for (var i = 0; i < allEvents.length; i++) {
             var eventEndTime = Date.parse(allEvents[i].endTime);
             if (Date.now() < eventEndTime) {
@@ -77,6 +77,9 @@ export default function OrgProfile() {
                 PAST_EVENTS.push(allEvents[i]);
             }
         }
+
+        // Reverse order for past events, we want the most recent displaying first
+        PAST_EVENTS = PAST_EVENTS.reverse()
 
         // These objects allow us to put "expand" for additional (more than 3) events.
         var additionalUpcomingEvents;
