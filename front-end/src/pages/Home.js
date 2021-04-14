@@ -127,8 +127,12 @@ export default function Home() {
                   }}
                   events={filteredEvents}
                   eventClick={(info) => {
-                    setAnimateCard('blob-animation')
-                    setTimeout(() => { setSelectedEvent(info.event) }, 100)
+                    if (selectedEvent == null || info.event.id !== selectedEvent.id) {
+                      setAnimateCard('blob-animation')
+                      info.el.style.backgroundColor = "var(--primaryshade1)";
+                      info.el.style.borderColor = "var(--primaryshade1)";
+                      setTimeout(() => { setSelectedEvent(info.event) }, 100)
+                    }
                   }}
                 />
               </div>
