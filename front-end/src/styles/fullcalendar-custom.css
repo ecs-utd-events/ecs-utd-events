@@ -12,6 +12,21 @@
     /* margin-bottom: 10vh; */
 }
 
+.fullcalendar-wrapper .loading-spinner-wrapper .loading-spinner {
+    width: 20em;
+    height: 20em;
+    border: 1.25em solid var(--primaryshade2);
+    border-right-color: transparent;
+    animation-duration: 1s;
+}
+
+.fullcalendar-wrapper-mobile .loading-spinner-wrapper .loading-spinner {
+    width: 10em;
+    height: 10em;
+    border: 0.7em solid var(--primaryshade2);
+    border-right-color: transparent;
+}
+
 .fullcalendar-wrapper.admin .fc-daygrid-event-dot, .fullcalendar-wrapper .fc-daygrid-event-dot {
     border: none;
 }
