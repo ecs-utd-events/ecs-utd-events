@@ -181,7 +181,7 @@ export default function EditProfile() {
                                         ref={register({ required: true })}
                                         name="shortName"
                                         disabled={!isEditing} />
-                                    {errors.shortName && <p className="error-edit-profile">⚠ A short name for your organization is required!</p>}
+                                    {errors.shortName && <p className="error error-edit-profile">⚠ A short name for your organization is required!</p>}
                                 </Col>
                                 <Col className="pr-0">
                                     <TitleWithDescription>
@@ -204,10 +204,10 @@ export default function EditProfile() {
                                         })}
                                         name="slug"
                                         disabled={!isEditing} />
-                                    {errors.slug?.type === 'required' && <p className="error-edit-profile">⚠ An organization slug is required!</p>}
-                                    {errors.slug?.type === 'uniqueSlug' && <p className="error-edit-profile">⚠ This organization slug is already taken!</p>}
-                                    {errors.slug?.type === 'lowerCase' && <p className="error-edit-profile">⚠ The slug must be all lowercase!</p>}
-                                    {errors.slug?.type === 'onlyDashes' && <p className="error-edit-profile">⚠ The only special characters the slug can contain are dashes!</p>}
+                                    {errors.slug?.type === 'required' && <p className="error error-edit-profile">⚠ An organization slug is required!</p>}
+                                    {errors.slug?.type === 'uniqueSlug' && <p className="error error-edit-profile">⚠ This organization slug is already taken!</p>}
+                                    {errors.slug?.type === 'lowerCase' && <p className="error error-edit-profile">⚠ The slug must be all lowercase!</p>}
+                                    {errors.slug?.type === 'onlyDashes' && <p className="error error-edit-profile">⚠ The only special characters the slug can contain are dashes!</p>}
                                 </Col>
                             </Row>
 
@@ -220,7 +220,7 @@ export default function EditProfile() {
                                     ref={register({ required: true })}
                                     name="website"
                                     disabled={!isEditing} />
-                                {errors.website && <p className="error-edit-profile">⚠ A website where students can find out more information about your organization is required!</p>}
+                                {errors.website && <p className="error error-edit-profile">⚠ A website where students can find out more information about your organization is required!</p>}
                             </Row>
 
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
@@ -264,8 +264,8 @@ export default function EditProfile() {
                                             maxDescriptionLength: value => validateMaxDescriptionLength(value)
                                         }
                                     })} />
-                                {errors.description?.type === 'required' && <p className="error-edit-profile">⚠ A short description of your organization is required!</p>}
-                                {errors.description?.type === 'maxDescriptionLength' && <p className="error-edit-profile">⚠ Your org description must be 600 characters or less!</p>}
+                                {errors.description?.type === 'required' && <p className="error error-edit-profile">⚠ A short description of your organization is required!</p>}
+                                {errors.description?.type === 'maxDescriptionLength' && <p className="error error-edit-profile">⚠ Your org description must be 600 characters or less!</p>}
 
                             </Row>
                             <Row style={{ textAlign: "left", paddingTop: 20 }}>
