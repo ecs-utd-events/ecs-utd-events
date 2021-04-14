@@ -121,7 +121,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
         changeCalendarView(event.startTime);
     }
 
-    if (isLoading) {
+    if (isLoading || orgs.length === 0 || currOrg.org == null ) {
         return <LoadingEventCard />
     }
 
@@ -184,21 +184,25 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                     <Form.Group controlId="eventTitle">
                                         <Form.Label>Event Title</Form.Label>
                                         <Form.Control type="text" placeholder="Title" name="title" ref={register({ required: true })} defaultValue={event.title} />
+                                        {errors.title && <p className="error">⚠ An event title is required.</p>}
                                     </Form.Group>
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="date">
                                             <Form.Label>Date</Form.Label>
                                             <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={event.startTime == '' ? getCSTFormattedDate(new Date()) : getCSTFormattedDate(event.startTime)} />
-                                            {errors.date && <p className="error">⚠ Please do not create past events.</p>}
+                                            {errors.date?.type === 'required' && <p className="error">⚠ An event date is required.</p>}
+                                            {errors.date?.type === 'validate' && <p className="error">⚠ You cannot create past events.</p>}
                                         </Form.Group>
                                         <Form.Group as={Col} controlId="startTime">
                                             <Form.Label>Start time</Form.Label>
                                             <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => { setStartTime(e.target.value); changeCalendarView(e.target.value) }} defaultValue={getCSTFormattedTime(event.startTime)} />
+                                            {errors.startTime && <p className="error">⚠ An event start time is required.</p>}
                                         </Form.Group>
                                         <Form.Group as={Col} controlId="endTime">
                                             <Form.Label>End time</Form.Label>
                                             <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getCSTFormattedTime(event.endTime)} />
-                                            {errors.endTime && <p className="error">⚠ The start time must be before the end time.</p>}
+                                            {errors.endTime?.type === 'required' && <p className="error">⚠ An event end time is required.</p>}
+                                            {errors.endTime?.type === 'validate' && <p className="error">⚠ Event end time must be after the start time.</p>}
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row>
@@ -206,6 +210,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                             <Form.Group controlId="location">
                                                 <Form.Label>Location</Form.Label>
                                                 <Form.Control type="text" placeholder="Location" name="location" ref={register({ required: true })} defaultValue={event.location} />
+                                                {errors.location && <p className="error">⚠ An event location is required.</p>}
                                             </Form.Group>
                                             <Form.Group>
                                                 <Form.Label>Collaborators</Form.Label>
@@ -241,6 +246,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                                     </Col>
                                                 </Row>
                                                 <Form.Control type="text" as="textarea" rows={4} placeholder="Description" name="description" ref={register({ required: true, maxLength: 500 })} defaultValue={event.description} />
+                                                {errors.description?.type === 'required' && <p className="error">⚠ An event description is required.</p>}
                                             </Form.Group>
                                         </Col>
                                     </Form.Row>
