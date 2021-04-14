@@ -87,7 +87,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
             setStartTime(getCSTFormattedTime(event.startTime));
             setEndTime(getCSTFormattedTime(event.endTime));
         }
-    }, []);
+    }, [event]);
 
     const onSubmit = (eventInfo) => {
         eventInfo["tags"] = tagsFilterValue;
@@ -117,6 +117,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
     };
 
     const startEditing = (e) => {
+        e.preventDefault()
         setIsEditing(true);
         changeCalendarView(event.startTime);
     }
@@ -183,8 +184,9 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                 <Col>
                                     <Form.Group controlId="eventTitle">
                                         <Form.Label>Event Title</Form.Label>
-                                        <Form.Control type="text" placeholder="Title" name="title" ref={register({ required: true })} defaultValue={event.title} />
-                                        {errors.title && <p className="error">⚠ An event title is required.</p>}
+                                        <Form.Control type="text" placeholder="Title" name="title" ref={register({ required: true, maxLength: 100 })} defaultValue={event.title} />
+                                        {errors.title?.type === 'required' && <p className="error">⚠ An event title is required.</p>}
+                                        {errors.title?.type === 'maxLength' && <p className="error">⚠ Titles should be 100 chars or less.</p>}
                                     </Form.Group>
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="date">
@@ -231,7 +233,6 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                             </Form.Group>
                                         </Col>
                                         <Col style={{ textAlign: 'left' }}>
-                                            {/* <Col className="d-flex align-items-end"> */}
                                             <Form.Group controlId="link">
                                                 <Form.Label>Link</Form.Label>
                                                 <Form.Control type="url" placeholder="Link" name="link" ref={register()} defaultValue={event.link || ''} />
