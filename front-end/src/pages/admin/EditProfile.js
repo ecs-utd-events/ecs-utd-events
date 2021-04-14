@@ -49,9 +49,11 @@ export default function EditProfile() {
 
     const { register, handleSubmit, watch, reset, errors, clearErrors } = useForm();
     const [isEditing, setIsEditing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const watchDescription = watch("description", org != null ? org.description : 'Description');
 
     const onSubmit = (newOrgData) => {
+        setIsLoading(true);
         auth.currentUser.getIdToken().then(idToken => {
             newOrgData["uId"] = org.uId;
             newOrgData["name"] = org.name;
@@ -67,24 +69,47 @@ export default function EditProfile() {
                 .then(response => {
                     console.log(response);
                     if (response.status !== 200) {
+                        reset(newOrgData);
                         handleErrors();
                     } else {
                         setIsEditing(false);
+                        reset(newOrgData);
+                        setIsLoading(false);
                     }
                 })
-                .catch(error => handleErrors());
+                .catch(error => {
+                    reset(newOrgData);
+                    handleErrors();
+                });
         }).catch(error => {
             console.error('Error in retrieving ID Token!');
+            setIsLoading(false);
         })
 
     }
 
     const handleErrors = () => {
         console.error('There was an issue sending the updated profile data to the server. Please try again!');
+        setIsLoading(false);
     }
 
-    const cancelEditing = () => {
-        reset();
+    const cancelEditing = (e) => {
+        e.preventDefault();
+        const socialMediaDefaultValues = org != null ? socialMediaPlatforms.reduce((map, platform) => ({
+            ...map,
+            [platform.ref]: org.socialMedia[platform.ref]
+        }), {}) : {}
+
+        const defaultValues = org != null ? {
+            'shortName': org.shortName,
+            'slug': org.slug,
+            'website': org.website,
+            'imageUrl': org.imageUrl,
+            'description': org.description,
+            'socialMedia': socialMediaDefaultValues
+        } : {}
+
+        reset(defaultValues);
         setIsEditing(false);
     };
 
@@ -127,7 +152,7 @@ export default function EditProfile() {
     // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
     const imageSource = org != null ? (org.imageUrl != "" ? org.imageUrl : Circle) : Circle;
 
-    if (org != null) {
+    if (org != null && !isLoading) {
         return (
             <AdminLayout pageName="Profile">
                 <div className="edit-profile-page">
