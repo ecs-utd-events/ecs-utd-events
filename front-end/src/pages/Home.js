@@ -128,7 +128,7 @@ export default function Home() {
                   events={filteredEvents}
                   eventClick={(info) => {
                     setAnimateCard('blob-animation')
-                    setSelectedEvent(info.event)
+                    setTimeout(() => { setSelectedEvent(info.event) }, 100)
                   }}
                 />
               </div>
