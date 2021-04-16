@@ -9,10 +9,11 @@ export default function AdminLayout({ children, pageName }) {
             <div style={{ minHeight: 'calc(100vh - 5rem)' }}>
                 <Container fluid>
                     <Row>
-                        <Col xs={2} style={{ minWidth: "200px" }}>
+                        <div>
                             <AdminTab parent={pageName} />
-                        </Col>
-                        <Col>
+                        </div>
+                        {/* marginLeft = AdminTab width (4.25em) + extra 1em for padding */}
+                        <Col style={{ marginLeft: '5.25em' }}>
                             {children}
                         </Col>
                     </Row>

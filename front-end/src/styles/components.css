@@ -335,6 +335,8 @@ div.form-group {
     bottom: 0;
     display: flex;
     flex-direction: column;
+    /* TODO: we could add a transition on width but need to set it to constant value like 12em */
+    /* transition doesn't look nice because text pops up too quickly! need to add a collapsing state */
     width: max-content!important;
     height: 100%;
     background-color: var(--accent1);
@@ -372,7 +374,8 @@ div.form-group {
 }
 
 .sidebar.collapsed {
-    width: 4.25em!important;
+    /* width = sidebar-icon width + horizontal padding on sidebar-items */
+    width: 4.25em!important; 
 }
 
 .sidebar.collapsed .sidebar.icon {
