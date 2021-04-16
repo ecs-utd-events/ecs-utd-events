@@ -65,9 +65,15 @@ export const ClosedTab = ({ tab, index, parent, logoutHandler }) => {
 }
 
 export default function AdminTab({ parent }) {
-    const [ isHovered, setIsHovered ] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [isCollapsing, setIsCollapsing] = useState(0);
     const history = useHistory();
-    const sidebarClass = isHovered ? 'sidebar' : 'sidebar collapsed';
+    const sidebarClass = !isHovered ?
+        ((isCollapsing === 1) ? 'sidebar collapsing open' :
+            (isCollapsing === 2) ? 'sidebar collapsing close' :
+                'sidebar collapsed')
+        :
+        (isCollapsing === 0) ? 'sidebar' : 'sidebar collapsed';
     const logoutHandler = () => {
         auth.signOut().then(() => {
             console.log('Adios! 👋')
@@ -78,13 +84,26 @@ export default function AdminTab({ parent }) {
         })
     }
     return (
-        <Container className={"mx-0 " + sidebarClass} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+        <Container className={"mx-0 " + sidebarClass}
+            onMouseEnter={
+                () => {
+                    setIsCollapsing(1);
+                    setTimeout(() => { setIsHovered(true); setIsCollapsing(0) }, 200)
+                }}
+            onMouseLeave={
+                () => {
+                    setIsCollapsing(2);
+                    setTimeout(() => {
+                        setIsHovered(false);
+                        setIsCollapsing(0)
+                    }, 200)
+                }}>
             <div className="sidebar-items">
-            {
-                TAB_CONTENTS.map((value, index) => <ClosedTab tab={value} key={index} index={index} parent={parent} logoutHandler={logoutHandler} />)
-            }
+                {
+                    TAB_CONTENTS.map((value, index) => <ClosedTab tab={value} key={index} index={index} parent={parent} logoutHandler={logoutHandler} />)
+                }
             </div>
         </Container>
-        
+
     )
 }
