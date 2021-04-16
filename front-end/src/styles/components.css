@@ -383,3 +383,52 @@ div.form-group {
     position: relative;
     top: '-5px';
 }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: max-content!important;
+    height: 100%;
+    background-color: var(--accent1);
+    z-index: 1;
+}
+
+.sidebar-icon {
+    width: 1.25em;
+    height: 1.25em;
+    margin-right: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.sidebar-items {
+    display: flex;
+    flex-direction: column;
+    padding: 0 8px;
+}
+
+.sidebar-items .item {
+    display: flex;
+    align-items: center;
+    padding: 16px 8px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.sidebar.collapsed {
+    width: 78px!important;
+}
+
+.sidebar.collapsed .sidebar.icon {
+    margin-right: 0;
+}
+
+.sidebar.collapsed .sidebar-text,
+.sidebar.collapsed .sidebar-logo {
+    display: none;
+}
