@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "ecs-utdevents",
+    "site": "ecs-utdevents-dev",
     "public": "build",
     "ignore": [
       "firebase.json",
