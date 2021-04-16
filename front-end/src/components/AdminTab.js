@@ -46,16 +46,16 @@ export const ClosedTab = ({ tab, index, parent, logoutHandler }) => {
     const rowClass = orderClass.concat(' ').concat(selected ? 'selected' : '')
     return (
         <Link to={tab.link} onClick={tab.flag ? logoutHandler : null}>
-            <Row className={"admin-tab item py-2 " + rowClass} disabled={tab.title === parent}>
-                <Col>
+            <Row className={"admin-tab item " + rowClass} disabled={tab.title === parent}>
+                <Col className="px-3">
                     <Container className="mx-0 px-0 my-0 py-1">
-                        <Row >
-                            <Col xs={2} className="sidebar-icon">
+                        <Row>
+                            <div className="sidebar-icon">
                                 <Icon icon={tab.icon} style={{ alignItems: 'center', color: 'var(--gray1)', fontSize: '1.5rem' }} />
-                            </Col>
-                            <Col style={{ alignItems: 'center', textAlign: 'center', height: '100%' }}>
+                            </div>
+                            <div className="sidebar-text-wrapper">
                                 <h6 className="admin-tab-title sidebar-text">{tab.title}</h6>
-                            </Col>
+                            </div>
                         </Row>
                     </Container>
                 </Col>
