@@ -9,8 +9,6 @@ import logoutIcon from '@iconify/icons-mdi/logout';
 import homeIcon from '@iconify/icons-mdi/home';
 import { auth } from "../firebase";
 
-import '../styles/AdminPages.css';
-
 const TAB_CONTENTS = [
     {
         title: 'Profile',
