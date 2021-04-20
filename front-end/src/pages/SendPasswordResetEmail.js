@@ -20,7 +20,7 @@ function getErrorMessage(errorCode) {
     }
 }
 
-function ResetPasswordCard({ username, onUsernameChange, submitHandler, errorCode }) {
+function RequestEmailForResetCard({ username, onUsernameChange, submitHandler, errorCode }) {
     return (
         <Card className="px-5 pt-4">
             <Card.Header className="card-header-no-border"><h2 className="font-weight-bold">Reset Your Password</h2></Card.Header>
@@ -70,7 +70,7 @@ function ResetPasswordCard({ username, onUsernameChange, submitHandler, errorCod
 )
 }
 
-function SuccessCard() {
+function CheckEmailCard() {
     return (
         <Card style={{ width: '40vw' }}>
             <Card.Header className="card-header-no-border text-success"><h2>Success 🥳</h2></Card.Header>
@@ -99,7 +99,7 @@ function SuccessCard() {
 }
 
 
-export default function ResetPassword() {
+export default function SendPasswordResetEmail() {
 
     const [username, setUsername] = useState('');
     const [errorCode, setErrorCode] = useState('');
@@ -129,8 +129,8 @@ export default function ResetPassword() {
                 <Container fluid>
                     <Row>
                         <Col style={{ display: 'flex', justifyContent: 'center' }}>
-                            {!success && <ResetPasswordCard username={username} onUsernameChange={onUsernameChange} submitHandler={submitHandler} errorCode={errorCode} />}
-                            {success && <SuccessCard />}
+                            {!success && <RequestEmailForResetCard username={username} onUsernameChange={onUsernameChange} submitHandler={submitHandler} errorCode={errorCode} />}
+                            {success && <CheckEmailCard />}
                         </Col>
                     </Row>
                 </Container>

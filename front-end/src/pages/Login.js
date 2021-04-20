@@ -86,7 +86,7 @@ export default function Login() {
                                                 <CustomButton type="submit" className="drop-shadow py-2" wide>Login</CustomButton>
                                             </Col>
                                             <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                <Link to="/reset-password" style={{ textAlign: 'center' }}>Forgot password?</Link>
+                                                <Link to="/reset-password-reset-email" style={{ textAlign: 'center' }}>Forgot password?</Link>
                                             </Col>
                                         </Row>
                                         <Row>

@@ -1,4 +1,3 @@
-import { Redirect } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import CustomButton from '../components/CustomButton';
 import Form from 'react-bootstrap/Form';
@@ -71,7 +70,7 @@ function ResetCard({ email, onPasswordChange, submitForm, errorCode}) {
                                 className="drop-shadow py-2"
                             > 
                                 Save
-                                            </CustomButton>
+                            </CustomButton>
                         </Col>
                     </Row>
                     <Row>
