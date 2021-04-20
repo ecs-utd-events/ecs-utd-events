@@ -7,8 +7,9 @@ import {
 import { useEffect } from "react";
 
 import Login from './pages/Login';
-import ResetPassword from "./pages/ResetPassword";
+import ResetPasswordHandler from "./pages/ResetPasswordHandler";
 import Home from './pages/Home';
+import ResetPassword from './pages/ResetPassword';
 import OrgProfileRouter from './pages/OrgProfileRouter';
 import AdminRouter from "./pages/admin/AdminRouter";
 import UserProvider from "./providers/UserProvider";
@@ -39,7 +40,8 @@ function App() {
           <Switch>
             <Route path="/org" component={OrgProfileRouter} />
             <Route path="/login" exact component={Login} />
-            <Route path="/reset-password" exact component={ResetPassword} />
+            <Route path="/reset-password" exact component={ResetPasswordHandler} />
+            <Route path="/reset-password-with-email" exact component={ResetPassword} />
             <Route path="/admin" component={AdminRouter} />
             <Route path="/email" component={JerryEmail} />
             <Route path="/" exact component={Home} />
