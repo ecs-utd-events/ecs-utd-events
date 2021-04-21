@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
+import Spinner from 'react-bootstrap/esm/Spinner';
 import {
   Link
 } from "react-router-dom";
@@ -48,23 +49,27 @@ export default function Home() {
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(false);
 
   const organizations = useContext(AllOrgContext);
   const prevSelectedEvent = usePrevious(selectedEvent);
 
   useEffect(() => {
+    setIsLoadingEvents(true);
     // GET request for all events using fetch inside useEffect React hook
     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
       .then(response => response.json())
       .then(data => parseEventsToFullCalendarFormat(data))
       .then(data => { setEvents(data); setFilteredEvents(data); })
+      .then(_ => setIsLoadingEvents(false))
       .catch(error => {
         console.error('There was an error fetching events!', error);
+        setIsLoadingEvents(false);
       });
   }, []);
 
   useEffect(() => {
-    if (filteredEvents.length > 0) {
+    if (filteredEvents.length > 0 && selectedEvent != null) {
       var tempFilteredEvents = filteredEvents;
       if (prevSelectedEvent != null) {
         if (prevSelectedEvent.id === selectedEvent.id) {
@@ -100,6 +105,9 @@ export default function Home() {
             <Col lg={9}>
               <HomeFilters setFilteredEvents={setFilteredEvents} allEvents={events} />
               <div className="fullcalendar-wrapper d-none d-md-block">
+                <div className="loading-spinner-wrapper" style={{ pointerEvents: "none" }}>
+                  {isLoadingEvents && <Spinner animation="border" className="loading-spinner" />}
+                </div>
                 <FullCalendar
                   initialView="dayGridMonth"
                   plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
@@ -127,13 +135,20 @@ export default function Home() {
                   }}
                   events={filteredEvents}
                   eventClick={(info) => {
-                    setAnimateCard('blob-animation')
-                    setSelectedEvent(info.event)
+                    if (selectedEvent == null || info.event.id !== selectedEvent.id) {
+                      setAnimateCard('blob-animation')
+                      info.el.style.backgroundColor = "var(--primaryshade1)";
+                      info.el.style.borderColor = "var(--primaryshade1)";
+                      setTimeout(() => { setSelectedEvent(info.event) }, 100)
+                    }
                   }}
                 />
               </div>
               {/* THIS CALENDAR RENDERS ON WINDOWS WITH WIDTH SMALLER THAN 768px (md breakpoint)*/}
               <div className="fullcalendar-wrapper fullcalendar-wrapper-mobile d-sm-block d-md-none">
+                <div className="loading-spinner-wrapper" style={{ pointerEvents: "none" }}>
+                  {isLoadingEvents && <Spinner animation="border" className="loading-spinner" />}
+                </div>
                 <FullCalendar
                   initialView="upcomingWeek"
                   plugins={[timeGridPlugin, listPlugin]}

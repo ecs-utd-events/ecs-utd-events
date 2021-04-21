@@ -152,62 +152,6 @@ div.form-group {
     box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
-.admin-tab {
-    padding: 20px;
-    background-color: var(--accent1);
-}
-
-.admin-tab:hover {
-    background-color: var(--accent2);
-    cursor: pointer;
-}
-
-.admin-tab.first {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    margin-top: 0;
-}
-
-.admin-tab.last {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    margin-bottom: 0;
-}
-
-.admin-tab.selected {
-    background-color: var(--accent3);
-    border-left: 5px solid var(--primary1);
-}
-
-.admin-tab.selected:hover {
-    background-color: var(--accent3);
-    cursor: auto;
-}
-
-.background .admin-tab-wrapper {
-    background-color: none;
-    border: none;
-    margin-top: 2rem;
-    margin-left: 1rem;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.admin-tab-title {
-    font-weight: 600;
-    align-self: center;
-    margin-bottom: 0;
-}
-
-.admin-tab-wrapper a {
-    color: var(--gray1)
-}
-
-.admin-tab-wrapper a:hover {
-    color: var(--gray1);
-    text-decoration: none;
-}
-
 .MuiChip-root.custom-tag {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
@@ -382,4 +326,99 @@ div.form-group {
     font-size: '2rem';
     position: relative;
     top: '-5px';
+}
+
+.sidebar, .sidebar.collapsing.open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: 12em!important;
+    transition: width 0.25s ease-in-out;
+    /* width: max-content!important; */
+    height: 100%;
+    background-color: var(--accent1);
+    z-index: 1;
+}
+
+.sidebar-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.25em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.sidebar-items {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.sidebar-items .item {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.sidebar.collapsed, .sidebar.collapsing.close {
+    /* width = sidebar-icon width + horizontal padding on sidebar-items */
+    width: 4.25em!important;
+}
+
+.sidebar.collapsed .sidebar-text, .sidebar.collapsed .sidebar-logo {
+    display: none;
+}
+
+.sidebar.collapsing .sidebar-text, .sidebar.collapsing .sidebar-logo {
+    display: none;
+}
+
+.sidebar-text-wrapper {
+    display: flex;
+    flex-grow: 1;
+    justify-content: start;
+    padding-left: 0.5em;
+    padding-right: 1em;
+}
+
+.admin-tab {
+    padding: 20px;
+    background-color: var(--accent1);
+}
+
+.admin-tab:hover {
+    background-color: var(--accent2);
+    cursor: pointer;
+}
+
+.admin-tab.selected {
+    background-color: var(--accent3);
+}
+
+.admin-tab-title {
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-top: 2.5px;
+}
+
+.sidebar-items a {
+    color: var(--gray1)
+}
+
+.sidebar-items a:hover {
+    color: var(--gray1);
+    text-decoration: none;
 }

@@ -111,10 +111,13 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                 </Row>
             }
             <Row className="mb-0">
-                <Col className="d-flex align-item-end justify-content-end">
+                <Col className="d-flex align-items-end">
+                    <p className="text-muted my-0 mb-2 ml-0" style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p>
+                </Col>
+                <Col xs={1} className="d-flex align-item-end justify-content-end">
                     <ButtonGroup>
                         {event.extendedProps.link != null &&
-                            <IconButton className="mr-1 color-black mb-0" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
+                            <IconButton className="mr-1 color-black" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
                         }
                         <ICalendarLink event={formattedICalEvent}>
                             <IconButton className="mr-1" SVGComponent={CalendarIcon} />
@@ -125,9 +128,6 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                 </Col>
             </Row>
             <Row className="my-0">
-                <Col className="d-flex align-items-end">
-                    <p className="text-muted my-0 mb-2 ml-0" style={{ fontSize: '.75rem' }}>Last updated {lastUpdatedStr}</p>
-                </Col>
             </Row>
         </>
     )

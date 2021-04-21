@@ -7,55 +7,69 @@ import Card from 'react-bootstrap/Card';
 import React, { useState } from 'react';
 import { auth } from '../firebase';
 
-import FullPageLoading from './../components/FullPageLoading';
+import FullPageLoading from '../components/FullPageLoading';
 import './../styles/App.css';
 
-function getErrorMessage(errorCode) {
-    if (errorCode === 'auth/invalid-email') {
-        return '😴 Please enter a valid email'
-    } else if (errorCode === 'auth/user-not-found') {
-        return '😳 Login failed: Invalid username'
-    } else {
-        return '😬 There was an unknown error, Please try again!'
-    }
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function ResetPasswordCard({ username, onUsernameChange, submitHandler, errorCode }) {
+function SuccessfullyResetCard() {
     return (
         <Card className="px-5 pt-4">
-            <Card.Header className="card-header-no-border"><h2 className="font-weight-bold">Reset Your Password</h2></Card.Header>
+            <Card.Header className="card-header-no-border"><h2 className="font-weight-bold">You've successfully reset your password!</h2></Card.Header>
             <Card.Body className="px-0">
-                {errorCode !== '' && <h6 className="text-danger">{getErrorMessage(errorCode)}</h6>}
-                <Form onSubmit={submitHandler}>
-                    <Form.Group controlId="email">
+                <Row className="mt-2 px-0">
+                    <Col className="pl-3 py-1">
+                        <CustomButton
+                            wide
+                            secondary
+                            type="button"
+                            className="drop-shadow py-2"
+                            style={{ backgroundColor: 'var(--primary3)', color: 'var(--gray1)' }}
+                            href="/login"
+                        >
+                            Return to Login
+                    </CustomButton>
+                    </Col>
+                </Row>
+            </Card.Body>
+        </Card>
+    );
+}
+
+function ResetCard({ email, onPasswordChange, submitForm, errorCode}) {
+    return (
+        <Card className="px-5 pt-4">
+            <Card.Header className="card-header-no-border">
+                <h2 className="font-weight-bold">Resetting Password for:</h2 >
+                <p className="mb-0">{email}</p>
+            </Card.Header >
+            <Card.Body className="px-0">
+                {errorCode !== '' && <h6 className="text-danger">{ }</h6>}
+                <Form onSubmit={submitForm}>
+                    <Form.Group controlId="password">
                         <Form.Control
                             className="py-4"
                             required
-                            onChange={onUsernameChange}
-                            value={username}
-                            type="email"
-                            placeholder="Email address" />
+                            type="password"
+                            onChange={onPasswordChange}
+                            placeholder="New Password" />
                     </Form.Group>
                     <Row className="mt-2 px-0">
-                        <Col className="pl-3 py-1">
-                            <CustomButton
-                                wide
-                                secondary
-                                type="button"
-                                className="drop-shadow py-2"
-                                style={{ backgroundColor: 'var(--primary3)', color: 'var(--gray1)' }}
-                                href="/login"
-                            >
-                                Return to Login
-                            </CustomButton>
-                        </Col>
                         <Col className="pr-3 py-1">
                             <CustomButton
                                 wide
                                 type="submit"
                                 className="drop-shadow py-2"
-                            >
-                                Submit
+                            > 
+                                Save
                             </CustomButton>
                         </Col>
                     </Row>
@@ -66,59 +80,38 @@ function ResetPasswordCard({ username, onUsernameChange, submitHandler, errorCod
                     </Row>
                 </Form>
             </Card.Body>
-        </Card>
-    )
+        </Card >
+    );
 }
-
-function SuccessCard() {
-    return (
-        <Card style={{ width: '40vw' }}>
-            <Card.Header className="card-header-no-border text-success"><h2>Success 🥳</h2></Card.Header>
-            <Card.Body>
-                <Row>
-                    <Col>
-                        <h5>Check your email to finish resetting your password!</h5>
-                    </Col>
-                </Row>
-                <Row className="mt-4">
-                    <Col>
-                        <CustomButton
-                            primary
-                            type="submit"
-                            className="drop-shadow"
-                            width={'10rem'}
-                            style={{ color: 'var(--gray1)' }}
-                            href="/login">
-                            Return to Login
-                            </CustomButton>
-                    </Col>
-                </Row>
-            </Card.Body>
-        </Card>
-    )
-}
-
-export default function ResetPassword() {
-
-    const [username, setUsername] = useState('');
-    const [errorCode, setErrorCode] = useState('');
+export default function ResetPassword({ errorCode }) {
+    const mode = getParameterByName('mode');
+    const actionCode = getParameterByName('oobCode');
+    const continueUrl = getParameterByName('continueUrl');
+    const lang = getParameterByName('lang') || 'en';
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState(null);
     const [success, setSuccess] = useState(false);
 
-    const submitHandler = event => {
-        event.preventDefault();
-        setLoading(true);
-        auth.sendPasswordResetEmail(username).then(() => {
-            setLoading(false);
-            setSuccess(true);
-        }).catch((error) => {
-            setLoading(false);
-            setErrorCode(error.code);
+    auth.verifyPasswordResetCode(actionCode)
+        .then((email) => {
+            setEmail(email);
         })
+        .catch((error) => {
+            console.log(error.message)
+        });
+
+    const onPasswordChange = event => {
+        setPassword(event.target.value);
     }
 
-    const onUsernameChange = event => {
-        setUsername(event.target.value);
+    const submitForm = event => {
+        event.preventDefault();
+        auth.confirmPasswordReset(actionCode, password).then(() => {
+            setSuccess(true);
+        }).catch((error) => {
+            console.log(error.message)
+        })
     }
 
     return (
@@ -128,12 +121,13 @@ export default function ResetPassword() {
                 <Container fluid>
                     <Row>
                         <Col style={{ display: 'flex', justifyContent: 'center' }}>
-                            {!success && <ResetPasswordCard username={username} onUsernameChange={onUsernameChange} submitHandler={submitHandler} errorCode={errorCode} />}
-                            {success && <SuccessCard />}
+                            {success && <SuccessfullyResetCard />}
+                            {!success && <ResetCard email={email} onPasswordChange={onPasswordChange} submitForm={submitForm} errorCode={errorCode}/>}
                         </Col>
                     </Row>
                 </Container>
             </div>
         </div>
     )
+
 }
