@@ -203,7 +203,7 @@ div.form-group {
     min-height: 100vh;
     padding: 1rem;
     padding-bottom: 0;
-    padding-top: 10vh;
+    padding-top: 64px;
     background-color: white;
 }
 

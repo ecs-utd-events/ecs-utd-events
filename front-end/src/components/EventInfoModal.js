@@ -10,7 +10,7 @@ export default function EventInfoModal({ mobileModalOpen, setMobileModalOpen, ev
     const handleClose = () => setMobileModalOpen(false);
     return (
         <Dialog
-            style={{ overflow: 'auto' }}
+            style={{ overflowY: 'auto', overflowX: 'hidden', maxWidth: '100vw', maxHeight: '100vh' }}
             open={mobileModalOpen}
             onClose={handleClose}
             closeAfterTransition>
