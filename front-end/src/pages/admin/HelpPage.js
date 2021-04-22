@@ -14,7 +14,7 @@ export default function HelpPage() {
             <h1 className="my-3" style={{textAlign:'center'}}>FAQs</h1>
             {questions.map(question => {
                 return (
-                    <Accordion>
+                    <Accordion key={question.ref}>
                         <Card className="mt-2">
                             <Card.Header>
                                 <Accordion.Toggle as={Button} variant="light" eventKey="0" >

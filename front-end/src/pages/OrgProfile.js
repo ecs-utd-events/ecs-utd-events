@@ -14,7 +14,7 @@ import NavbarComponent from '../components/NavbarComponent';
 import Collapse from 'react-bootstrap/Collapse'
 import React, { useContext, useEffect, useState } from "react";
 import CustomButton from '../components/CustomButton';
-import { ToggleButton } from "../components/ToggleButton";
+import ToggleButton from "../components/ToggleButton";
 
 import './../styles/App.css';
 
@@ -38,14 +38,14 @@ function findThisOrg(allOrgs, orgSlug) {
     return null;
 }
 
+const MAX_EVENTS_DISPLAYED = 3;
+
 export default function OrgProfile() {
     let { orgSlug } = useParams();
     const [thisOrg, setThisOrg] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
-    const [openUpcomingEvents, setOpenUpcomingEvents] = useState(false);
-    const [openPastEvents, setOpenPastEvents] = useState(false);
-    const [selected, setSelected] = useState(false);
-    const maxEventsDisplayed = 3;
+    const [showAdditionalEvents, setShowAdditionalEvents] = useState(false);
+    const [showUpcoming, setShowUpcoming] = useState(true);
     const organizations = useContext(AllOrgContext);
     const { org } = useContext(UserContext);
 
@@ -68,9 +68,10 @@ export default function OrgProfile() {
         // Sort events into past and future based on endTime.
         var UPCOMING_EVENTS = [];
         var PAST_EVENTS = [];
+        const NOW = Date.now()
         for (var i = 0; i < allEvents.length; i++) {
             var eventEndTime = Date.parse(allEvents[i].endTime);
-            if (Date.now() < eventEndTime) {
+            if (NOW < eventEndTime) {
                 UPCOMING_EVENTS.push(allEvents[i]);
             }
             else {
@@ -81,56 +82,9 @@ export default function OrgProfile() {
         // Reverse order for past events, we want the most recent displaying first
         PAST_EVENTS = PAST_EVENTS.reverse()
 
-        // These objects allow us to put "expand" for additional (more than 3) events.
-        var additionalUpcomingEvents;
-        if (UPCOMING_EVENTS.length > maxEventsDisplayed) {
-            additionalUpcomingEvents =
-                <div>
-                    <CustomButton className="drop-shadow" onClick={() => setOpenUpcomingEvents(!openUpcomingEvents)}
-                        aria-controls="expand-events"
-                        aria-expanded={openUpcomingEvents}>
-                        see all events...</CustomButton>
-                    <Collapse in={openUpcomingEvents} style={{ paddingTop: '1vh' }}>
-                        <div>
-                            {UPCOMING_EVENTS.slice(maxEventsDisplayed, UPCOMING_EVENTS.length).map(event => {
-                                return (
-                                    <OrgPageEventCard key={event.id} event={event} pastEvent={false} orgs={organizations}></OrgPageEventCard>
-                                );
-                            })}
-                        </div>
-                    </Collapse>
-                </div>
-        }
-
-        if (UPCOMING_EVENTS.length === 0)
-            additionalUpcomingEvents = <h6><i>No upcoming events.</i></h6>;
-
-        var additionalPastEvents;
-        if (PAST_EVENTS.length > maxEventsDisplayed) {
-            additionalPastEvents =
-                <div>
-                    <CustomButton className="drop-shadow" onClick={() => setOpenPastEvents(!openPastEvents)}
-                        aria-controls="expand-events"
-                        aria-expanded={openPastEvents}>
-                        see all events...</CustomButton>
-                    <Collapse in={openPastEvents} style={{ paddingTop: '1vh' }}>
-                        <div>
-                            {PAST_EVENTS.slice(maxEventsDisplayed, PAST_EVENTS.length).map(event => {
-                                return (
-                                    <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
-                                );
-                            })}
-                        </div>
-                    </Collapse>
-                </div>
-        }
-
-        if (PAST_EVENTS.length === 0)
-            additionalPastEvents = <h6><i>No recent events.</i></h6>;
-
-
         // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
         var imageSource = thisOrg != null ? (thisOrg.imageUrl != null && thisOrg.imageUrl !== "" ? thisOrg.imageUrl : Circle) : Circle;
+        const showSeeAllButton = (showUpcoming && UPCOMING_EVENTS.length > MAX_EVENTS_DISPLAYED) || (!showUpcoming && PAST_EVENTS.length > MAX_EVENTS_DISPLAYED)
 
         return (
             <div className="App">
@@ -171,43 +125,81 @@ export default function OrgProfile() {
                                 {thisOrg.description}
                             </Col>
                         </Row>
-                        <ToggleButton
-                            selected={selected}
-                            toggleSelected={() => {
-                                setSelected(!selected);
-                            }}
-                        />
-                        {!selected && <Container style={{ paddingBottom: "40px" }}>
-                            <Row className="mb-3" style={{ textAlign: 'center' }}>
-                                <h1 className="item-align-center font-weight-bold">Upcoming Events</h1>
+                        <Container style={{ paddingBottom: "40px" }}>
+                            <Row className="mb-3 text-center">
+                                {/* paddingLeft = ToggleButton width (10.5rem) + ToggleButton paddingRight (1rem) */}
+                                <div className="d-flex flex-grow-1 justify-content-center" style={{ paddingLeft: '11.5rem' }}>
+                                    {showUpcoming ?
+                                        <h1 className="font-weight-bold">Upcoming Events</h1>
+                                        :
+                                        <h1 className="font-weight-bold org-page-past-event-header">Past Events</h1>
+                                    }
+                                </div>
+                                <div className="pr-3">
+                                    <ToggleButton
+                                        selected={showUpcoming}
+                                        toggleSelected={() => {
+                                            setShowUpcoming(!showUpcoming);
+                                            setShowAdditionalEvents(false);
+                                        }}
+                                    />
+                                </div>
                             </Row>
-                            {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
-                            {UPCOMING_EVENTS.slice(0, maxEventsDisplayed).map(event => {
-                                return (
-                                    <OrgPageEventCard key={event.id} event={event} pastEvent={false} orgs={organizations}></OrgPageEventCard>
-                                );
-                            })}
-                            {additionalUpcomingEvents}
+                            {showUpcoming &&
+                                <div>
+                                    {/* DISPLAY UPCOMING EVENTS, assumes sorted order of UPCOMING_EVENTS array. */}
+                                    {UPCOMING_EVENTS.slice(0, MAX_EVENTS_DISPLAYED).map(event => {
+                                        return (
+                                            <OrgPageEventCard key={event.id} event={event} pastEvent={false} orgs={organizations}></OrgPageEventCard>
+                                        );
+                                    })}
+                                    <Collapse in={showAdditionalEvents} style={{ paddingTop: '1vh' }}>
+                                        <div>
+                                            {
+                                                UPCOMING_EVENTS.slice(MAX_EVENTS_DISPLAYED, UPCOMING_EVENTS.length).map(event => {
+                                                    return (
+                                                        <OrgPageEventCard key={event.id} event={event} pastEvent={false} orgs={organizations}></OrgPageEventCard>
+                                                    );
+                                                })
+                                            }
+                                        </div>
+                                    </Collapse>
+                                </div>
+                            }
+                            {!showUpcoming &&
+                                < div >
+                                    {/* DISPLAY PAST EVENTS */}
+                                    {PAST_EVENTS.slice(0, MAX_EVENTS_DISPLAYED).map(event => {
+                                        return (
+                                            <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
+                                        );
+                                    })}
+                                    <Collapse in={showAdditionalEvents} style={{ paddingTop: '1vh' }}>
+                                        <div>
+                                            {
+                                                PAST_EVENTS.slice(MAX_EVENTS_DISPLAYED, PAST_EVENTS.length).map(event => {
+                                                    return (
+                                                        <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
+                                                    );
+                                                })
+                                            }
+                                        </div>
+                                    </Collapse>
+                                </div>
+                            }
+                            {showSeeAllButton && <CustomButton
+                                className="drop-shadow"
+                                onClick={() => setShowAdditionalEvents(!showAdditionalEvents)}
+                                aria-controls="expand-events"
+                                aria-expanded={showAdditionalEvents}
+                            >
+                                {showAdditionalEvents ? "See Less" : "See More"}
+                            </CustomButton>}
                         </Container>
-                        }
-                        {selected &&
-                            <Container>
-                                {/* DISPLAY PAST EVENTS */}
-                                <Row className="mb-3" style={{ textAlign: 'center' }}>
-                                    <h1 className="item-align-center font-weight-bold org-page-past-event-header">Past Events</h1>
-                                </Row>
-                                {PAST_EVENTS.slice(0, maxEventsDisplayed).map(event => {
-                                    return (
-                                        <OrgPageEventCard key={event.id} event={event} pastEvent={true} orgs={organizations}></OrgPageEventCard>
-                                    );
-                                })}
-                                {additionalPastEvents}
-                            </Container>
-                        }
                     </Container>
                 </div>
                 <FooterComponent page='OrgProfilePage' />
-            </div>
+            </div >
         )
     }
     else
