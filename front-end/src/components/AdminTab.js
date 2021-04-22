@@ -85,16 +85,23 @@ export default function AdminTab({ parent }) {
         <Container className={"mx-0 " + sidebarClass}
             onMouseEnter={
                 () => {
-                    setIsCollapsing(1);
-                    setTimeout(() => { setIsHovered(true); setIsCollapsing(0) }, 200)
+                    if (isCollapsing === 0) {
+                        setIsCollapsing(1);
+                        setTimeout(() => {
+                            setIsHovered(true);
+                            setIsCollapsing(0);
+                        }, 200);
+                    }
                 }}
             onMouseLeave={
                 () => {
-                    setIsCollapsing(2);
+                    if (isCollapsing === 0) {
+                        setIsCollapsing(2);
+                    }
                     setTimeout(() => {
                         setIsHovered(false);
-                        setIsCollapsing(0)
-                    }, 200)
+                        setIsCollapsing(0);
+                    }, 200);
                 }}>
             <div className="sidebar-items">
                 {
