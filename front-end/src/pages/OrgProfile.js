@@ -126,24 +126,23 @@ export default function OrgProfile() {
                             </Col>
                         </Row>
                         <Container style={{ paddingBottom: "40px" }}>
-                            <Row className="mb-3 text-center">
-                                {/* paddingLeft = ToggleButton width (10.5rem) + ToggleButton paddingRight (1rem) */}
-                                <div className="d-flex flex-grow-1 justify-content-center" style={{ paddingLeft: '11.5rem' }}>
+                            <Row className="mb-0 text-center">
+                                <div className="d-flex flex-grow-1 justify-content-center">
                                     {showUpcoming ?
                                         <h1 className="font-weight-bold">Upcoming Events</h1>
                                         :
                                         <h1 className="font-weight-bold org-page-past-event-header">Past Events</h1>
                                     }
                                 </div>
-                                <div className="pr-3">
-                                    <ToggleButton
-                                        selected={showUpcoming}
-                                        toggleSelected={() => {
-                                            setShowUpcoming(!showUpcoming);
-                                            setShowAdditionalEvents(false);
-                                        }}
-                                    />
-                                </div>
+                            </Row>
+                            <Row className="mb-3 text-center d-flex justify-content-end pr-3">
+                                <ToggleButton
+                                    selected={showUpcoming}
+                                    toggleSelected={() => {
+                                        setShowUpcoming(!showUpcoming);
+                                        setShowAdditionalEvents(false);
+                                    }}
+                                />
                             </Row>
                             {showUpcoming &&
                                 <div>

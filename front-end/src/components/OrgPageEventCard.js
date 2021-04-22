@@ -59,18 +59,20 @@ export default function OrgPageEventCard({ event, pastEvent, orgs }) {
                 </Row>
                 {event.tags != null &&
                     <Row className="mb-0">
-                        <Col className="d-flex justify-content-start align-items-end m-0">
-                            {
-                                event.tags.map((label, index) =>
-                                    <Tag
-                                        key={index}
-                                        type={pastEvent ? "" : "accent"}
-                                        style={{ backgroundColor: pastEvent && 'var(--secondary3)', margin: '2px' }}
-                                    >
-                                        {label}
-                                    </Tag>
-                                )
-                            }
+                        <Col xs={12} sm={8} md={6} className="d-flex justify-content-start align-items-end m-0" style={{ wordBreak: 'break-word' }}>
+                            <Row className="m-0">
+                                {
+                                    event.tags.map((label, index) =>
+                                        <Tag
+                                            key={index}
+                                            type={pastEvent ? "" : "accent"}
+                                            style={{ backgroundColor: pastEvent && 'var(--secondary3)', margin: '2px' }}
+                                        >
+                                            {label}
+                                        </Tag>
+                                    )
+                                }
+                            </Row>
                         </Col>
                         <Col className="d-flex justify-content-end align-items-end m-0">
                             {event.link != null &&
