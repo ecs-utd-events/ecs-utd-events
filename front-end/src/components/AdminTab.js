@@ -64,14 +64,14 @@ export const ClosedTab = ({ tab, index, parent, logoutHandler }) => {
 
 export default function AdminTab({ parent }) {
     const [isHovered, setIsHovered] = useState(false);
-    const [isCollapsing, setIsCollapsing] = useState(0);
+    const [isCollapsing, setIsCollapsing] = useState(-1);
     const history = useHistory();
     const sidebarClass = !isHovered ?
         ((isCollapsing === 1) ? 'sidebar collapsing open' :
             (isCollapsing === 2) ? 'sidebar collapsing close' :
                 'sidebar collapsed')
         :
-        (isCollapsing === 0) ? 'sidebar' : 'sidebar collapsed';
+        (isCollapsing === 0 || isCollapsing === -1) ? 'sidebar' : 'sidebar collapsed';
     const logoutHandler = () => {
         auth.signOut().then(() => {
             console.log('Adios! 👋')
