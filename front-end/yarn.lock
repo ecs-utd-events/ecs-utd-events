@@ -1497,6 +1497,11 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@iconify-icons/radix-icons@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@iconify-icons/radix-icons/-/radix-icons-1.1.2.tgz#44ec671741917bced3a6abc01231f58868fbc0a8"
+  integrity sha512-ekEStKPEUNSNf/As5YwQhnT26o5oXhLoDZfV/Udn3Eq+Ksn9vStmbChy7TpHKN+/lS29ujW3h+V0tpJfIC3nYg==
+
 "@iconify/icons-mdi@^1.1.12":
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/@iconify/icons-mdi/-/icons-mdi-1.1.12.tgz#6cdf4fd354730491685ff741c0d490c90631683b"

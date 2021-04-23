@@ -7,9 +7,9 @@ import Col from 'react-bootstrap/Col';
 import ShowMoreText from 'react-show-more-text';
 import ShareIcon from '@iconify/icons-mdi/share';
 import LinkIcon from '@iconify/icons-mdi/link-variant';
+import CalButtonIcon from '@iconify-icons/radix-icons/calendar';
 import { useEffect, useState } from "react";
 import ICalendarLink from "react-icalendar-link";
-
 import IconButton from '../components/IconButton';
 import Tag from "./Tag";
 import { getFormattedTime, lastUpdatedToString, eventCardFormatToISO } from './TimeUtils';
@@ -120,7 +120,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                             <IconButton className="mr-1 color-black" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
                         }
                         <ICalendarLink event={formattedICalEvent}>
-                            <IconButton className="mr-1" SVGComponent={CalendarIcon} />
+                            <IconButton className="mr-1" icon={CalButtonIcon} />
                         </ICalendarLink>
 
                         {/* <IconButton className="mr-1" icon={ShareIcon}></IconButton> */}

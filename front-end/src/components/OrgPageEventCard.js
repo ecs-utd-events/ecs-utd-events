@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Tag from './Tag';
 import { getFormattedTime } from './TimeUtils';
-import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
+import CalendarIcon from '@iconify-icons/radix-icons/calendar';
 import LinkIcon from '@iconify/icons-mdi/link-variant';
 import ICalendarLink from "react-icalendar-link";
 import IconButton from '../components/IconButton';
@@ -50,7 +50,7 @@ export default function OrgPageEventCard({ event, pastEvent, orgs }) {
                                         <IconButton className="m-0 mr-1 color-black" icon={LinkIcon} href={event.link} target="_blank"></IconButton>
                                     }
                                     <ICalendarLink event={formattedICalEvent}>
-                                        <IconButton className="m-0" SVGComponent={CalendarIcon} />
+                                        <IconButton className="m-0" icon={CalendarIcon} />
                                     </ICalendarLink>
                                 </Col>
                             </Row>
@@ -79,7 +79,7 @@ export default function OrgPageEventCard({ event, pastEvent, orgs }) {
                                 <IconButton className="m-0 mr-1 color-black" icon={LinkIcon} href={event.link} target="_blank"></IconButton>
                             }
                             <ICalendarLink event={formattedICalEvent}>
-                                <IconButton className="m-0 mr-1" SVGComponent={CalendarIcon} />
+                                <IconButton className="m-0 mr-1" icon={CalendarIcon} />
                             </ICalendarLink>
                         </Col>
                     </Row>}
