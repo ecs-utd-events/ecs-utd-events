@@ -17,6 +17,7 @@ import { getFormattedTime, lastUpdatedToString, eventCardFormatToISO } from './T
 import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
+import { Link } from 'react-router-dom';
 
 export function ListItemLayout({ Icon, children }) {
     return (
@@ -85,7 +86,16 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
                         <ListItemLayout Icon={GroupIcon}>
-                            {relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}
+                            {relevantOrgs != null &&
+                                relevantOrgs.map((org, index) =>
+                                    <span>
+                                        <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
+                                            <b>{org.shortName}</b>
+                                        </Link>
+                                        {index !== relevantOrgs.length - 1 ? ', ' : ''}
+                                    </span>
+                                )
+                            }
                         </ListItemLayout>
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
