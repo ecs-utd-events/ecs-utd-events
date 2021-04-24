@@ -74,6 +74,7 @@ export default function Login() {
                                 <Card.Header className="card-header-no-border"><h2 className="font-weight-bold">Organization Login</h2></Card.Header>
                                 <Card.Body className="pt-3 mx-3">
                                     {errorCode !== '' && <h6 className="text-danger">{getErrorMessage(errorCode)}</h6>}
+                                    {location.state != null && errorCode === '' && location.state.displayError ? <h6 className="text-danger">It appears you are not logged in yet!</h6> : null}
                                     <Form onSubmit={submitHandler}>
                                         <Form.Group controlId="email">
                                             <Form.Control className="py-4" required onChange={(event) => setUsername(event.target.value)} value={username} type="email" placeholder="Email address" />
