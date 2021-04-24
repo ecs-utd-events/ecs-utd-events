@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
+import ReactTooltip from 'react-tooltip';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -122,7 +123,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
         changeCalendarView(event.startTime);
     }
 
-    if (isLoading || orgs.length === 0 || currOrg.org == null ) {
+    if (isLoading || orgs.length === 0 || currOrg.org == null) {
         return <LoadingEventCard />
     }
 
@@ -190,18 +191,21 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                     </Form.Group>
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="date">
-                                            <Form.Label>Date</Form.Label>
+                                            <Form.Label data-tip="Please enter Date and Time in <b>CST</b>!">Date ⓘ</Form.Label>
+                                            <ReactTooltip backgroundColor="#FEC89A" textColor="black" clickable={true} effect="solid" offset={{ top: '-5px' }} html={true} />
                                             <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={event.startTime == '' ? getCSTFormattedDate(new Date()) : getCSTFormattedDate(event.startTime)} />
                                             {errors.date?.type === 'required' && <p className="error">⚠ An event date is required.</p>}
                                             {errors.date?.type === 'validate' && <p className="error">⚠ You cannot create past events.</p>}
                                         </Form.Group>
                                         <Form.Group as={Col} controlId="startTime">
-                                            <Form.Label>Start time</Form.Label>
+                                            <Form.Label data-tip="Please enter Date and Time in <b>CST</b>!">Start time ⓘ</Form.Label>
+                                            <ReactTooltip backgroundColor="#FEC89A" textColor="black" clickable={true} effect="solid" offset={{ top: '-5px' }} html={true} />
                                             <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => { setStartTime(e.target.value); changeCalendarView(e.target.value) }} defaultValue={getCSTFormattedTime(event.startTime)} />
                                             {errors.startTime && <p className="error">⚠ An event start time is required.</p>}
                                         </Form.Group>
                                         <Form.Group as={Col} controlId="endTime">
-                                            <Form.Label>End time</Form.Label>
+                                            <Form.Label data-tip="Please enter Date and Time in <b>CST</b>!">End time ⓘ</Form.Label>
+                                            <ReactTooltip backgroundColor="#FEC89A" textColor="black" clickable={true} effect="solid" offset={{ top: '-5px' }} html={true} />
                                             <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getCSTFormattedTime(event.endTime)} />
                                             {errors.endTime?.type === 'required' && <p className="error">⚠ An event end time is required.</p>}
                                             {errors.endTime?.type === 'validate' && <p className="error">⚠ Event end time must be after the start time.</p>}
