@@ -164,6 +164,11 @@ export default function OrgProfile() {
                                             }
                                         </div>
                                     </Collapse>
+                                    {UPCOMING_EVENTS.length === 0 &&
+                                        <div className="d-flex flex-grow-1 justify-content-center align-items-center" style={{backgroundColor: 'var(--gray5)', height: '10rem'}}>
+                                            <h3 style={{ color: 'var(--gray3)' }}>We currently don't have any upcoming events 😔</h3>
+                                        </div>
+                                    }
                                 </div>
                             }
                             {!showUpcoming &&
@@ -185,6 +190,11 @@ export default function OrgProfile() {
                                             }
                                         </div>
                                     </Collapse>
+                                    {PAST_EVENTS.length === 0 &&
+                                        <div className="d-flex flex-grow-1 justify-content-center align-items-center" style={{backgroundColor: 'var(--gray5)', height: '10rem'}}>
+                                            <h3 style={{ color: 'var(--gray3)' }}>We don't have a past, only a bright future 🌞</h3>
+                                        </div>
+                                    }
                                 </div>
                             }
                             {showSeeAllButton && <CustomButton
@@ -257,7 +267,7 @@ export default function OrgProfile() {
                                 />
                             </Row>
                             <div>
-                                <OrgPageEventCard loading/>
+                                <OrgPageEventCard loading />
                             </div>
                         </Container>
                     </Container>
