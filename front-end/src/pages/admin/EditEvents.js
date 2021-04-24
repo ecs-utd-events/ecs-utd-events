@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext, createRef } from "react";
 import FullCalendar, { isArraysEqual } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { Row, Col, Table } from 'react-bootstrap';
+import { Row, Col, Table, Spinner } from 'react-bootstrap';
 
 import AdminLayout from "../../components/AdminLayout";
 import EditableEventCard, { LoadingEventCard } from '../../components/EditableEventCard';
@@ -275,45 +275,53 @@ export default function EditEvents() {
                                 </CustomButton>
                             </div>
                         </div>
-                        {myEvents != null &&
-                            <div className="my-events-table-wrapper">
-                                <Table striped hover={myEvents != null && myEvents.length > 0} responsive>
-                                    <thead>
-                                        <tr>
-                                            <th className="date-cell">Date</th>
-                                            <th className="time-cell">Time</th>
-                                            <th className="name-cell">Name</th>
+                        <div className="my-events-table-wrapper">
+                            <Table striped hover={myEvents != null && myEvents.length > 0} responsive>
+                                <thead>
+                                    <tr>
+                                        <th className="date-cell">Date</th>
+                                        <th className="time-cell">Time</th>
+                                        <th className="name-cell">Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {myEvents == null &&
+                                        <tr style={{ height: '100%' }}>
+                                            <div className="d-flex align-items-center justify-content-center" style={{ height: '100%' }}>
+                                                <h4 style={{ color: "var(--gray3)" }}>Loading...</h4>
+                                            </div>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {myEvents.map((event) => {
-                                            return (
-                                                <tr key={event.id} onClick={(e) => {
-                                                    var dbEvent = formatFCEventToDB(event)
-                                                    changeCalendarView(event.start)
-                                                    setSelectedEvent(dbEvent)
-                                                    setIsEditing(false)
-                                                }}>
-                                                    <td className="date-cell">{new Date(event.start).toLocaleDateString()}</td>
-                                                    <td className="time-cell">{getFormattedTime(event.start)} - {getFormattedTime(event.end)}</td>
-                                                    <td className="name-cell">{event.title}</td>
-                                                </tr>
-                                            )
-                                        })}
-                                        {myEvents.length === 0 &&
-                                            <tr style={{ height: '100%' }}>
-                                                <div className="d-flex align-items-center justify-content-center" style={{ height: '100%' }}>
-                                                    <h4 style={{ color: "var(--gray3)" }}>No Events To Display</h4>
-                                                </div>
+                                    }
+                                    {myEvents != null && myEvents.map((event) => {
+                                        return (
+                                            <tr key={event.id} onClick={(e) => {
+                                                var dbEvent = formatFCEventToDB(event)
+                                                changeCalendarView(event.start)
+                                                setSelectedEvent(dbEvent)
+                                                setIsEditing(false)
+                                            }}>
+                                                <td className="date-cell">{new Date(event.start).toLocaleDateString()}</td>
+                                                <td className="time-cell">{getFormattedTime(event.start)} - {getFormattedTime(event.end)}</td>
+                                                <td className="name-cell">{event.title}</td>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </Table>
-                            </div>
-                        }
+                                        )
+                                    })}
+                                    {myEvents != null && myEvents.length === 0 &&
+                                        <tr style={{ height: '100%' }}>
+                                            <div className="d-flex align-items-center justify-content-center" style={{ height: '100%' }}>
+                                                <h4 style={{ color: "var(--gray3)" }}>No Events To Display</h4>
+                                            </div>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </Table>
+                        </div>
                     </Col>
                     <Col className="p-0">
                         <div className="fullcalendar-wrapper admin">
+                            <div className="loading-spinner-wrapper" style={{ pointerEvents: "none" }}>
+                                {allEvents == null && <Spinner animation="border" className="loading-spinner" />}
+                            </div>
                             <FullCalendar
                                 ref={calendarRef}
                                 initialView="dayGridMonth"
@@ -353,9 +361,65 @@ export default function EditEvents() {
     else {
         return (
             <AdminLayout pageName="Events">
-                <div style={{ padding: "1rem" }} />
-                <LoadingEventCard />
-                <LoadingEventCard />
+                <Row>
+                    <Col className="p-0" xs={3} sm={4}>
+                        <div className="my-events-header">
+                            <div>
+                                <h3>My Events</h3>
+                            </div>
+                        </div>
+                        <div className="my-events-table-wrapper">
+                            <Table striped hover={false} responsive>
+                                <thead>
+                                    <tr>
+                                        <th className="date-cell">Date</th>
+                                        <th className="time-cell">Time</th>
+                                        <th className="name-cell">Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style={{ height: '100%' }}>
+                                        <div className="d-flex align-items-center justify-content-center" style={{ height: '100%' }}>
+                                            <h4 style={{ color: "var(--gray3)" }}>Loading...</h4>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </Col>
+                    <Col className="p-0">
+                        <div className="fullcalendar-wrapper admin">
+                            <div className="loading-spinner-wrapper" style={{ pointerEvents: "none" }}>
+                                <Spinner animation="border" className="loading-spinner" />
+                            </div>
+                            <FullCalendar
+                                ref={calendarRef}
+                                initialView="dayGridMonth"
+                                plugins={[dayGridPlugin, timeGridPlugin]}
+                                headerToolbar={{
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'dayGridMonth,timeGridWeek'
+                                }}
+                                height="100%"
+                                scrollTime='08:00:00'
+                                events={[]}
+                                eventClick={(info) => {
+                                    var event = formatFCEventToDB(info.event)
+                                    setSelectedEvent(event)
+                                    setIsEditing(false)
+                                }}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="px-5 mx-5">
+                        <div>
+                            <LoadingEventCard />
+                        </div>
+                    </Col>
+                </Row>
             </AdminLayout>
         );
     }
