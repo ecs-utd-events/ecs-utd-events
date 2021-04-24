@@ -13,6 +13,8 @@ import ICalendarLink from "react-icalendar-link";
 import IconButton from '../components/IconButton';
 import Tag from "./Tag";
 import { getFormattedTime, lastUpdatedToString, eventCardFormatToISO } from './TimeUtils';
+import ReactTooltip from 'react-tooltip';
+
 
 import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
@@ -90,7 +92,8 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                                 relevantOrgs.map((org, index) =>
                                     <span>
                                         <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
-                                            <b>{org.shortName}</b>
+                                            <b data-tip={org.name}>{org.shortName}</b>
+                                            <ReactTooltip backgroundColor="#FFD7BA" textColor="black" clickable={true} effect="solid" offset={{ top: 0 }} html={true} />
                                         </Link>
                                         {index !== relevantOrgs.length - 1 ? ', ' : ''}
                                     </span>
