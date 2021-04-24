@@ -18,7 +18,7 @@ export default function OrgInfoCard({ orgName, orgImageUrl }) {
                         </Col>
                         <Col xs={8}>
                             <div className="org-info-card-style">
-                                <h3 className="font-weight-bold card-title">{orgName}</h3>
+                                <h3 className="font-weight-bold card-title text-break">{orgName}</h3>
                             </div>
                         </Col>
                     </Row>
