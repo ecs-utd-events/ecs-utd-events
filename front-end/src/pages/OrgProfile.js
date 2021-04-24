@@ -26,6 +26,7 @@ import FooterComponent from '../components/FooterComponent';
 import IconButton from "../components/IconButton";
 import { socialMediaPlatforms } from '../constants/SocialMediaPlatforms';
 import groupmeIcon from '../assets/groupme.svg';
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function findThisOrg(allOrgs, orgSlug) {
     if (allOrgs != null && orgSlug != null) {
@@ -202,5 +203,66 @@ export default function OrgProfile() {
         )
     }
     else
-        return null;
+        return (
+            <div className="App">
+                {/* minHeight of the separate wrapping div is set to push the footer to the bottom of the page */}
+                <div style={{ minHeight: 'calc(100vh - 5rem)' }}>
+                    <NavbarComponent page='OrgProfilePage' org={org} />
+                    <Container>
+                        <div className="d-flex justify-content-center">
+                            <Skeleton width="25vh" height="25vh" variant="circle" animation="wave" />
+                        </div>
+                        <Row className="mt-4 mb-0">
+                            <h1 className="item-align-center font-weight-bold d-flex justify-content-center"><Skeleton animation="wave" width="50%" /></h1>
+                        </Row>
+                        <Row className="center-row">
+                            <ButtonGroup>
+                                <Skeleton className="mr-2" width="40px" height="40px" variant="circle" />
+                                <Skeleton className="mr-2" width="40px" height="40px" variant="circle" />
+                                <Skeleton className="mr-2" width="40px" height="40px" variant="circle" />
+                            </ButtonGroup>
+                        </Row>
+                        <Row className="mb-3 mt-4">
+                            <Col xs={2} style={{ textAlign: 'right', marginTop: '-4px' }}>
+                                <Icon icon={linkIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
+                            </Col>
+                            <Col style={{ textAlign: 'left' }}>
+                                <a><Skeleton width="50%" animation="wave" /></a>
+                            </Col>
+                        </Row>
+                        <Row className="mb-5">
+                            <Col xs={2} style={{ textAlign: 'right', marginTop: '3px', marginBottom: 'auto' }}>
+                                <Icon icon={descriptionIcon} style={{ fontSize: '2rem', color: 'var(--gray3)' }} />
+                            </Col>
+                            <Col xs={8} style={{ textAlign: 'left' }}>
+                                <Skeleton animation="wave" />
+                                <Skeleton animation="wave" />
+                                <Skeleton animation="wave" />
+                            </Col>
+                        </Row>
+                        <Container style={{ paddingBottom: "40px" }}>
+                            <Row className="mb-0 text-center">
+                                <div className="d-flex flex-grow-1 justify-content-center">
+                                    {showUpcoming ?
+                                        <h1 className="font-weight-bold">Upcoming Events</h1>
+                                        :
+                                        <h1 className="font-weight-bold org-page-past-event-header">Past Events</h1>
+                                    }
+                                </div>
+                            </Row>
+                            <Row className="mb-3 text-center d-flex justify-content-end pr-3">
+                                <ToggleButton
+                                    selected={showUpcoming}
+                                    disabled
+                                />
+                            </Row>
+                            <div>
+                                <OrgPageEventCard loading/>
+                            </div>
+                        </Container>
+                    </Container>
+                </div>
+                <FooterComponent page='OrgProfilePage' />
+            </div >
+        )
 }

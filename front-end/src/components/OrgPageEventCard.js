@@ -7,9 +7,44 @@ import CalendarIcon from '@iconify-icons/radix-icons/calendar';
 import LinkIcon from '@iconify/icons-mdi/link-variant';
 import ICalendarLink from "react-icalendar-link";
 import IconButton from '../components/IconButton';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 
-export default function OrgPageEventCard({ event, pastEvent, orgs }) {
+export default function OrgPageEventCard({ event, pastEvent, orgs, loading }) {
+
+    if (loading) {
+        return (
+            <Card className="drop-shadow mb-4">
+                <Row>
+                    <Col style={{ textAlign: 'left', wordBreak: 'break-all' }}>
+                        <h5 className="font-weight-bold"><Skeleton animation="wave" /></h5>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={4} md={2} style={{ textAlign: 'left', paddingBottom: '5px' }}>
+                        {/* <p className="mb-0">{event.start.toDateString()}</p> */}
+                        <p className="mb-0"><Skeleton animation="wave" /></p>
+                        <p className="mb-0"><Skeleton animation="wave" /></p>
+                        <p className="mb-0"><Skeleton animation="wave" /></p>
+                        <p className="mb-0"><Skeleton animation="wave" /></p>
+                    </Col>
+                    <Col style={{ textAlign: 'left' }} className="d-flex">
+                        <Row className="d-flex flex-grow-1">
+                            <Col className="mr-3">
+                                <Skeleton animation="wave" height="100%" />
+                            </Col>
+                        </Row>
+                        <Row className="d-flex">
+                            <Col className="d-flex flex-grow-1 justify-content-end align-items-end m-0">
+                                <Skeleton className="mr-2" width="40px" height="40px" variant="circle" />
+                                <Skeleton className="mr-2" width="40px" height="40px" variant="circle" />
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Card>
+        )
+    }
 
     const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
     if (event != null && orgs != null) {
