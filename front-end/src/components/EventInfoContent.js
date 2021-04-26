@@ -34,6 +34,7 @@ export function ListItemLayout({ Icon, children }) {
     )
 }
 
+// get the shortName for all orgs that are collaborators on this event
 function getRelevantOrgs(allOrgs, event) {
     if (allOrgs == null || event == null || event.extendedProps.org == null || event.extendedProps.org.length === 0) {
         return null;
@@ -49,17 +50,19 @@ function getRelevantOrgs(allOrgs, event) {
     return filteredArr
 }
 
+// A shared component to display event info on large and small screens
 export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
+
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
-        // console.log(event);
     }, [event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
     var includedLink = event.extendedProps.link != null ? event.extendedProps.link : "";
 
+    // create .ical/.ics event for downloading
     const formattedICalEvent = {
         title: event.title,
         description: event.extendedProps.description + " " + includedLink,

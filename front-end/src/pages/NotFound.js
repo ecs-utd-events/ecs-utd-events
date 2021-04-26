@@ -1,6 +1,7 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+// We fall back to this component when a route is not found (404 Error)
 export default function NotFound() {
     return (
         <div style={{ minHeight: "100vh", backgroundColor: 'var(--secondary1)' }}>

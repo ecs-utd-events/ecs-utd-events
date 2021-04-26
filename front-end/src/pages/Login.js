@@ -14,6 +14,7 @@ import './../styles/App.css';
 import FullPageLoading from '../components/FullPageLoading';
 import { UserContext } from '../providers/UserProvider';
 
+// Return custom error messaging based on Firebase Auth errors: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signinwithemailandpassword
 function getErrorMessage(errorCode) {
     if (errorCode === 'auth/invalid-email') {
         return '😴 Please enter a valid email'
@@ -44,6 +45,10 @@ export default function Login() {
             auth.signInWithEmailAndPassword(username, password).then((authCredentials) => {
                 setErrorCode('');
                 setLoading(true);
+                // we only arrive in this code block if the user successfully logged in
+                // however the userContext which is used by the rest of the application (including AdminRouter)
+                // can take a second to update with these credentials, thus we enforce an artifical 1s loading
+                // to ensure that the credentials have a chance to propagate throughout the rest of the application
                 setTimeout(() => {
                     console.log('Welcome ' + authCredentials.user.email + ' 😎');
                     setLoading(false);
@@ -59,6 +64,9 @@ export default function Login() {
         })
     }
 
+    // if the user is actually already logged in then we can redirect them to the admin portal!
+    // check to see if there is a redirectRoute in the state (i.e. did the AdminRouter first redirect to the login page because the user wasn't authenticated within the delay timer)
+    // otherwise by default send the user to the profile page
     if(user != null) {
         history.replace(location.state != null ? location.state.redirectRoute : '/admin/profile');
     }

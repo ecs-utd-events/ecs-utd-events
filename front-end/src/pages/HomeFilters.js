@@ -14,6 +14,7 @@ export function sortTagsAlphabetically(tagsArr) {
     return sortedArr;
 }
 
+// helper function to get a time string from an integer in the range [0, 1440] (i.e. minutes in the day) 
 function getTimeFromRangeMinutes(value, index) {
     if (value === 0 || value === 1440) {
         return "12:00 AM"
@@ -34,6 +35,9 @@ function getTimeFromRangeMinutes(value, index) {
     return hoursString + ":" + minuteString + " " + (value >= 720 ? 'PM' : 'AM');
 }
 
+//helper function to filter all events based on the filter values
+// TODO: this could become very expensive and slow in the future, depending on how many events are present
+// could potentially optimize by only filtering for the events currently displayed on the calendar (lazy filtering)
 function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvents, setFilteredEvents) {
     if (allEvents == null || allEvents.length === 0) {
         return;
@@ -73,7 +77,7 @@ function filterEvents(orgFilterValue, tagsFilterValue, timeFilterValue, allEvent
     return filteredEvents;
 }
 
-
+// This functional component handles the filters seen on the home page above the calendar
 export default function HomeFilters({ setFilteredEvents, allEvents }) {
     const [tags, setTags] = useState([]);
     const [timeFilterValue, setTimeFilterValue] = useState([0, 1440])
@@ -93,12 +97,14 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
             });
     }, [])
 
+    // wait for org data to come in and then set the state with it
     useEffect(() => {
         if (orgs != null) {
             setOrganizations(orgs);
         }
     }, [orgs])
 
+    // any time a filter value is updated we refilter all the events
     useEffect(() => {
         const filteredEvents = filterEvents(orgFilterValue, tagsFilterValue, committedTimeFilterValue, allEvents, setFilteredEvents);
         setFilteredEvents(filteredEvents);
@@ -106,6 +112,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
 
     return (
         <Row className="home-page-filters mx-1 mt-2">
+            {/* organizations filter */}
             <Col xs={12} sm={4} className="d-flex align-items-end pl-2 pr-0">
                 <Autocomplete
                     loading={organizations.length === 0}
@@ -116,6 +123,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                     clearOnEscape
                 />
             </Col>
+            {/* tags filter */}
             <Col className="d-flex align-items-end">
                 <Autocomplete
                     loading={tags.length === 0}
@@ -129,6 +137,7 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                     }}
                 />
             </Col>
+            {/* start and end time filter */}
             <Col className="align-items-end pr-0">
                 <Row style={{ width: '100%' }}>
                     <Slider
@@ -136,7 +145,10 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
                         max={1440}
                         step={15}
                         value={timeFilterValue}
+                        // we update the time filter value to reflect the slider moving
                         onChange={(_, newValue) => setTimeFilterValue(newValue)}
+                        // we save the COMMITTED time filter value when the user is done moving the slider
+                        // this way we only refilter events once the user is done setting the time
                         onChangeCommitted={(_, newValue) => { setCommittedTimeFilterValue(newValue); setTimeFilterValue(newValue); }}
                         getAriaValueText={getTimeFromRangeMinutes}
                         valueLabelDisplay="auto"

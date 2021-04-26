@@ -8,6 +8,7 @@ import Image from 'react-bootstrap/Image';
 import Circle from '../assets/placeholder_org_image.svg';
 import { auth } from '../firebase';
 
+// This functional component renders the navbar! This is only used on the home page and the org profile pages
 export default function NavbarComponent({ page }) {
     const { org, user } = useContext(UserContext);
     const [dummyOrgState, setDummyOrgState] = useState(org);

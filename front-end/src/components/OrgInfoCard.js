@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import PlaceholderOrgImage from '../assets/placeholder_org_image.svg';
 import Image from 'react-bootstrap/Image'
 
+// This functional component renders a card to display org profile picture and name which we display on the home page
 export default function OrgInfoCard({ orgName, orgImageUrl }) {
     var imageSource = orgImageUrl || PlaceholderOrgImage;
     return (

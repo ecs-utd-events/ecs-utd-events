@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import { Container, Col, Card, Row } from 'react-bootstrap'
 
-import IconButton from '../components/IconButton';
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import { getFormattedTime } from './TimeUtils';
 
+// This functional component displays a card with event info on the edit events page in the admin portal
+// This card is used when either no event has been selected or the selected event is not owned by the user
 export default function NonEditableEventCard({ event }) {
 
     const allOrgs = useContext(AllOrgContext);

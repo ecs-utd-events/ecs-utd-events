@@ -9,7 +9,8 @@ import ICalendarLink from "react-icalendar-link";
 import IconButton from '../components/IconButton';
 import Skeleton from '@material-ui/lab/Skeleton';
 
-
+// This functional component renders an event card for an Org Profile page
+// It expects "event" prop to be in the FullCalendar format!
 export default function OrgPageEventCard({ event, pastEvent, orgs, loading }) {
 
     if (loading) {
@@ -46,10 +47,12 @@ export default function OrgPageEventCard({ event, pastEvent, orgs, loading }) {
         )
     }
 
+    // change background color styles if we have past vs. future event
     const backgroundColor = pastEvent === true ? "org-page-past-event-card" : "";
     if (event != null && orgs != null) {
 
         var includedLink = event.link != null ? " " + event.link : "";
+        // create .ical/.ics event for downloading
         const formattedICalEvent = {
             title: event.title,
             description: event.description + includedLink,
@@ -57,7 +60,7 @@ export default function OrgPageEventCard({ event, pastEvent, orgs, loading }) {
             endTime: event.endTime,
             location: event.location
         }
-        // Get the relevant other organizations for this event
+        // Get the relevant organizations for this event
         var relevantOrgs = orgs.filter(org => event.orgs.includes(org.uId));
         return (
             <Card className={"drop-shadow mb-4 " + backgroundColor}>
@@ -68,7 +71,6 @@ export default function OrgPageEventCard({ event, pastEvent, orgs, loading }) {
                 </Row>
                 <Row>
                     <Col xs={4} md={2} style={{ textAlign: 'left', paddingBottom: '5px' }}>
-                        {/* <p className="mb-0">{event.start.toDateString()}</p> */}
                         <p className="mb-0">{(new Date(event.startTime)).toDateString()}</p>
                         <p className="mb-0">{!event.allDay ? getFormattedTime(new Date(event.startTime)) + " - " + getFormattedTime(new Date(event.endTime)) : null}</p>
                         <p className="mb-0">{event.location}</p>

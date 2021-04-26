@@ -10,6 +10,7 @@ import { auth } from '../firebase';
 import FullPageLoading from '../components/FullPageLoading';
 import './../styles/App.css';
 
+// get parameters from the URL which was navigated to from auto-generated email
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -20,6 +21,7 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+// helper function to display card on successful password reset
 function SuccessfullyResetCard() {
     return (
         <Card className="px-5 pt-4">
@@ -44,6 +46,7 @@ function SuccessfullyResetCard() {
     );
 }
 
+// helper function to display reset password form
 function ResetCard({ email, onPasswordChange, submitForm, errorCode}) {
     return (
         <Card className="px-5 pt-4">

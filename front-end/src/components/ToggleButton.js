@@ -2,6 +2,7 @@ import React from "react";
 
 import "../styles/ToggleButton.css";
 
+// Supports the custom toggle button used primarily on the Org Profile page
 export default function ToggleButton({ selected, toggleSelected, ...otherProps }) {
 
     return (

@@ -25,9 +25,9 @@ import Circle from '../assets/placeholder_org_image.svg';
 import FooterComponent from '../components/FooterComponent';
 import IconButton from "../components/IconButton";
 import { socialMediaPlatforms } from '../constants/SocialMediaPlatforms';
-import groupmeIcon from '../assets/groupme.svg';
 import Skeleton from "@material-ui/lab/Skeleton";
 
+// use the orgSlug in the URL params to get the organization data object with all the relevant data
 function findThisOrg(allOrgs, orgSlug) {
     if (allOrgs != null && orgSlug != null) {
         for (var i = 0; i < allOrgs.length; i++) {
@@ -42,6 +42,7 @@ function findThisOrg(allOrgs, orgSlug) {
 const MAX_EVENTS_DISPLAYED = 3;
 
 export default function OrgProfile() {
+    // get orgSlug from the URL parameters
     let { orgSlug } = useParams();
     const [thisOrg, setThisOrg] = useState(null);
     const [allEvents, setAllEvents] = useState(null);
@@ -51,10 +52,13 @@ export default function OrgProfile() {
     const { org } = useContext(UserContext);
 
     useEffect(() => {
+        // use URL params and data for all the orgs to get the data for this particular org
         setThisOrg(findThisOrg(organizations, orgSlug));
     }, [organizations, orgSlug])
 
     useEffect(() => {
+        // once we have an org then we need to fetch all the dates relevant to that org
+        // note that all events have an "org" array which stores relevant orgIds
         if (thisOrg != null) {
             fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/org=' + thisOrg.uId)
                 .then(response => response.json())
@@ -85,6 +89,8 @@ export default function OrgProfile() {
 
         // Display a placeholder image if the organization is null OR the organization's imageUrl field is null.
         var imageSource = thisOrg != null ? (thisOrg.imageUrl != null && thisOrg.imageUrl !== "" ? thisOrg.imageUrl : Circle) : Circle;
+
+        // show a button to expand displayed events when we have more than MAX_EVENTS_DISPLAYED
         const showSeeAllButton = (showUpcoming && UPCOMING_EVENTS.length > MAX_EVENTS_DISPLAYED) || (!showUpcoming && PAST_EVENTS.length > MAX_EVENTS_DISPLAYED)
 
         return (
@@ -165,7 +171,7 @@ export default function OrgProfile() {
                                         </div>
                                     </Collapse>
                                     {UPCOMING_EVENTS.length === 0 &&
-                                        <div className="d-flex flex-grow-1 justify-content-center align-items-center" style={{backgroundColor: 'var(--gray5)', height: '10rem'}}>
+                                        <div className="d-flex flex-grow-1 justify-content-center align-items-center" style={{ backgroundColor: 'var(--gray5)', height: '10rem' }}>
                                             <h3 style={{ color: 'var(--gray3)' }}>We currently don't have any upcoming events 😔</h3>
                                         </div>
                                     }
@@ -191,7 +197,7 @@ export default function OrgProfile() {
                                         </div>
                                     </Collapse>
                                     {PAST_EVENTS.length === 0 &&
-                                        <div className="d-flex flex-grow-1 justify-content-center align-items-center" style={{backgroundColor: 'var(--gray5)', height: '10rem'}}>
+                                        <div className="d-flex flex-grow-1 justify-content-center align-items-center" style={{ backgroundColor: 'var(--gray5)', height: '10rem' }}>
                                             <h3 style={{ color: 'var(--gray3)' }}>We don't have a past, only a bright future 🌞</h3>
                                         </div>
                                     }

@@ -38,6 +38,7 @@ const TAB_CONTENTS = [
     }
 ];
 
+// helper function to display each of the tabs
 export const ClosedTab = ({ tab, index, parent, logoutHandler }) => {
     const selected = tab.title === parent;
     const orderClass = index === 0 ? 'first' : index === TAB_CONTENTS.length - 1 ? 'last' : ''
@@ -62,10 +63,18 @@ export const ClosedTab = ({ tab, index, parent, logoutHandler }) => {
     )
 }
 
+// This functional component displays the sidebar in the admin panel
+// the "parent" property is the name of the current page the user is on and is used to determine which Tab should be highlighted
+// the "parent" property should be one of the possible titles in TAB_CONTENTS
 export default function AdminTab({ parent }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isCollapsing, setIsCollapsing] = useState(-1);
     const history = useHistory();
+    // isCollapsing has 4 states:
+    // -1 is an initial state where sidebar should be collapsed
+    // 0 is a neutral state where the siderbar should maintain the position it is already in
+    // 1 is when the sidebar is opening
+    // 2 is when the sidebar is closing
     const sidebarClass = !isHovered ?
         ((isCollapsing === 1) ? 'sidebar collapsing open' :
             (isCollapsing === 2) ? 'sidebar collapsing close' :
@@ -85,8 +94,13 @@ export default function AdminTab({ parent }) {
         <Container className={"mx-0 " + sidebarClass}
             onMouseEnter={
                 () => {
+                    // we must check that isCollapsing is in a neutral state before trying to reopen it
+                    // this avoids the majority of glitching, as it treats isCollapsing as a shared resource
+                    // that must be locked before the function can start
                     if (isCollapsing === 0) {
                         setIsCollapsing(1);
+                        // we set isHovered to true after 200ms
+                        // the animation for the sidebar to open and close is 0.25s = 250ms
                         setTimeout(() => {
                             setIsHovered(true);
                             setIsCollapsing(0);
@@ -98,6 +112,8 @@ export default function AdminTab({ parent }) {
                     if (isCollapsing === 0) {
                         setIsCollapsing(2);
                     }
+                    // even if the siderbar is opening we must start the process of closing it once the mouse leaves,
+                    // irrespective of whether isCollapsing has been locked by the other function or not
                     setTimeout(() => {
                         setIsHovered(false);
                         setIsCollapsing(0);
