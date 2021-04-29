@@ -1,27 +1,15 @@
-import PropTypes from "prop-types";
-import React, { Component } from "react";
+import React from "react";
 
 import "../styles/ToggleButton.css";
 
-export class ToggleButton extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+// Supports the custom toggle button used primarily on the Org Profile page
+export default function ToggleButton({ selected, toggleSelected, ...otherProps }) {
 
-    render() {
-        const { selected, toggleSelected } = this.props;
-        return (
-            <div className="toggle-container" onClick={toggleSelected}>
-                <div className={`dialog-button ${selected ? "" : "disabled"}`}>
-                    {selected ? "Past" : "Upcoming"}
-                </div>
+    return (
+        <div className={`toggle-container ${selected ? "selected" : "unselected"}`} onClick={toggleSelected} {...otherProps}>
+            <div className={`dialog-button ${selected ? "selected" : "unselected"}`}>
+                {selected ? "Upcoming" : "Past"}
             </div>
-        );
-    }
+        </div>
+    )
 }
-
-ToggleButton.propTypes = {
-    selected: PropTypes.bool.isRequired,
-    toggleSelected: PropTypes.func.isRequired
-};

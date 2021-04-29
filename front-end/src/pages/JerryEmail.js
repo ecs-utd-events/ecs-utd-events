@@ -6,12 +6,17 @@ import CustomButton from "../components/CustomButton";
 import { useContext, useRef, useState } from "react";
 import { AllOrgContext } from "../providers/AllOrgProvider";
 
+// Helper function to check if two DateTime objects are on the same day
 const datesAreOnSameDay = (first, second) =>
     first.getFullYear() === second.getFullYear() &&
     first.getMonth() === second.getMonth() &&
     first.getDate() === second.getDate();
 
+// Helper function to get the string for a single event
 const getEventString = (curEvent, orgs) => {
+    // Create a list of orgs that are collaborating on this event
+    // We must use a for loop as the event only stores an array of orgIds
+    // and we must convert orgIds to org shortNames
     let orgString = ''
     for (let j = 0; j < curEvent.orgs.length; j += 1) {
         let curOrg = orgs.find(org => org.uId === curEvent.orgs[j]);
@@ -21,11 +26,14 @@ const getEventString = (curEvent, orgs) => {
         }
     }
     const curDate = new Date(curEvent.startTime);
+    
+    // build the final event string
     return (curEvent.title + ' -- ' + orgString + '\n' + curDate.toLocaleTimeString() + '\t|\t'
         + curEvent.location + '\n' + curEvent.description
         + (curEvent.link != null ? ('\n' + addProtocol(curEvent.link)) : "") + '\n\n');
 }
 
+// In case a link does not inclues "https://" we add it here
 function addProtocol(str) {
     var pattern = new RegExp('^(https?:\\/\\/).*');
     if (!pattern.test(str)) {
@@ -35,10 +43,13 @@ function addProtocol(str) {
     }
 }
 
+// this async function takes the apiData and converts it into the email
 async function getEmailString(apiData, orgs) {
     if (apiData == null || apiData.length == 0) {
         return 'No Events To Display';
     } else {
+        // The textObj is meant to be used if we want to display the email in HTML
+        // which might look nicer on the webpage but serve no functional purpose for the email copy button
         // var textObj = {}
         var string = ''
         var i = 0;
@@ -48,6 +59,7 @@ async function getEmailString(apiData, orgs) {
         while (i < apiData.length) {
             const curEvent = apiData[i]
             const curDate = new Date(curEvent.startTime)
+            // We must check to see if we need a new Header for a new day
             if (datesAreOnSameDay(curDate, prevDate)) {
                 // textObj.prevDate.push(curEvent);
                 const eventString = getEventString(curEvent, orgs);
@@ -65,7 +77,11 @@ async function getEmailString(apiData, orgs) {
     }
 }
 
+// This page supports an auto email generator for a faculty member to send to the ecs.all mailing list
+// It is named after Mr. Jerry Alexander, a former Assistant Dean of ECS and head of JCS.
 export default function JerryEmail() {
+
+    // today and nextSunday are the default times set for the email generator
     const today = new Date();
     today.setHours(0, 0, 0);
     const formattedStart = getFormattedDate(today);
@@ -89,10 +105,12 @@ export default function JerryEmail() {
         }
     }
 
-
     const generateEmail = (data, e) => {
+        // data comes from the useForm() hook API when we use handleSubmit()
         var startDate = new Date(data.startDate);
         var endDate = new Date(data.endDate);
+        // We want startDate and endDate to start from midnight UTC
+        // thus we add the timeZoneOffset to these times to adjust the clock back to 00:00:00 UTC
         var timeZoneOffset = startDate.getTimezoneOffset() / 60
         startDate.setHours(startDate.getHours() + timeZoneOffset);
         endDate.setHours(endDate.getHours() + timeZoneOffset);

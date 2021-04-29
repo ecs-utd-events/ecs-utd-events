@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
+import ReactTooltip from 'react-tooltip';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -56,6 +57,7 @@ export function LoadingEventCard() {
     )
 }
 
+// helper function to get orgIds from multiple Organization objects
 function getOrgIds(allOrgs) {
     var orgIdsOnly = [];
     for (var i = 0; i < allOrgs.length; i++) {
@@ -64,6 +66,8 @@ function getOrgIds(allOrgs) {
     return orgIdsOnly;
 }
 
+// This functional component displays an event card on the edit events pages that is able to be edited by the user
+// It expects the "event" property in the Full Calendar format
 export default function EditableEventCard({ tags, event, deleteEvent, setIsEditing, isEditing, changeCalendarView, saveEvent }) {
     const orgs = useContext(AllOrgContext);
     const currOrg = useContext(UserContext);
@@ -76,7 +80,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [show, setShow] = useState(false);
+    const [showDeleteEventModal, setShowDeleteEventModal] = useState(false);
     const [tagsFilterValue, setTagsFilterValue] = useState(defaultTags)
     const [orgFilterValue, setOrgFilterValue] = useState(defaultCollaborators)
 
@@ -90,15 +94,19 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
     }, [event]);
 
     const onSubmit = (eventInfo) => {
+        // tags and orgs aren't stored directly in the form data since the AutoComplete component does not expose
+        // it's ref/data to the useForm() hook API, thus we must add it in manually here
         eventInfo["tags"] = tagsFilterValue;
         eventInfo["orgs"] = orgFilterValue;
         saveEvent(eventInfo, event.id, currOrg.org.uId, setIsLoading);
     }
 
+    // check that startTime is not greater than endTime
     const validateTime = async () => {
         if (startTime > endTime) return false;
     }
 
+    // check that the date has not already past
     const validateDate = async (date) => {
         const fullDate = eventCardFormatToISO(date, startTime);
         if (event.id === '') {
@@ -110,6 +118,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
 
     const cancelEditing = (e) => {
         e.preventDefault()
+        // when the user has cancelled creating a new event we delete its data
         if (event.id === '') {
             deleteEvent(event.id);
         }
@@ -122,7 +131,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
         changeCalendarView(event.startTime);
     }
 
-    if (isLoading || orgs.length === 0 || currOrg.org == null ) {
+    if (isLoading || orgs.length === 0 || currOrg.org == null) {
         return <LoadingEventCard />
     }
 
@@ -152,7 +161,7 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                     <Row className="d-flex flex-grow-1">
                                         <Col className="d-flex justify-content-end align-items-end m-0">
                                             <IconButton className="mr-2 my-0" icon={EditIcon} onClick={startEditing}></IconButton>
-                                            <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
+                                            <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShowDeleteEventModal(true); }}></IconButton>
                                         </Col>
                                     </Row>
                                 }
@@ -165,13 +174,13 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                 </Col>
                                 <Col className="d-flex justify-content-end align-items-end m-0 mb-3">
                                     <IconButton className="mr-2 my-0" icon={EditIcon} onClick={startEditing}></IconButton>
-                                    <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShow(true); }}></IconButton>
+                                    <IconButton className="my-0" icon={TrashIcon} onClick={(e) => { e.preventDefault(); setShowDeleteEventModal(true); }}></IconButton>
                                 </Col>
                             </Row>
                         }
                     </Card>
                 </Col>
-                <DeleteEventModal show={show} onHide={() => setShow(false)} delete={() => deleteEvent(event.id)} title={event.title} />
+                <DeleteEventModal show={showDeleteEventModal} onHide={() => setShowDeleteEventModal(false)} delete={() => deleteEvent(event.id)} title={event.title} />
             </Container>
         );
     } else if (event != null && isEditing) {
@@ -190,18 +199,21 @@ export default function EditableEventCard({ tags, event, deleteEvent, setIsEditi
                                     </Form.Group>
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="date">
-                                            <Form.Label>Date</Form.Label>
+                                            <Form.Label data-tip="Please enter Date and Time in <b>CST</b>!">Date ⓘ</Form.Label>
+                                            <ReactTooltip backgroundColor="#FEC89A" textColor="black" clickable={true} effect="solid" offset={{ top: '-5px' }} html={true} />
                                             <Form.Control type="date" placeholder="Date" name="date" ref={register({ required: true, validate: validateDate })} onChange={e => changeCalendarView(e.target.value)} defaultValue={event.startTime == '' ? getCSTFormattedDate(new Date()) : getCSTFormattedDate(event.startTime)} />
                                             {errors.date?.type === 'required' && <p className="error">⚠ An event date is required.</p>}
                                             {errors.date?.type === 'validate' && <p className="error">⚠ You cannot create past events.</p>}
                                         </Form.Group>
                                         <Form.Group as={Col} controlId="startTime">
-                                            <Form.Label>Start time</Form.Label>
+                                            <Form.Label data-tip="Please enter Date and Time in <b>CST</b>!">Start time ⓘ</Form.Label>
+                                            <ReactTooltip backgroundColor="#FEC89A" textColor="black" clickable={true} effect="solid" offset={{ top: '-5px' }} html={true} />
                                             <Form.Control type="time" placeholder="Start Time" name="startTime" ref={register({ required: true })} onChange={e => { setStartTime(e.target.value); changeCalendarView(e.target.value) }} defaultValue={getCSTFormattedTime(event.startTime)} />
                                             {errors.startTime && <p className="error">⚠ An event start time is required.</p>}
                                         </Form.Group>
                                         <Form.Group as={Col} controlId="endTime">
-                                            <Form.Label>End time</Form.Label>
+                                            <Form.Label data-tip="Please enter Date and Time in <b>CST</b>!">End time ⓘ</Form.Label>
+                                            <ReactTooltip backgroundColor="#FEC89A" textColor="black" clickable={true} effect="solid" offset={{ top: '-5px' }} html={true} />
                                             <Form.Control type="time" placeholder="End Time" name="endTime" ref={register({ required: true, validate: validateTime })} onChange={e => setEndTime(e.target.value)} defaultValue={getCSTFormattedTime(event.endTime)} />
                                             {errors.endTime?.type === 'required' && <p className="error">⚠ An event end time is required.</p>}
                                             {errors.endTime?.type === 'validate' && <p className="error">⚠ Event end time must be after the start time.</p>}

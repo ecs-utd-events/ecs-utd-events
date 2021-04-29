@@ -6,11 +6,12 @@ import { AppBar, Dialog, Toolbar } from "@material-ui/core";
 import EventInfoContent from "./EventInfoContent";
 import IconButton from "./IconButton";
 
+// functional component to render a modal for event info on mobile devices/small screens
 export default function EventInfoModal({ mobileModalOpen, setMobileModalOpen, event, orgs }) {
     const handleClose = () => setMobileModalOpen(false);
     return (
         <Dialog
-            style={{ overflow: 'auto' }}
+            style={{ overflowY: 'auto', overflowX: 'hidden', maxWidth: '100vw', maxHeight: '100vh' }}
             open={mobileModalOpen}
             onClose={handleClose}
             closeAfterTransition>

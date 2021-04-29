@@ -1,5 +1,9 @@
 
+// oneDayInMilliseconds calculates the difference needed for 2 dateTime objects to be considered greater than 24 hours
+// with a 1s margin of error
 export const oneDayInMilliseconds = 86400000 - 1000;
+
+// helper function to format an event from our back-end db to the FullCalendar format
 export function parseEventsToFullCalendarFormat(eventData) {
   return eventData.map(event => {
     const allDay = new Date(event.endTime) - (new Date(event.startTime)) >= oneDayInMilliseconds ? true : false;
@@ -9,6 +13,7 @@ export function parseEventsToFullCalendarFormat(eventData) {
       start: event.startTime,
       end: event.endTime,
       allDay: allDay,
+      // extendedProps are all properties not used directly by FullCalendar but info we still want readily available
       extendedProps: {
         description: event.description,
         org: event.orgs,
@@ -22,6 +27,7 @@ export function parseEventsToFullCalendarFormat(eventData) {
   })
 }
 
+// helper function to convert an event from the FullCalendar format back to our back-end db format
 export function formatFCEventToDB(event) {
   return {
     id: event.id,

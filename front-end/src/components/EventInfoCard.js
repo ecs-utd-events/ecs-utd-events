@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/esm/Card";
 import EventInfoContent from './EventInfoContent.js';
 
-
+// This functional component displays the event info card on large screens
 export default function EventInfoCard({ event, animateCard, setAnimateCard, orgs }) {
     const onAnimationEnd = () => {
         setAnimateCard('')
@@ -9,6 +9,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard, orgs
     if (event != null) {
         return (
             <Card className="drop-shadow card pb-0">
+                {/* This div handles animating a colorful blob whenever animateCard === 'blob-animation' */}
                 <div style={{ height: "100%", width: "100%", position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
                     <div style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden" }}>
                         <div style={{ display: animateCard === '' ? 'none' : 'block' }} className={"blob " + animateCard} onAnimationEnd={onAnimationEnd}>
@@ -22,6 +23,7 @@ export default function EventInfoCard({ event, animateCard, setAnimateCard, orgs
             </Card >
         );
     } else {
+        // When no event has been selected yet display a helper/intro card
         return (
             <Card className="drop-shadow card">
                 <Card.Header className="card-header-no-border">

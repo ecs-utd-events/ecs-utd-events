@@ -2,6 +2,7 @@ import { Container, Row, Col } from "react-bootstrap/esm";
 import AdminTab from "./AdminTab";
 import FooterComponent from '../components/FooterComponent';
 
+// This functional component handles the layout of the AdminTab component for all of the pages in the Admin Portal
 export default function AdminLayout({ children, pageName }) {
     return (
         <div className="background" style={{ minHeight: '100vh' }}>

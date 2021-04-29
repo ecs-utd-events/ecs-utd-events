@@ -7,16 +7,19 @@ import Col from 'react-bootstrap/Col';
 import ShowMoreText from 'react-show-more-text';
 import ShareIcon from '@iconify/icons-mdi/share';
 import LinkIcon from '@iconify/icons-mdi/link-variant';
+import CalButtonIcon from '@iconify-icons/radix-icons/calendar';
 import { useEffect, useState } from "react";
 import ICalendarLink from "react-icalendar-link";
-
 import IconButton from '../components/IconButton';
 import Tag from "./Tag";
 import { getFormattedTime, lastUpdatedToString, eventCardFormatToISO } from './TimeUtils';
+import ReactTooltip from 'react-tooltip';
+
 
 import { ReactComponent as CalendarIcon } from './../assets/calendar.svg';
 import { ReactComponent as GroupIcon } from './../assets/group.svg';
 import { ReactComponent as PlaceholderIcon } from './../assets/placeholder.svg';
+import { Link } from 'react-router-dom';
 
 export function ListItemLayout({ Icon, children }) {
     return (
@@ -31,6 +34,7 @@ export function ListItemLayout({ Icon, children }) {
     )
 }
 
+// get the shortName for all orgs that are collaborators on this event
 function getRelevantOrgs(allOrgs, event) {
     if (allOrgs == null || event == null || event.extendedProps.org == null || event.extendedProps.org.length === 0) {
         return null;
@@ -46,17 +50,19 @@ function getRelevantOrgs(allOrgs, event) {
     return filteredArr
 }
 
+// A shared component to display event info on large and small screens
 export default function EventInfoContent({ event, mobile, orgs }) {
     const [relevantOrgs, setRelevantOrgs] = useState(null);
+
     useEffect(() => {
         const filteredOrgs = getRelevantOrgs(orgs, event);
         setRelevantOrgs(filteredOrgs);
-        // console.log(event);
     }, [event]);
 
     var lastUpdatedStr = lastUpdatedToString(event.extendedProps.lastUpdated);
     var includedLink = event.extendedProps.link != null ? event.extendedProps.link : "";
 
+    // create .ical/.ics event for downloading
     const formattedICalEvent = {
         title: event.title,
         description: event.extendedProps.description + " " + includedLink,
@@ -85,7 +91,17 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
                         <ListItemLayout Icon={GroupIcon}>
-                            {relevantOrgs != null && relevantOrgs.map(org => org.shortName).join(", ")}
+                            {relevantOrgs != null &&
+                                relevantOrgs.map((org, index) =>
+                                    <span>
+                                        <Link style={{ color: 'var(--gray2)' }} target="_blank" to={`/org/${org.slug}`}>
+                                            <b data-tip={org.name}>{org.shortName}</b>
+                                            <ReactTooltip backgroundColor="#FFD7BA" textColor="black" clickable={true} effect="solid" offset={{ top: 0 }} html={true} />
+                                        </Link>
+                                        {index !== relevantOrgs.length - 1 ? ', ' : ''}
+                                    </span>
+                                )
+                            }
                         </ListItemLayout>
                     </ListGroupItem>
                     <ListGroupItem className="px-0">
@@ -120,7 +136,7 @@ export default function EventInfoContent({ event, mobile, orgs }) {
                             <IconButton className="mr-1 color-black" icon={LinkIcon} href={event.extendedProps.link} target="_blank"></IconButton>
                         }
                         <ICalendarLink event={formattedICalEvent}>
-                            <IconButton className="mr-1" SVGComponent={CalendarIcon} />
+                            <IconButton className="mr-1" icon={CalButtonIcon} />
                         </ICalendarLink>
 
                         {/* <IconButton className="mr-1" icon={ShareIcon}></IconButton> */}

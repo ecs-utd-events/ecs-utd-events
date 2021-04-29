@@ -12,14 +12,15 @@ import './../styles/App.css';
 
 function getErrorMessage(errorCode) {
     if (errorCode === 'auth/invalid-email') {
-        return '😴 Please enter a valid email'
+        return '😴 ERROR: Please enter a valid email'
     } else if (errorCode === 'auth/user-not-found') {
-        return '😳 Login failed: Invalid username'
+        return '😳 ERROR: Invalid username'
     } else {
         return '😬 There was an unknown error, Please try again!'
     }
 }
 
+// Helper function to display the reset password form card
 function RequestEmailForResetCard({ username, onUsernameChange, submitHandler, errorCode }) {
     return (
         <Card className="px-5 pt-4">
@@ -70,6 +71,7 @@ function RequestEmailForResetCard({ username, onUsernameChange, submitHandler, e
 )
 }
 
+// Helper function to display success message once reset password email has been sent
 function CheckEmailCard() {
     return (
         <Card style={{ width: '40vw' }}>
@@ -98,7 +100,7 @@ function CheckEmailCard() {
     )
 }
 
-
+// This page takes in a user's username/email and sends them a password reset email
 export default function SendPasswordResetEmail() {
 
     const [username, setUsername] = useState('');
