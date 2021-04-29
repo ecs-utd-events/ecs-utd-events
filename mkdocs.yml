@@ -1,10 +1,15 @@
-site_name: ecs-utdevents Docs
+site_name: ecs-utdevents documentation
 nav:
   - index.md
   - about.md
-  - 'Dev':
+  - 'Developers':
     - 'Front-End': 'frontend.md'
     - 'Back-End': 'backend.md'
-  - admin.md
+    - 'API Documentation': 'api_documentation.md'
+    -  admin.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
 
 theme: readthedocs
