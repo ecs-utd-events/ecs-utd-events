@@ -1,0 +1,10 @@
+site_name: ecs-utdevents Docs
+nav:
+  - index.md
+  - about.md
+  - 'Dev':
+    - 'Front-End': 'frontend.md'
+    - 'Back-End': 'backend.md'
+  - admin.md
+
+theme: readthedocs
