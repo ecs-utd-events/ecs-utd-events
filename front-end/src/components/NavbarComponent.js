@@ -43,7 +43,7 @@ export default function NavbarComponent({ page }) {
             </Navbar.Brand>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto d-flex align-items-center">
-                    <Nav.Link href="https://github.com/siddharthnaik99/utdecsevents_backend" target="_blank" >API Documentation</Nav.Link>
+                    <Nav.Link href="https://ecs-utd-events.github.io/docs/" target="_blank" >Docs</Nav.Link>
                     {dummyOrgState != null ?
                         (
                             <NavDropdown

@@ -67,6 +67,12 @@ export const orgQuestions =
         answer: 'When adding a new profile photo URL you may need to refresh the page to see updates. If you are instead seeing an empty box then this probably means that the URL you\'ve given does not lead directly to the image. '
         + 'Make sure when you put the URL into your browser that you navigate to just the image not a webpage with the image on it. These image URLs should end in .jpg/.jpeg/.png or another image format. '
         + 'You can usually find an image URLs by right-clicking on an image and selecting "Copy Image Address"',
-
+    },
+    {
+        question: 'How can I use my data on the website for other purposes?',
+        answer: 'You can access our Public API to retrieve all your event data! You could use this in any way you wish; you could create a discord bot that notifies your server about upcoming events or display your events directly'
+        + ' on your organization\'s website or really anything! Check out our API documentation for more info.',
+        ref: 'API Docs',
+        link: 'https://ecs-utd-events.github.io/docs/api_documentation/',
     }
 ]
