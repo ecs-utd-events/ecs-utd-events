@@ -19,6 +19,7 @@ import './styles/App.css';
 import AllOrgProvider from "./providers/AllOrgProvider";
 import NotFound from "./pages/NotFound";
 import JerryEmail from "./pages/JerryEmail";
+import TestRouter from "./pages/TestRouter";
 
 
 export function ScrollToTop() {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/admin" component={AdminRouter} />
             <Route path="/email" exact component={JerryEmail} />
             <Route path="/" exact component={Home} />
+            <Route path="/test" component={TestRouter} />
             <Route component={NotFound} />
           </Switch>
         </Router>

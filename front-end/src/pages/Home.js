@@ -28,6 +28,7 @@ import { AllOrgContext } from '../providers/AllOrgProvider';
 
 import { parseEventsToFullCalendarFormat } from '../components/FullCalendarUtils';
 import { usePrevious } from '../components/CustomHooks';
+import { apiProvider } from '../providers/Provider';
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm. We use this
 to randomize the order of presented organizations. 
@@ -57,6 +58,12 @@ export default function Home() {
   useEffect(() => {
     setIsLoadingEvents(true);
     // GET request for all events using fetch inside useEffect React hook
+    apiProvider.getAll('events', setEvents)
+    setEvents(parseEventsToFullCalendarFormat(events))
+    setFilteredEvents(events)
+    if (events == null)
+      setIsLoadingEvents(false)
+
     fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
       .then(response => response.json())
       .then(data => parseEventsToFullCalendarFormat(data))

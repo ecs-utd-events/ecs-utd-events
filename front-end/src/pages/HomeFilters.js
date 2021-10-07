@@ -7,6 +7,7 @@ import { Slider, TextField, ValueLabel } from '@material-ui/core';
 
 import { AllOrgContext } from '../providers/AllOrgProvider';
 import '../styles/components.css';
+import { apiProvider } from '../providers/Provider';
 
 export function sortTagsAlphabetically(tagsArr) {
     var sortedArr = tagsArr;
@@ -88,13 +89,8 @@ export default function HomeFilters({ setFilteredEvents, allEvents }) {
     const orgs = useContext(AllOrgContext);
 
     useEffect(() => {
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/tags/all')
-            .then(response => response.json())
-            .then(data => sortTagsAlphabetically(data))
-            .then(sortedTags => setTags(sortedTags))
-            .catch(error => {
-                console.error('There was an error fetching tags!', error);
-            });
+        apiProvider.getAll('tags', setTags)
+        setTags(sortTagsAlphabetically(tags))
     }, [])
 
     // wait for org data to come in and then set the state with it
