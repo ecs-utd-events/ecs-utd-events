@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -13,6 +13,7 @@ import ResetPassword from './pages/ResetPassword';
 import OrgProfileRouter from './pages/OrgProfileRouter';
 import AdminRouter from "./pages/admin/AdminRouter";
 import UserProvider from "./providers/UserProvider";
+import AddOrganization from "./components/AddOrganization";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
@@ -20,6 +21,7 @@ import AllOrgProvider from "./providers/AllOrgProvider";
 import NotFound from "./pages/NotFound";
 import JerryEmail from "./pages/JerryEmail";
 import TestRouter from "./pages/TestRouter";
+import TestFetch from "./pages/TestFetch";
 
 
 export function ScrollToTop() {
@@ -49,6 +51,7 @@ function App() {
             <Route path="/email" exact component={JerryEmail} />
             <Route path="/" exact component={Home} />
             <Route path="/test" component={TestRouter} />
+            <Route path="/form" component={AddOrganization} />
             <Route component={NotFound} />
           </Switch>
         </Router>

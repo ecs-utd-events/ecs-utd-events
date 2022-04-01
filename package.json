@@ -1,0 +1,24 @@
+{
+  "name": "ecs-utd-events",
+  "version": "1.0.0",
+  "description": "Front end code for our site [https://ecs-utdevents.web.app/](https://ecs-utdevents.web.app/). Directions on running Front-End in dev environment can be found inside `front-end` folder README",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node --version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecs-utd-events/ecs-utd-events.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ecs-utd-events/ecs-utd-events/issues"
+  },
+  "homepage": "https://github.com/ecs-utd-events/ecs-utd-events#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3"
+  }
+}

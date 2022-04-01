@@ -57,22 +57,12 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoadingEvents(true);
-    // GET request for all events using fetch inside useEffect React hook
     apiProvider.getAll('events', setEvents)
+    console.log(events)
     setEvents(parseEventsToFullCalendarFormat(events))
     setFilteredEvents(events)
-    if (events == null)
-      setIsLoadingEvents(false)
-
-    fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/events/all')
-      .then(response => response.json())
-      .then(data => parseEventsToFullCalendarFormat(data))
-      .then(data => { setEvents(data); setFilteredEvents(data); })
-      .then(_ => setIsLoadingEvents(false))
-      .catch(error => {
-        console.error('There was an error fetching events!', error);
-        setIsLoadingEvents(false);
-      });
+    // if (events == null)
+    setIsLoadingEvents(false)
   }, []);
 
   useEffect(() => {
@@ -91,7 +81,7 @@ export default function Home() {
       selectedEventRef.display = "block";
       setFilteredEvents([...tempFilteredEvents]);
     }
-  }, [selectedEvent])
+  }, [selectedEvent]);
 
   return (
     <div className="App">

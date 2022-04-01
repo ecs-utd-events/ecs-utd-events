@@ -20,6 +20,8 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^4.6.0",
+    "cars": "^1.1.6",
+    "cors": "^2.8.5",
     "firebase": "^8.2.9",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
@@ -56,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12"
   }
 }

@@ -5,8 +5,9 @@ export const AllOrgContext = createContext(null);
 function AllOrgProvider({ children }) {
     const [orgs, setOrgs] = useState([])
 
+    // load organizations onto home page (see bottom of page)
     useEffect(() => {
-        fetch((process.env.REACT_APP_SERVER_URL || 'http://localhost:80') + '/api/orgs/all')
+        fetch(process.env.REACT_APP_SERVER_URL + '/organizations', { method: 'GET', mode: 'cors', redirect: 'follow' })
             .then(response => response.json())
             .then(data => setOrgs(data))
             .catch(error => {
