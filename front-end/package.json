@@ -23,6 +23,7 @@
     "cars": "^1.1.6",
     "cors": "^2.8.5",
     "firebase": "^8.2.9",
+    "firebase-tools": "^10.5.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-collapse": "^5.1.0",
@@ -30,7 +31,7 @@
     "react-hook-form": "^6.15.1",
     "react-icalendar-link": "^2.0.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.2",
+    "react-scripts": "^5.0.0",
     "react-show-more-text": "^1.4.6",
     "react-tooltip": "^4.2.15",
     "web-vitals": "^1.0.1"

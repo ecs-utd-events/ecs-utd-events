@@ -7,7 +7,7 @@ const getAll = async (resource, set) => {
     .then(response => response.json())
     .then(data => set(data))
     .catch(error => {
-        console.error('There was an error fetching tags!', error);
+        console.error('There was an error fetching ${resource}!', error);
     });
 }
 
@@ -16,7 +16,7 @@ const getSingle = async (resource, id, set) => {
     .then(response => response.json())
     .then(data => set(data))
     .catch(error => {
-        console.error('There was an error fetching tags!', error);
+        console.error('There was an error fetching a single ${resource}', error);
     });
 }
 

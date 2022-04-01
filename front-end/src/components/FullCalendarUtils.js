@@ -6,6 +6,11 @@ export const oneDayInMilliseconds = 86400000 - 1000;
 // helper function to format an event from our back-end db to the FullCalendar format
 export function parseEventsToFullCalendarFormat(eventData) {
   return eventData.map(event => {
+
+    console.log("hi pretty")
+    console.log(typeof event.startTime)
+    console.log("EVENT: " + new Date(event.startTime))
+
     const allDay = new Date(event.endTime) - (new Date(event.startTime)) >= oneDayInMilliseconds ? true : false;
     return {
       id: event.id,
