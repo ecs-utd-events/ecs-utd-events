@@ -20,11 +20,11 @@ export default function OrgForm() {
         <div className="details">
             <div className="split left">
             <h1>Submit organization application</h1>
-            <p> <b>
+            <h6>
             Want to show your events to our community? Don't hesitate to do so!! If you submit your organization information
             here , we will add you to our list of events and display you on our calendar. Collaborate more effectively and let
             your community members know to book your upcoming event dates in advance!
-            </b></p>
+            </h6>
             </div>
             <div className="split right">
             <h2>Organization Details</h2>

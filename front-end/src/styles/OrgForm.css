@@ -30,9 +30,9 @@ body {
     text-align: center;
   }
 
-  .left p {
+  .left h6 {
     max-width: 500px;
-    margin-left: 20ch;
+    margin-left: 13ch;
     margin-top: 5ch;
   }
 
@@ -41,6 +41,18 @@ body {
     text-align: center;
     right: 0;
     background-color: #eeeeee;
+  }
+
+  .right form {
+    max-width: 500px;
+    margin-left: 12ch;
+  }
+
+  img {
+    max-width: 50px;
+    margin-top: 10ch;
+    float: left;
+    margin-left: 25ch;
   }
   
   
