@@ -1,22 +1,20 @@
 const admin = require("firebase-admin");
-const functions = require("firebase-functions")
-const cors = require('cors')({origin: true});
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
 admin.initializeApp({
     credential: admin.credential.cert({
-        privateKey: functions.config().private.key.replace(/\\n/g, '\n'),
-        projectId: functions.config().project.id,
-        clientEmail: functions.config().client.email
+        privateKey: process.env.FIREBASE_CONFIG_PRIVATEKEY,
+        projectId: process.env.FIREBASE_CONFIG_PROJECTID,
+        clientEmail: process.env.FIREBASE_CONFIG_CLIENTEMAIL
     }),
-    databaseURL: 'https://ecs-utd-events.firebaseio.com'
-})
+    databaseURL: process.env.DATABASE_URL
+});
 
-const app = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-        return response.send("Hello from Firebase!")
-    })
-})
+const app = express();
+app.use(cors({ origin: true }));
 
-const db = admin.firestore()
+const db = admin.firestore();
 
-module.exports = { admin, app, db, cors }
+module.exports = { admin, app, db, cors };

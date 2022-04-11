@@ -1,49 +1,62 @@
-const { cors, db } = require('./config/firebase')
-const functions = require("firebase-functions")
+const functions = require("firebase-functions");
+const { Collection } = require("./constants");
+const { db } = require("./config/firebase");
 
-const addEvent = functions.https.onRequest((req, res) => {
-    cors(req, res, async () => {
-        const { description, endTime, link, location, startTime, title } = req.body
-        try {
-            const event = db.collection('events').doc()
+const addEvent = functions.https.onRequest(async (req, res) => {
+    const { description, endTime, flyer, lastUpdated, link, location, orgs, startTime, tags, title } = req.body;
+    try {
+        const event = db.collection(Collection.EVENTS).doc();
 
-            const eventObject =  {
-                id: event.id,
-                description,
-                endTime,
-                link,
-                location,
-                startTime,
-                title
-            }
+        const eventObject =  {
+            description,
+            endTime,
+            flyer,
+            link,
+            lastUpdated,
+            location,
+            orgs,
+            startTime,
+            tags,
+            title
+        };
 
-            event.set(eventObject)
+        event.set(eventObject);
+        res.status(200).send({
+            status: 'Success',
+            message: 'Event added successfully!',
+            data: eventObject
+        });
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+});
 
-            res.status(200).send({
-                status: 'Success',
-                message: 'Event added successfully!',
-                data: eventObject
-            })
+const getAllEvents = functions.https.onRequest(async (req, res) => {
+    try {
+        let allEvents = [];
+        const querySnapshot = await db.collection(Collection.EVENTS).get();
+        querySnapshot.forEach((doc) => {
+            let event = doc.data();
 
-        } catch {
-            res.status(500).json 
-        }
-    })
-})
+            allEvents.push({
+                description: event.description,
+                endTime: event.endTime,
+                flyer: event.flyer,
+                link: event.link,
+                lastUpdated: event.lastUpdated,
+                location: event.location,
+                orgs: event.orgs,
+                startTime: event.startTime,
+                tags: event.tags,
+                title: event.title,
+            });
+        });
 
-const getAllEvents = functions.https.onRequest((req, res) => {
-    cors(req, res, async () => {
-        try {
-            let allEvents = []
-            const querySnapshot = await db.collection('events').get()
-            querySnapshot.forEach((doc) => allEvents.push(doc.data()))
-            
-            return res.status(200).json(allEvents)
+        return res.status(200).json(allEvents);
 
-        } catch (error) {
-            return res.status(500).json(error.message)
-        }
-    })
-})
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+});
 
-module.exports = { addEvent, getAllEvents }
+module.exports = { addEvent, getAllEvents };
