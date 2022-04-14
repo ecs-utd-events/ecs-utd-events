@@ -15,6 +15,9 @@ function AllOrgProvider({ children }) {
             });
     }, [])
 
+    console.log("in allorgprovider neha")
+    console.log(orgs)
+
     return (
         <AllOrgContext.Provider value={orgs}>
             {children}
