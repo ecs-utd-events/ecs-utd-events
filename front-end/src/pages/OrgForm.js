@@ -1,3 +1,4 @@
+import { CalendarApi } from "@fullcalendar/react";
 import { useState } from "react";
 import "../styles/OrgForm.css";
 
@@ -21,10 +22,22 @@ export default function OrgForm() {
             <div className="split left">
             <h1>Submit organization application</h1>
             <h6>
-            Want to show your events to our community? Don't hesitate to do so!! If you submit your organization information
-            here , we will add you to our list of events and display you on our calendar. Collaborate more effectively and let
+            Want to show your events to our community? Don't hesitate to do so!! If you<br></br>
+            submit your organization information here, we will add you to our list of<br></br>
+            events and display you on our calendar. Collaborate more effectively and let<br></br>
             your community members know to book your upcoming event dates in advance!
             </h6>
+            <section className="container">
+                <img src="calendar.svg"></img>
+                <p><b>Display your events on our<br></br>
+                community calendar</b></p>
+                <img src="clipboard.svg"></img>
+                <p><b>Get an idea of how many people<br></br>
+                will attend your event</b></p>
+                <img src="comments.svg"></img>
+                <p><b>Alert your community to any<br></br>
+                changes in date, time, or location</b></p>
+            </section>
             </div>
             <div className="split right">
             <h2>Organization Details</h2>
