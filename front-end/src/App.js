@@ -20,6 +20,7 @@ import AllOrgProvider from "./providers/AllOrgProvider";
 import NotFound from "./pages/NotFound";
 import JerryEmail from "./pages/JerryEmail";
 import TestRouter from "./pages/TestRouter";
+import OrgForm from "./pages/OrgForm";
 
 
 export function ScrollToTop() {
@@ -49,6 +50,7 @@ function App() {
             <Route path="/email" exact component={JerryEmail} />
             <Route path="/" exact component={Home} />
             <Route path="/test" component={TestRouter} />
+            <Route path="/form" component={OrgForm} />
             <Route component={NotFound} />
           </Switch>
         </Router>
